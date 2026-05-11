@@ -24,12 +24,6 @@ import PartialDelivery from "./pages/PartialDelivery.tsx";
 import PendingItemDelivery from "./pages/PendingItemDelivery.tsx";
 import Cancelled from "./pages/Cancelled.tsx";
 import PRD from "./pages/PRD.tsx";
-import ProofOfPickup from "./pages/portal/ProofOfPickup.tsx";
-import ProofOfDelivery from "./pages/portal/ProofOfDelivery.tsx";
-import ItemsSortedAtFacility from "./pages/portal/ItemsSortedAtFacility.tsx";
-import ApprovalEntry from "./pages/portal/ApprovalEntry.tsx";
-import ApprovalItem from "./pages/portal/ApprovalItem.tsx";
-import ApprovalConfirm from "./pages/portal/ApprovalConfirm.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { ScrollToTop } from "./components/nav/ScrollToTop.tsx";
 
@@ -65,12 +59,6 @@ const App = () => (
           <Route path="/cancelled" element={<Cancelled />} />
           <Route path="/order-complete" element={<OrderComplete />} />
           <Route path="/prd" element={<PRD />} />
-          <Route path="/portal/:orderId/pickup" element={<ProofOfPickup />} />
-          <Route path="/portal/:orderId/facility" element={<ItemsSortedAtFacility />} />
-          <Route path="/portal/:orderId/delivery" element={<ProofOfDelivery />} />
-          <Route path="/portal/:orderId/approval" element={<ApprovalEntry />} />
-          <Route path="/portal/:orderId/approval/confirm" element={<ApprovalConfirm />} />
-          <Route path="/portal/:orderId/approval/:itemIdx" element={<ApprovalItem />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
