@@ -28,8 +28,8 @@ const STATUS_TO_ROUTE: Record<OrderStatus, string> = {
   drop_off_failed: "/drop-off-failed",
   complete: "/order-complete",
   cancelled: "/cancelled",
-  // TODO: build dedicated /laundry-bag-requested page
-  laundry_bag_requested: "/order-received",
+  laundry_bag_requested: "/laundry-bag",
+  laundry_bag_delivered: "/laundry-bag",
 };
 
 const cardBgForStatus = (status: OrderStatus): string => {

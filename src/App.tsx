@@ -23,6 +23,7 @@ import ApprovalRequired from "./pages/ApprovalRequired.tsx";
 import PartialDelivery from "./pages/PartialDelivery.tsx";
 import PendingItemDelivery from "./pages/PendingItemDelivery.tsx";
 import Cancelled from "./pages/Cancelled.tsx";
+import LaundryBagOrder from "./pages/LaundryBagOrder.tsx";
 import PRD from "./pages/PRD.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { ScrollToTop } from "./components/nav/ScrollToTop.tsx";
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/pending-item-delivery" element={<PendingItemDelivery />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="/cancelled" element={<Cancelled />} />
+          <Route path="/laundry-bag" element={<LaundryBagOrder />} />
           <Route path="/order-complete" element={<OrderComplete />} />
           <Route path="/prd" element={<PRD />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -261,6 +261,19 @@ export const MOCK_ORDERS: OrderData[] = [
     },
   },
   {
+    orderId: "LBG552",
+    orderType: "laundry_bag",
+    status: "laundry_bag_delivered",
+    listTimestamp: "Delivered on 22 Apr 2026, 11:08 AM",
+    pickupLocation: "Apt 1402, Marina Heights, Dubai Marina",
+    pickupWindow: "22 Apr · 9:00 – 11:00 AM",
+    dropoffWindow: "22 Apr · 9:00 – 11:00 AM",
+    stageTimestamps: {
+      received: "21 Apr, 9:42 pm",
+      complete: "22 Apr, 11:08 am",
+    },
+  },
+  {
     orderId: "CSO663",
     orderType: "laundry",
     status: "complete",

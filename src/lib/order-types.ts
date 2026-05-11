@@ -15,7 +15,8 @@ export type OrderStatus =
   | "complete"
   | "cancelled"
   | "payment_failed"
-  | "laundry_bag_requested";
+  | "laundry_bag_requested"
+  | "laundry_bag_delivered";
 
 export type StatusCategory =
   | "in_flight"
@@ -40,6 +41,7 @@ export const STATUS_TO_CATEGORY: Record<OrderStatus, StatusCategory> = {
   complete: "completed",
   cancelled: "completed",
   laundry_bag_requested: "special",
+  laundry_bag_delivered: "completed",
 };
 
 export const STATUS_LABEL: Record<OrderStatus, string> = {
@@ -58,6 +60,7 @@ export const STATUS_LABEL: Record<OrderStatus, string> = {
   cancelled: "Cancelled",
   payment_failed: "Payment Failed",
   laundry_bag_requested: "Laundry Bag Requested",
+  laundry_bag_delivered: "Laundry Bag Delivered",
 };
 
 export const ORDER_TYPE_LABEL: Record<OrderType, string> = {

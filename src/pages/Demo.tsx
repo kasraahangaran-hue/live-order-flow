@@ -97,7 +97,7 @@ const Demo = () => {
 
         <SectionHeader>Special</SectionHeader>
         <div className="flex flex-col gap-3">
-          {cardsFor(["laundry_bag_requested"], ["laundry_bag"])}
+          {cardsFor(["laundry_bag_requested", "laundry_bag_delivered"], ["laundry_bag"])}
         </div>
 
         <SectionHeader>Pick a screen to preview</SectionHeader>
