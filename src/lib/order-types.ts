@@ -60,6 +60,7 @@ export const STATUS_LABEL: Record<OrderStatus, string> = {
   cancelled: "Cancelled",
   payment_failed: "Payment Failed",
   laundry_bag_requested: "Laundry Bag Requested",
+  laundry_bag_delivered: "Laundry Bag Delivered",
 };
 
 export const ORDER_TYPE_LABEL: Record<OrderType, string> = {
