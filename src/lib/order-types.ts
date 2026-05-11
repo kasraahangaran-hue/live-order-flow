@@ -45,10 +45,13 @@ export const STATUS_TO_CATEGORY: Record<OrderStatus, StatusCategory> = {
 export const STATUS_LABEL: Record<OrderStatus, string> = {
   received: "Order Received",
   collected: "Order Collected",
+  driver_assigned: "Driver Assigned",
   items_in_process: "Items in Process",
   approval_required: "Approval Required",
+  out_for_drop_off: "Out for Drop Off",
   delivery_today: "Delivery Today",
   driver_on_the_way: "Driver on the Way",
+  drop_off_failed: "Drop Off Failed",
   partially_delivered: "Order Partially Delivered",
   pending_item_delivery: "Pending Item Delivery",
   complete: "Completed",
