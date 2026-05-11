@@ -56,6 +56,7 @@ export const OrderCard = ({ order }: OrderCardProps) => {
   const cardBg = cardBgForStatus(status);
   const isApproval = status === "approval_required";
   const isPaymentFailed = status === "payment_failed";
+  const isDropOffFailed = status === "drop_off_failed";
 
   return (
     <Link
@@ -74,7 +75,7 @@ export const OrderCard = ({ order }: OrderCardProps) => {
           className={`mt-0.5 truncate text-xs ${
             isApproval
               ? "font-bold text-warning-dark"
-              : isPaymentFailed
+              : isPaymentFailed || isDropOffFailed
                 ? "font-bold text-destructive"
                 : "text-muted-foreground"
           }`}
