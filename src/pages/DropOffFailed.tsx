@@ -16,14 +16,16 @@ const DropOffFailed = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order Received", timestamp: ts.received },
-    { key: "collected", label: "Order Pick Up", timestamp: ts.collected },
+    { key: "received", label: "Order received", timestamp: ts.received },
+    { key: "collected", label: "Collected", timestamp: ts.collected },
     { key: "items_in_process", label: "Items in Process", timestamp: ts.items_in_process },
+    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.delivery_today },
     {
-      key: "delivery_today",
-      label: "Drop Off",
-      pill: { label: "DROP OFF FAILED", variant: "attention" },
-      timestamp: ts.driver_on_the_way ?? ts.delivery_today,
+      key: "driver_on_the_way",
+      label: "Driver on the Way",
+      icon: "hold",
+      pill: { label: "DROP OFF FAILED", variant: "urgent" },
+      timestamp: ts.driver_on_the_way,
     },
     { key: "complete", label: "Delivered" },
   ];
@@ -32,30 +34,22 @@ const DropOffFailed = () => {
     <OrderShell
       hero={{
         status: "Drop off failed",
-        subtitle: "We couldn't complete the delivery. Please contact support or reschedule.",
+        subtitle: "We couldn't complete the delivery. Please reschedule to try again.",
         orderType: order.orderType,
         orderId: order.orderId,
         showSupport: true,
         stages,
-        currentIndex: 3,
-        variant: "hold",
+        currentIndex: 4,
         onHold: true,
         heroIcon: <AlertTriangle strokeWidth={2.2} />,
       }}
     >
       <ActionCard
-        variant="attention"
+        variant="urgent"
         icon={<AlertTriangle strokeWidth={2.4} />}
-        title="Drop off couldn't be completed"
-        message="The driver wasn't able to deliver your items. You can reschedule the drop off or reach out to support."
-        primaryAction={{
-          label: "Reschedule drop off",
-          variant: "primary",
-        }}
-        secondaryAction={{
-          label: "Contact support",
-          variant: "secondary",
-        }}
+        title="Drop off failed"
+        message="The driver wasn't able to deliver your items. Reschedule the drop off to try again."
+        primaryAction={{ label: "Reschedule drop off", variant: "primary" }}
       />
 
       <DeliveryCard
@@ -63,7 +57,7 @@ const DropOffFailed = () => {
         address={order.pickupLocation}
         when={ts.collected ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
+        dropoff={{ label: "Drop off failed", when: "Awaiting reschedule" }}
       />
 
       <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
