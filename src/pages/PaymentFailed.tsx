@@ -1,6 +1,6 @@
 import { TriangleAlert } from "lucide-react";
 
-import { StatusHero } from "@/components/order/StatusHero";
+import { OrderShell } from "@/components/order/OrderShell";
 import { ActionCard } from "@/components/order/ActionCard";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
@@ -26,46 +26,40 @@ const PaymentFailed = () => {
   ];
 
   return (
-    <main className="h-screen bg-background font-sans antialiased">
-      <div className="mx-auto flex h-screen max-w-md flex-col bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:overflow-hidden md:rounded-[2.25rem] md:border md:border-border">
-        <div className="flex-1 overflow-y-auto pb-32">
-          <div className="min-h-[calc(100%+120px)]">
-          <StatusHero
-            status="Payment required"
-            subtitle="Delivery on hold · capture payment to release"
-            orderType={order.orderType}
-            orderId={order.orderId}
-            showSupport
-            stages={stages}
-            currentIndex={4}
-            onHold
-          />
+    <OrderShell
+      hero={{
+        status: "Payment required",
+        subtitle: "Delivery on hold · capture payment to release",
+        orderType: order.orderType,
+        orderId: order.orderId,
+        showSupport: true,
+        stages,
+        currentIndex: 4,
+        onHold: true,
+      }}
+    >
+      <ActionCard
+        variant="urgent"
+        icon={<TriangleAlert strokeWidth={2.4} />}
+        title="Payment failed"
+        message="Your card was declined. We can't deliver your order until payment is captured."
+        amountDue={order.amountDue ?? "AED 142.00 due"}
+        primaryAction={{ label: "Retry payment", variant: "primary" }}
+        secondaryAction={{ label: "Update card", variant: "secondary" }}
+      />
 
-          <ActionCard
-            variant="urgent"
-            icon={<TriangleAlert strokeWidth={2.4} />}
-            title="Payment failed"
-            message="Your card was declined. We can't deliver your order until payment is captured."
-            amountDue={order.amountDue ?? "AED 142.00 due"}
-            primaryAction={{ label: "Retry payment", variant: "primary" }}
-            secondaryAction={{ label: "Update card", variant: "secondary" }}
-          />
+      <DeliveryCard
+        dropoffNote={order.pickupNote ?? "Picked up at door"}
+        address={order.pickupLocation}
+        when={ts.collected ?? order.pickupWindow}
+        pickupDone
+        dropoff={{ label: "Delivery on hold", when: "Pending payment" }}
+      />
 
-          <DeliveryCard
-            dropoffNote={order.pickupNote ?? "Picked up at door"}
-            address={order.pickupLocation}
-            when={ts.collected ?? order.pickupWindow}
-            pickupDone
-            dropoff={{ label: "Delivery on hold", when: "Pending payment" }}
-          />
-
-          <OrderConfirmations stage="delivery" />
-          <ServicesSelection locked />
-          <OrderInstructions locked />
-          </div>
-        </div>
-      </div>
-    </main>
+      <OrderConfirmations stage="delivery" />
+      <ServicesSelection locked />
+      <OrderInstructions locked />
+    </OrderShell>
   );
 };
 

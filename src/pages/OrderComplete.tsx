@@ -1,5 +1,4 @@
-
-import { StatusHero } from "@/components/order/StatusHero";
+import { OrderShell } from "@/components/order/OrderShell";
 import { QuickActions } from "@/components/order/QuickActions";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
@@ -19,43 +18,37 @@ const OrderComplete = () => {
   ];
 
   return (
-    <main className="h-screen bg-background font-sans antialiased">
-      <div className="mx-auto flex h-screen max-w-md flex-col bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:overflow-hidden md:rounded-[2.25rem] md:border md:border-border">
-        <div className="flex-1 overflow-y-auto pb-32">
-          <div className="min-h-[calc(100%+120px)]">
-          <StatusHero
-            status="Completed order"
-            subtitle={ts.complete ? `Delivered ${ts.complete}` : "Delivered"}
-            orderType={order.orderType}
-            orderId={order.orderId}
-            stages={stages}
-            currentIndex={4}
-            completed
-          />
+    <OrderShell
+      hero={{
+        status: "Completed order",
+        subtitle: ts.complete ? `Delivered ${ts.complete}` : "Delivered",
+        orderType: order.orderType,
+        orderId: order.orderId,
+        stages,
+        currentIndex: 4,
+        completed: true,
+      }}
+    >
+      <QuickActions />
 
-          <QuickActions />
+      <OrderConfirmations stage="delivered" orderId={order.orderId} order={order} />
 
-          <OrderConfirmations stage="delivered" orderId={order.orderId} order={order} />
+      <DeliveryCard
+        dropoffNote={order.pickupNote ?? "Picked up at door"}
+        address={order.pickupLocation}
+        when={ts.collected ?? order.pickupWindow}
+        pickupDone
+        dropoff={{
+          label: order.dropoffNote ?? "Delivered at door",
+          when: ts.complete ?? order.dropoffWindow,
+          done: true,
+        }}
+        defaultOpen={false}
+      />
 
-          <DeliveryCard
-            dropoffNote={order.pickupNote ?? "Picked up at door"}
-            address={order.pickupLocation}
-            when={ts.collected ?? order.pickupWindow}
-            pickupDone
-            dropoff={{
-              label: order.dropoffNote ?? "Delivered at door",
-              when: ts.complete ?? order.dropoffWindow,
-              done: true,
-            }}
-            defaultOpen={false}
-          />
-
-          <ServicesSelection locked />
-          <OrderInstructions locked />
-          </div>
-        </div>
-      </div>
-    </main>
+      <ServicesSelection locked />
+      <OrderInstructions locked />
+    </OrderShell>
   );
 };
 
