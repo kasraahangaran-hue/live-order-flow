@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +17,8 @@ const ApprovalRequired = () => {
   const ts = order.stageTimestamps;
   const count = order.itemsAwaitingApproval ?? 0;
   const noun = count === 1 ? "item" : "items";
+  const [tucked, setTucked] = useState(false);
+  const headerGradient = order.orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
 
   const stages: Stage[] = [
     { key: "received", label: "Order Received", timestamp: ts.received },
@@ -35,7 +38,11 @@ const ApprovalRequired = () => {
   return (
     <main className="fixed inset-0 overflow-hidden bg-background font-sans antialiased overscroll-none">
       <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
-        <div className="z-[60] shrink-0 bg-gradient-hero shadow-hero">
+        <div
+          className={`z-[60] shrink-0 ${headerGradient} transition-[border-radius,box-shadow] duration-300 ease-out ${
+            tucked ? "rounded-b-[28px] shadow-hero" : "rounded-b-none shadow-none"
+          }`}
+        >
           <OrderHeader
             orderId={order.orderId}
             orderType={order.orderType}
@@ -55,6 +62,7 @@ const ApprovalRequired = () => {
             currentIndex={2}
             variant="received"
             showHeader={false}
+            onTuckedChange={setTucked}
           />
 
           <ActionCard
