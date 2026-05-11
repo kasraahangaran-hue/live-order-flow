@@ -15,7 +15,8 @@ export type OrderStatus =
   | "complete"
   | "cancelled"
   | "payment_failed"
-  | "laundry_bag_requested";
+  | "laundry_bag_requested"
+  | "laundry_bag_delivered";
 
 export type StatusCategory =
   | "in_flight"
