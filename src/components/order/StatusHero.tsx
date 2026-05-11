@@ -25,6 +25,8 @@ interface Props {
   /** Externally controlled tuck state. When provided, internal IO sentinel is disabled. */
   tucked?: boolean;
   onTuckedChange?: (tucked: boolean) => void;
+  /** Optional Lucide icon node to replace the default HeroArt SVG. */
+  heroIcon?: ReactNode;
 }
 
 const wrapperAnim: Record<HeroVariant, string> = {
