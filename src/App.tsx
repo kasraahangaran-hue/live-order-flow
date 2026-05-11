@@ -24,12 +24,6 @@ import PartialDelivery from "./pages/PartialDelivery.tsx";
 import PendingItemDelivery from "./pages/PendingItemDelivery.tsx";
 import Cancelled from "./pages/Cancelled.tsx";
 import PRD from "./pages/PRD.tsx";
-import ProofOfPickup from "./pages/portal/ProofOfPickup.tsx";
-import ProofOfDelivery from "./pages/portal/ProofOfDelivery.tsx";
-import ItemsSortedAtFacility from "./pages/portal/ItemsSortedAtFacility.tsx";
-import ApprovalEntry from "./pages/portal/ApprovalEntry.tsx";
-import ApprovalItem from "./pages/portal/ApprovalItem.tsx";
-import ApprovalConfirm from "./pages/portal/ApprovalConfirm.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { ScrollToTop } from "./components/nav/ScrollToTop.tsx";
 
