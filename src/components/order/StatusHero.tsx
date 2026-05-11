@@ -21,6 +21,7 @@ interface Props {
   orderId: string;
   showSupport?: boolean;
   onBack?: () => void;
+  showHeader?: boolean;
 }
 
 const wrapperAnim: Record<HeroVariant, string> = {
@@ -45,6 +46,7 @@ export const StatusHero = ({
   orderId,
   showSupport = false,
   onBack,
+  showHeader = true,
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
   const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
@@ -98,16 +100,17 @@ export const StatusHero = ({
         className={`sticky top-0 z-50 ${gradientClass} shadow-hero animate-fade-in transition-[border-radius] duration-300 ${tucked ? "rounded-b-none" : "rounded-b-[28px]"}`}
         aria-label="Order status"
       >
-        {/* OrderHeader — always visible, never tucked */}
-        <div className="relative z-10">
-          <OrderHeader
-            orderId={orderId}
-            orderType={orderType ?? "laundry"}
-            showSupport={showSupport}
-            onBack={onBack}
-            variant="inline"
-          />
-        </div>
+        {showHeader && (
+          <div className="relative z-10">
+            <OrderHeader
+              orderId={orderId}
+              orderType={orderType ?? "laundry"}
+              showSupport={showSupport}
+              onBack={onBack}
+              variant="inline"
+            />
+          </div>
+        )}
 
         {/* Tuckable hero body — grid row animates from 1fr to 0fr */}
       <div
