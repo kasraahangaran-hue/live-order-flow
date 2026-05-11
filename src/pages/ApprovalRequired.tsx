@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { StatusHero } from "@/components/order/StatusHero";
-import { OrderHeader } from "@/components/order/OrderHeader";
+import { OrderShell } from "@/components/order/OrderShell";
 import { ActionCard } from "@/components/order/ActionCard";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
@@ -17,8 +15,6 @@ const ApprovalRequired = () => {
   const ts = order.stageTimestamps;
   const count = order.itemsAwaitingApproval ?? 0;
   const noun = count === 1 ? "item" : "items";
-  const [tucked, setTucked] = useState(false);
-  const headerGradient = order.orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
 
   const stages: Stage[] = [
     { key: "received", label: "Order Received", timestamp: ts.received },
@@ -35,68 +31,44 @@ const ApprovalRequired = () => {
     { key: "complete", label: "Delivered" },
   ];
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const top = e.currentTarget.scrollTop;
-    setTucked((prev) => {
-      if (!prev && top > 24) return true;
-      if (prev && top < 8) return false;
-      return prev;
-    });
-  };
-
   return (
-    <main className="fixed inset-0 overflow-hidden bg-background font-sans antialiased overscroll-none">
-      <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
-        <div className={`relative z-[60] shrink-0 overflow-hidden ${tucked ? "rounded-b-none" : "rounded-b-[28px]"} transition-[border-radius] duration-300 ease-out ${headerGradient} shadow-hero`}>
-          <OrderHeader
-            orderId={order.orderId}
-            orderType={order.orderType}
-            showSupport
-            variant="inline"
-          />
-          <StatusHero
-            status="Approval required"
-            subtitle={`${count} ${noun} awaiting your review`}
-            orderType={order.orderType}
-            orderId={order.orderId}
-            showSupport
-            stages={stages}
-            currentIndex={2}
-            variant="received"
-            showHeader={false}
-            tucked={tucked}
-          />
-        </div>
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-32 touch-pan-y" onScroll={handleScroll}>
-          <div className="min-h-[calc(100%+120px)]">
-            <ActionCard
-              variant="attention"
-              icon={<TriangleAlert strokeWidth={2.4} />}
-              title={`${count} ${noun} need approval`}
-              message={`You need to review and approve ${count} ${noun} before they can be processed.`}
-              countdown={order.approvalDeadline}
-              primaryAction={{
-                label: "Review items",
-                variant: "primary",
-                onClick: () => navigate(`/portal/${order.orderId}/approval`, { state: { order } }),
-              }}
-            />
+    <OrderShell
+      hero={{
+        status: "Approval required",
+        subtitle: `${count} ${noun} awaiting your review`,
+        orderType: order.orderType,
+        orderId: order.orderId,
+        showSupport: true,
+        stages,
+        currentIndex: 2,
+        variant: "received",
+      }}
+    >
+      <ActionCard
+        variant="attention"
+        icon={<TriangleAlert strokeWidth={2.4} />}
+        title={`${count} ${noun} need approval`}
+        message={`You need to review and approve ${count} ${noun} before they can be processed.`}
+        countdown={order.approvalDeadline}
+        primaryAction={{
+          label: "Review items",
+          variant: "primary",
+          onClick: () => navigate(`/portal/${order.orderId}/approval`, { state: { order } }),
+        }}
+      />
 
-            <DeliveryCard
-              dropoffNote={order.pickupNote ?? "Picked up at door"}
-              address={order.pickupLocation}
-              when={ts.collected ?? order.pickupWindow}
-              pickupDone
-              dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
-            />
+      <DeliveryCard
+        dropoffNote={order.pickupNote ?? "Picked up at door"}
+        address={order.pickupLocation}
+        when={ts.collected ?? order.pickupWindow}
+        pickupDone
+        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
+      />
 
-            <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
-            <ServicesSelection locked />
-            <OrderInstructions locked />
-          </div>
-        </div>
-      </div>
-    </main>
+      <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
+      <ServicesSelection locked />
+      <OrderInstructions locked />
+    </OrderShell>
   );
 };
 
