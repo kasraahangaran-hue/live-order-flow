@@ -192,6 +192,37 @@ export const MOCK_ORDERS: OrderData[] = [
       driver_on_the_way: "Today, 5:48 pm",
     },
   },
+  {
+    orderId: "PND472",
+    orderType: "laundry",
+    status: "pending_item_delivery",
+    listTimestamp: "Awaiting follow-up drop off",
+    pickupLocation: "Apt 1208, Sky Gardens, DIFC",
+    pickupWindow: "20 Apr · 7:00 – 9:00 AM",
+    dropoffWindow: "Today · before 8:00 PM",
+    pickupNote: "Picked up at door",
+    dropoffNote: "Drop off at door",
+    stageTimestamps: {
+      received: "19 Apr, 6:55 pm",
+      collected: "20 Apr, 7:42 am",
+      items_in_process: "20 Apr, 12:30 pm",
+      delivery_today: "22 Apr, 4:10 pm",
+      complete: "22 Apr, 6:18 pm",
+    },
+    itemsPending: 3,
+  },
+  {
+    orderId: "LBR219",
+    orderType: "laundry_bag",
+    status: "laundry_bag_requested",
+    listTimestamp: "Requested on 23 Apr 2026, 10:08 AM",
+    pickupLocation: "Apt 706, Bay Square, Business Bay",
+    pickupWindow: "Tomorrow · 10:00 AM – 12:00 PM",
+    dropoffWindow: "Tomorrow · 10:00 AM – 12:00 PM",
+    stageTimestamps: {
+      received: "23 Apr, 10:08 am",
+    },
+  },
 
   // --- Past orders ---
   {
@@ -296,6 +327,19 @@ export const MOCK_ORDERS: OrderData[] = [
       delivery_today: "25 Mar, 6:30 pm",
       complete: "25 Mar, 7:47 pm",
     },
+  },
+  {
+    orderId: "CNX331",
+    orderType: "laundry",
+    status: "cancelled",
+    listTimestamp: "Cancelled on 14 Apr 2026, 9:22 AM",
+    pickupLocation: "Apt 1108, Vision Tower, Business Bay",
+    pickupWindow: "14 Apr · 11:00 AM – 1:00 PM",
+    dropoffWindow: "18 Apr · 4:00 – 6:00 PM",
+    stageTimestamps: {
+      received: "13 Apr, 7:18 pm",
+    },
+    cancelledAt: "14 Apr, 9:22 am",
   },
 ];
 
