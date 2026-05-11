@@ -22,6 +22,8 @@ interface Props {
   showSupport?: boolean;
   onBack?: () => void;
   showHeader?: boolean;
+  /** Externally controlled tuck state. When provided, internal IO sentinel is disabled. */
+  tucked?: boolean;
   onTuckedChange?: (tucked: boolean) => void;
 }
 
@@ -48,29 +50,30 @@ export const StatusHero = ({
   showSupport = false,
   onBack,
   showHeader = true,
+  tucked: tuckedProp,
   onTuckedChange,
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
   const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
+  const isControlled = tuckedProp !== undefined;
 
-  const [tucked, setTucked] = useState(false);
+  const [internalTucked, setInternalTucked] = useState(false);
+  const tucked = isControlled ? (tuckedProp as boolean) : internalTucked;
   const sentinelRef = useRef<HTMLDivElement>(null);
   const ioSettledRef = useRef(false);
 
-  // IntersectionObserver — with a mount-settle delay and post-change commit lock
+  // IntersectionObserver — only used in uncontrolled mode (legacy sticky behavior)
   useEffect(() => {
+    if (isControlled) return;
     const el = sentinelRef.current;
     if (!el) return;
     let commitLockUntil = 0;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!ioSettledRef.current) return;
-        // During the post-transition commit window, ignore new IO fires —
-        // this prevents mid-collapse flicker when the sentinel briefly
-        // re-intersects due to scrollTop clamping as the section shrinks.
         if (performance.now() < commitLockUntil) return;
         const next = !entry.isIntersecting;
-        setTucked((prev) => {
+        setInternalTucked((prev) => {
           if (prev === next) return prev;
           commitLockUntil = performance.now() + 350;
           onTuckedChange?.(next);
@@ -91,12 +94,77 @@ export const StatusHero = ({
       io.disconnect();
       cancelAnimationFrame(raf1);
     };
-  }, []);
+  }, [isControlled, onTuckedChange]);
 
+  // Controlled mode: render plain block (no sticky/sentinel/own background/shadow/rounding).
+  // The parent owns the gradient, shadow, and rounded bottom on the pinned card wrapper.
+  if (isControlled) {
+    return (
+      <section aria-label="Order status" className="animate-fade-in">
+        {showHeader && (
+          <OrderHeader
+            orderId={orderId}
+            orderType={orderType ?? "laundry"}
+            showSupport={showSupport}
+            onBack={onBack}
+            variant="inline"
+          />
+        )}
 
+        <div
+          className="grid transition-[grid-template-rows,opacity] duration-300 ease-out"
+          style={{
+            gridTemplateRows: tucked ? "0fr" : "1fr",
+            opacity: tucked ? 0 : 1,
+            pointerEvents: tucked ? "none" : "auto",
+          }}
+          aria-hidden={tucked}
+        >
+          <div className="overflow-hidden">
+            <div className="relative px-6 pt-2 pb-6">
+              <div className="flex items-center gap-4">
+                <h1 className="min-w-0 flex-1 text-2xl font-extrabold leading-tight text-primary [text-wrap:balance]">
+                  {status}
+                </h1>
+
+                <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
+                  <HeroArt variant={v} />
+                </div>
+              </div>
+
+              <p className="mt-1.5 whitespace-nowrap text-sm text-muted-foreground tabular">
+                {subtitle}
+              </p>
+
+              {doorPickup && (
+                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-warning px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-warning-foreground animate-fade-in">
+                  <DoorOpen className="h-3.5 w-3.5" />
+                  <span>Leave laundry bags at door</span>
+                </div>
+              )}
+
+              <div className="relative mt-6">
+                <StatusTimeline
+                  stages={stages}
+                  currentIndex={currentIndex}
+                  onHold={onHold}
+                  rightSlot={cancellable ? <CancelButton /> : undefined}
+                />
+              </div>
+
+              {/* Breathing room — inside the collapsible region so it disappears when tucked */}
+              <div aria-hidden className="h-3" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Uncontrolled (legacy) mode: keep the original sticky + sentinel behavior intact
+  // for any other route still consuming StatusHero standalone.
   return (
     <>
-      {/* Sentinel — lives in normal document flow ABOVE the sticky section so it can scroll away */}
       <div ref={sentinelRef} aria-hidden className="h-px w-full" />
 
       <section
@@ -115,54 +183,52 @@ export const StatusHero = ({
           </div>
         )}
 
-        {/* Tuckable hero body — grid row animates from 1fr to 0fr */}
-      <div
-        className="grid transition-[grid-template-rows,opacity] duration-300 ease-out"
-        style={{
-          gridTemplateRows: tucked ? "0fr" : "1fr",
-          opacity: tucked ? 0 : 1,
-          pointerEvents: tucked ? "none" : "auto",
-        }}
-        aria-hidden={tucked}
-      >
-        <div className="overflow-hidden">
-          <div className="relative px-6 pt-2 pb-6">
-            <div className="flex items-center gap-4">
-              <h1 className="min-w-0 flex-1 text-2xl font-extrabold leading-tight text-primary [text-wrap:balance]">
-                {status}
-              </h1>
+        <div
+          className="grid transition-[grid-template-rows,opacity] duration-300 ease-out"
+          style={{
+            gridTemplateRows: tucked ? "0fr" : "1fr",
+            opacity: tucked ? 0 : 1,
+            pointerEvents: tucked ? "none" : "auto",
+          }}
+          aria-hidden={tucked}
+        >
+          <div className="overflow-hidden">
+            <div className="relative px-6 pt-2 pb-6">
+              <div className="flex items-center gap-4">
+                <h1 className="min-w-0 flex-1 text-2xl font-extrabold leading-tight text-primary [text-wrap:balance]">
+                  {status}
+                </h1>
 
-              <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
-                <HeroArt variant={v} />
+                <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
+                  <HeroArt variant={v} />
+                </div>
               </div>
-            </div>
 
-            <p className="mt-1.5 whitespace-nowrap text-sm text-muted-foreground tabular">
-              {subtitle}
-            </p>
+              <p className="mt-1.5 whitespace-nowrap text-sm text-muted-foreground tabular">
+                {subtitle}
+              </p>
 
-            {doorPickup && (
-              <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-warning px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-warning-foreground animate-fade-in">
-                <DoorOpen className="h-3.5 w-3.5" />
-                <span>Leave laundry bags at door</span>
+              {doorPickup && (
+                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-warning px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-warning-foreground animate-fade-in">
+                  <DoorOpen className="h-3.5 w-3.5" />
+                  <span>Leave laundry bags at door</span>
+                </div>
+              )}
+
+              <div className="relative mt-6">
+                <StatusTimeline
+                  stages={stages}
+                  currentIndex={currentIndex}
+                  onHold={onHold}
+                  rightSlot={cancellable ? <CancelButton /> : undefined}
+                />
               </div>
-            )}
-
-            <div className="relative mt-6">
-              <StatusTimeline
-                stages={stages}
-                currentIndex={currentIndex}
-                onHold={onHold}
-                rightSlot={cancellable ? <CancelButton /> : undefined}
-              />
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Breathing room below the pinned header — visible whether tucked or expanded */}
-      <div aria-hidden className="h-3" />
-    </section>
+        <div aria-hidden className="h-3" />
+      </section>
     </>
   );
 };
