@@ -2,6 +2,7 @@ import { TriangleAlert } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { StatusHero } from "@/components/order/StatusHero";
+import { OrderHeader } from "@/components/order/OrderHeader";
 import { ActionCard } from "@/components/order/ActionCard";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
@@ -32,9 +33,17 @@ const ApprovalRequired = () => {
   ];
 
   return (
-    <main className="h-[100dvh] bg-background font-sans antialiased">
-      <div className="mx-auto flex h-[100dvh] max-w-md flex-col bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:overflow-hidden md:rounded-[2.25rem] md:border md:border-border">
-        <div className="flex-1 overflow-y-auto pb-32">
+    <main className="fixed inset-0 overflow-hidden bg-background font-sans antialiased overscroll-none">
+      <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
+        <div className="z-[60] shrink-0 bg-gradient-hero shadow-hero">
+          <OrderHeader
+            orderId={order.orderId}
+            orderType={order.orderType}
+            showSupport
+            variant="inline"
+          />
+        </div>
+        <div className="flex-1 overflow-y-auto overscroll-contain pb-32">
           <div className="min-h-[calc(100%+120px)]">
           <StatusHero
             status="Approval required"
@@ -45,6 +54,7 @@ const ApprovalRequired = () => {
             stages={stages}
             currentIndex={2}
             variant="received"
+            showHeader={false}
           />
 
           <ActionCard
