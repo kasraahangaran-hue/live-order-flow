@@ -35,23 +35,25 @@ const ApprovalRequired = () => {
     { key: "complete", label: "Delivered" },
   ];
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const top = e.currentTarget.scrollTop;
+    setTucked((prev) => {
+      if (!prev && top > 24) return true;
+      if (prev && top < 8) return false;
+      return prev;
+    });
+  };
+
   return (
     <main className="fixed inset-0 overflow-hidden bg-background font-sans antialiased overscroll-none">
-      <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
-        <div
-          className={`z-[60] shrink-0 ${headerGradient} transition-[border-radius,box-shadow] duration-300 ease-out ${
-            tucked ? "rounded-b-[28px] shadow-hero" : "rounded-b-none shadow-none"
-          }`}
-        >
+      <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
+        <div className={`relative z-[60] shrink-0 overflow-hidden rounded-b-[28px] ${headerGradient} shadow-hero`}>
           <OrderHeader
             orderId={order.orderId}
             orderType={order.orderType}
             showSupport
             variant="inline"
           />
-        </div>
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-32 touch-pan-y">
-          <div className="min-h-[calc(100%+120px)]">
           <StatusHero
             status="Approval required"
             subtitle={`${count} ${noun} awaiting your review`}
@@ -62,33 +64,35 @@ const ApprovalRequired = () => {
             currentIndex={2}
             variant="received"
             showHeader={false}
-            onTuckedChange={setTucked}
+            tucked={tucked}
           />
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-32 touch-pan-y" onScroll={handleScroll}>
+          <div className="min-h-[calc(100%+120px)]">
+            <ActionCard
+              variant="attention"
+              icon={<TriangleAlert strokeWidth={2.4} />}
+              title={`${count} ${noun} need approval`}
+              message={`You need to review and approve ${count} ${noun} before they can be processed.`}
+              countdown={order.approvalDeadline}
+              primaryAction={{
+                label: "Review items",
+                variant: "primary",
+                onClick: () => navigate(`/portal/${order.orderId}/approval`, { state: { order } }),
+              }}
+            />
 
-          <ActionCard
-            variant="attention"
-            icon={<TriangleAlert strokeWidth={2.4} />}
-            title={`${count} ${noun} need approval`}
-            message={`You need to review and approve ${count} ${noun} before they can be processed.`}
-            countdown={order.approvalDeadline}
-            primaryAction={{
-              label: "Review items",
-              variant: "primary",
-              onClick: () => navigate(`/portal/${order.orderId}/approval`, { state: { order } }),
-            }}
-          />
+            <DeliveryCard
+              dropoffNote={order.pickupNote ?? "Picked up at door"}
+              address={order.pickupLocation}
+              when={ts.collected ?? order.pickupWindow}
+              pickupDone
+              dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
+            />
 
-          <DeliveryCard
-            dropoffNote={order.pickupNote ?? "Picked up at door"}
-            address={order.pickupLocation}
-            when={ts.collected ?? order.pickupWindow}
-            pickupDone
-            dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
-          />
-
-          <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
-          <ServicesSelection locked />
-          <OrderInstructions locked />
+            <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
+            <ServicesSelection locked />
+            <OrderInstructions locked />
           </div>
         </div>
       </div>
