@@ -41,8 +41,9 @@ const wrapperAnim: Record<HeroVariant, string> = {
 export const StatusHero = ({
   status,
   subtitle,
-  stages,
-  currentIndex,
+  stages = [],
+  currentIndex = 0,
+  hideTimeline = false,
   cancellable = false,
   completed = false,
   onHold = false,
