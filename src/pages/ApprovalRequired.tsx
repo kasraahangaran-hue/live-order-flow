@@ -43,7 +43,7 @@ const ApprovalRequired = () => {
             variant="inline"
           />
         </div>
-        <div className="flex-1 overflow-y-auto overscroll-contain pb-32">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-32 touch-pan-y">
           <div className="min-h-[calc(100%+120px)]">
           <StatusHero
             status="Approval required"
