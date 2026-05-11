@@ -10,8 +10,9 @@ export type HeroVariant = "received" | "processing" | "delivery" | "complete" | 
 interface Props {
   status: string;
   subtitle: string;
-  stages: Stage[];
-  currentIndex: number;
+  stages?: Stage[];
+  currentIndex?: number;
+  hideTimeline?: boolean;
   cancellable?: boolean;
   completed?: boolean;
   onHold?: boolean;
@@ -40,8 +41,9 @@ const wrapperAnim: Record<HeroVariant, string> = {
 export const StatusHero = ({
   status,
   subtitle,
-  stages,
-  currentIndex,
+  stages = [],
+  currentIndex = 0,
+  hideTimeline = false,
   cancellable = false,
   completed = false,
   onHold = false,
@@ -152,14 +154,16 @@ export const StatusHero = ({
                 </div>
               )}
 
-              <div className="relative mt-6">
-                <StatusTimeline
-                  stages={stages}
-                  currentIndex={currentIndex}
-                  onHold={onHold}
-                  rightSlot={cancellable ? <CancelButton /> : undefined}
-                />
-              </div>
+              {!hideTimeline && (
+                <div className="relative mt-6">
+                  <StatusTimeline
+                    stages={stages}
+                    currentIndex={currentIndex}
+                    onHold={onHold}
+                    rightSlot={cancellable ? <CancelButton /> : undefined}
+                  />
+                </div>
+              )}
 
               {/* Breathing room — inside the collapsible region so it disappears when tucked */}
               <div aria-hidden className="h-3" />
@@ -230,14 +234,16 @@ export const StatusHero = ({
                 </div>
               )}
 
-              <div className="relative mt-6">
-                <StatusTimeline
-                  stages={stages}
-                  currentIndex={currentIndex}
-                  onHold={onHold}
-                  rightSlot={cancellable ? <CancelButton /> : undefined}
-                />
-              </div>
+              {!hideTimeline && (
+                <div className="relative mt-6">
+                  <StatusTimeline
+                    stages={stages}
+                    currentIndex={currentIndex}
+                    onHold={onHold}
+                    rightSlot={cancellable ? <CancelButton /> : undefined}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

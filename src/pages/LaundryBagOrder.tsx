@@ -1,7 +1,6 @@
 import { OrderShell } from "@/components/order/OrderShell";
 import { LaundryBagIcon } from "@/components/order/LaundryBagIcon";
 import { useOrderData } from "@/lib/useOrderData";
-import type { Stage } from "@/components/order/StatusTimeline";
 
 const STEPS = [
   "You will shortly receive the Starter Kit so you have it ready for future orders",
@@ -13,11 +12,6 @@ const LaundryBagOrder = () => {
   const order = useOrderData();
   const isDelivered = order.status === "laundry_bag_delivered";
 
-  const stages: Stage[] = [
-    { key: "requested", label: "Requested", timestamp: order.stageTimestamps.received },
-    { key: "delivered", label: "Delivered", timestamp: isDelivered ? order.stageTimestamps.complete : undefined },
-  ];
-
   return (
     <OrderShell
       hero={{
@@ -28,9 +22,7 @@ const LaundryBagOrder = () => {
         orderType: order.orderType,
         orderId: order.orderId,
         showSupport: true,
-        stages,
-        currentIndex: isDelivered ? 1 : 0,
-        completed: isDelivered,
+        hideTimeline: true,
         heroIcon: <LaundryBagIcon size={48} />,
       }}
     >
