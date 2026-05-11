@@ -1,7 +1,6 @@
-We were not talking about the same top bar. The moving bar in your screenshot is the `StatusHero` / `OrderHeader` at the top of `/approval-required`, not the `Review Your Items` header inside the item review page.
-
 Plan:
-1. Update `ApprovalRequired.tsx` so the phone-sized order page uses a fixed full-height viewport container and only the content area scrolls.
-2. Update the hero/top-bar behavior in `StatusHero.tsx` so the header remains visually locked at the top of that scroll container.
-3. Keep the existing collapse/tuck behavior for the lower hero content if possible, but ensure the `Laundry Order / CUI376` bar itself does not move when scrolling.
-4. Verify the affected files compile cleanly or note any pre-existing lint issues separately.
+
+1. Update `/approval-required` so the browser document itself cannot scroll or rubber-band; the page will be a fixed full-viewport shell.
+2. Move scrolling into the internal order content container only, with `overscroll-behavior` containment so reaching the top/bottom does not pull the top bar down.
+3. Adjust `StatusHero` so the `Laundry Order / CUI376` header is fixed/anchored independently from the collapsible hero body, instead of relying on a sticky section that can visually move during bounce scrolling.
+4. Keep the current hero collapse behavior for the lower status content, but ensure the top bar remains locked at the top throughout normal scroll and over-scroll at both ends.
