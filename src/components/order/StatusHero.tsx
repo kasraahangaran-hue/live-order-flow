@@ -54,6 +54,7 @@ export const StatusHero = ({
   showHeader = true,
   tucked: tuckedProp,
   onTuckedChange,
+  heroIcon,
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
   const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
