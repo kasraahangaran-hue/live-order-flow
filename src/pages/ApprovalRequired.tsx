@@ -47,7 +47,7 @@ const ApprovalRequired = () => {
   return (
     <main className="fixed inset-0 overflow-hidden bg-background font-sans antialiased overscroll-none">
       <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-background md:my-6 md:h-[calc(100vh-3rem)] md:rounded-[2.25rem] md:border md:border-border">
-        <div className={`relative z-[60] shrink-0 overflow-hidden rounded-b-[28px] ${headerGradient} shadow-hero`}>
+        <div className={`relative z-[60] shrink-0 overflow-hidden ${tucked ? "rounded-b-none" : "rounded-b-[28px]"} transition-[border-radius] duration-300 ease-out ${headerGradient} shadow-hero`}>
           <OrderHeader
             orderId={order.orderId}
             orderType={order.orderType}
