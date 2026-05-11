@@ -154,14 +154,16 @@ export const StatusHero = ({
                 </div>
               )}
 
-              <div className="relative mt-6">
-                <StatusTimeline
-                  stages={stages}
-                  currentIndex={currentIndex}
-                  onHold={onHold}
-                  rightSlot={cancellable ? <CancelButton /> : undefined}
-                />
-              </div>
+              {!hideTimeline && (
+                <div className="relative mt-6">
+                  <StatusTimeline
+                    stages={stages}
+                    currentIndex={currentIndex}
+                    onHold={onHold}
+                    rightSlot={cancellable ? <CancelButton /> : undefined}
+                  />
+                </div>
+              )}
 
               {/* Breathing room — inside the collapsible region so it disappears when tucked */}
               <div aria-hidden className="h-3" />
