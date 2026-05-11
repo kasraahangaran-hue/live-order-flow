@@ -2,11 +2,14 @@ export type OrderType = "laundry" | "shoe_bag" | "finery" | "laundry_bag";
 
 export type OrderStatus =
   | "received"
+  | "driver_assigned"
   | "collected"
   | "items_in_process"
   | "approval_required"
+  | "out_for_drop_off"
   | "delivery_today"
   | "driver_on_the_way"
+  | "drop_off_failed"
   | "partially_delivered"
   | "pending_item_delivery"
   | "complete"
