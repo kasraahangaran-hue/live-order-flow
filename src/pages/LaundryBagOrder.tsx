@@ -61,7 +61,7 @@ const LaundryBagOrder = () => {
               <div className="h-9 w-9 rounded-full bg-washmen-light-blue flex items-center justify-center shrink-0">
                 <span className="text-primary font-bold text-base">{i + 1}</span>
               </div>
-              <p className="text-primary text-base font-medium leading-snug">
+              <p className="text-primary text-[14px] font-medium leading-snug">
                 {step.copy}
               </p>
             </div>
