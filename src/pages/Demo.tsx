@@ -7,8 +7,10 @@ const PRODUCT_TYPES: OrderType[] = ["laundry", "shoe_bag", "finery"];
 
 const IN_FLIGHT: OrderStatus[] = [
   "received",
+  "driver_assigned",
   "collected",
   "items_in_process",
+  "out_for_drop_off",
   "delivery_today",
   "driver_on_the_way",
 ];
@@ -16,6 +18,7 @@ const ATTENTION: OrderStatus[] = [
   "approval_required",
   "partially_delivered",
   "pending_item_delivery",
+  "drop_off_failed",
   "payment_failed",
 ];
 const COMPLETED: OrderStatus[] = ["complete", "cancelled"];
