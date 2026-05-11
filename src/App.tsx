@@ -55,6 +55,9 @@ const App = () => (
           <Route path="/processing" element={<Processing />} />
           <Route path="/out-for-delivery" element={<Index />} />
           <Route path="/driver-on-the-way" element={<DriverOnTheWay />} />
+          <Route path="/driver-assigned" element={<DriverAssigned />} />
+          <Route path="/out-for-drop-off" element={<OutForDropOff />} />
+          <Route path="/drop-off-failed" element={<DropOffFailed />} />
           <Route path="/approval-required" element={<ApprovalRequired />} />
           <Route path="/partial-delivery" element={<PartialDelivery />} />
           <Route path="/pending-item-delivery" element={<PendingItemDelivery />} />
