@@ -75,7 +75,7 @@ export const OrderCard = ({ order }: OrderCardProps) => {
           className={`mt-0.5 truncate text-xs ${
             isApproval
               ? "font-bold text-warning-dark"
-              : isPaymentFailed
+              : isPaymentFailed || isDropOffFailed
                 ? "font-bold text-destructive"
                 : "text-muted-foreground"
           }`}
