@@ -22,6 +22,7 @@ interface Props {
   showSupport?: boolean;
   onBack?: () => void;
   showHeader?: boolean;
+  onTuckedChange?: (tucked: boolean) => void;
 }
 
 const wrapperAnim: Record<HeroVariant, string> = {
@@ -47,6 +48,7 @@ export const StatusHero = ({
   showSupport = false,
   onBack,
   showHeader = true,
+  onTuckedChange,
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
   const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
@@ -71,6 +73,7 @@ export const StatusHero = ({
         setTucked((prev) => {
           if (prev === next) return prev;
           commitLockUntil = performance.now() + 350;
+          onTuckedChange?.(next);
           return next;
         });
       },
