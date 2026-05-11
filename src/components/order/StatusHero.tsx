@@ -141,7 +141,7 @@ export const StatusHero = ({
                 </div>
               </div>
 
-              <p className="mt-1.5 whitespace-nowrap text-sm text-muted-foreground tabular">
+              <p className="mt-1.5 text-sm text-muted-foreground tabular">
                 {subtitle}
               </p>
 
