@@ -58,6 +58,7 @@ const App = () => (
           <Route path="/pending-item-delivery" element={<PendingItemDelivery />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="/cancelled" element={<Cancelled />} />
+          <Route path="/laundry-bag" element={<LaundryBagOrder />} />
           <Route path="/order-complete" element={<OrderComplete />} />
           <Route path="/prd" element={<PRD />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
