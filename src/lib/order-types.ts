@@ -26,13 +26,16 @@ export type StatusCategory =
 
 export const STATUS_TO_CATEGORY: Record<OrderStatus, StatusCategory> = {
   received: "in_flight",
+  driver_assigned: "in_flight",
   collected: "in_flight",
   items_in_process: "in_flight",
+  out_for_drop_off: "in_flight",
   delivery_today: "in_flight",
   driver_on_the_way: "in_flight",
   approval_required: "needs_attention_soft",
   partially_delivered: "needs_attention_soft",
   pending_item_delivery: "needs_attention_soft",
+  drop_off_failed: "needs_attention_urgent",
   payment_failed: "needs_attention_urgent",
   complete: "completed",
   cancelled: "completed",
