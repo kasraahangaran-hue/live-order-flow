@@ -10,8 +10,9 @@ export type HeroVariant = "received" | "processing" | "delivery" | "complete" | 
 interface Props {
   status: string;
   subtitle: string;
-  stages: Stage[];
-  currentIndex: number;
+  stages?: Stage[];
+  currentIndex?: number;
+  hideTimeline?: boolean;
   cancellable?: boolean;
   completed?: boolean;
   onHold?: boolean;
