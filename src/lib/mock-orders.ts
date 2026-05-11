@@ -249,18 +249,6 @@ export const MOCK_ORDERS: OrderData[] = [
     },
   },
   {
-    orderId: "CRO128",
-    orderType: "laundry_bag",
-    status: "complete",
-    listTimestamp: "Completed on 21 Feb 2026, 4:41 PM",
-    pickupLocation: "Apt 1102, Business Bay",
-    pickupWindow: "21 Feb · 3:00 – 5:00 PM",
-    dropoffWindow: "21 Feb · 3:00 – 5:00 PM",
-    stageTimestamps: {
-      complete: "21 Feb, 4:41 pm",
-    },
-  },
-  {
     orderId: "LBG552",
     orderType: "laundry_bag",
     status: "laundry_bag_delivered",
