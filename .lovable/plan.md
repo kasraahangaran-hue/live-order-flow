@@ -1,23 +1,24 @@
 ## Goal
 
-Make the pinned top bar and the collapsible status block on `/approval-required` look like a single uniform hero "card" that smoothly collapses and expands — while keeping the top bar locked in place during over-scroll (the fix from the previous round).
+Eliminate the two remaining defects on `/approval-required`:
 
-## Problem
+1. The visible seam/gap between the pinned top bar and the status block below it.
+2. The strip of leftover padding (and the rounded-corner curve) that peeks out under the top bar when the status block is collapsed.
 
-Right now we have two visually independent pieces:
+Keep the over-scroll lock (top bar pinned during rubber-band) intact.
 
-1. The pinned `OrderHeader` wrapper in `ApprovalRequired.tsx`
-   - `bg-gradient-hero` + `shadow-hero` of its own
-   - No bottom corner radius
-2. The `StatusHero` `<section>` directly below it inside the scroll area
-   - Also `bg-gradient-hero` + `shadow-hero`
-   - Animates `rounded-b-[28px]` ↔ `rounded-b-none`
+## Root causes
 
-Result: a visible seam (double shadow + a hard horizontal line where the two backgrounds meet), and the rounded bottom + drop shadow only wrap the lower piece instead of the whole hero unit. When the body collapses, the top bar still looks like a separate strip glued on top.
+1. **Seam**: `bg-gradient-hero` is `linear-gradient(135deg, mint, lavender)`. The pinned header div and the `StatusHero <section>` each render their own copy of that gradient, so the colors at their shared edge don't match. Even though both use the same class, the gradient restarts in each element → visible horizontal seam = the perceived "gap".
+2. **Peek-out on collapse**: inside `StatusHero`, only the inner grid row animates from `1fr → 0fr`. The wrapping `<section>` itself still contributes:
+   - the `h-3` breathing-room spacer at the bottom of the section (~12px),
+   - the `rounded-b-[28px]` curve on the section,
+   - the `pt-2` top padding on the body container.
+   When tucked, the inner content has 0 height but those wrapper bits remain, so a thin gradient strip with a rounded bottom curve sits below the pinned header.
 
 ## Fix
 
-Treat the pinned bar + collapsible body as one visual hero with shared background, shared bottom rounding, and a single drop shadow that always sits at the bottom edge of the currently-visible hero (whether expanded or tucked).
+Render the entire hero (top bar + collapsible status body + rounded bottom + shadow) as **one** pinned card outside the scrollable area. This guarantees a single continuous gradient (no restart, no seam) and lets the entire card — spacer, padding, and rounded corners included — collapse together with no leftover strip.
 
 ### Files to change
 
@@ -26,37 +27,67 @@ Treat the pinned bar + collapsible body as one visual hero with shared backgroun
 
 ### Approach
 
-1. **Single shared background.** Keep the pinned header div as the top of the hero. Remove its independent `shadow-hero` and let the gradient continue seamlessly into the collapsible body below. Both pieces use the same `bg-gradient-hero` (or `bg-gradient-hero-finery`) so there is no seam.
+1. **Move `StatusHero` out of the scroll container** in `ApprovalRequired.tsx`. Layout becomes:
 
-2. **Move the bottom rounding + shadow to the "current bottom" of the hero.**
-   - When **expanded**, the bottom of the hero is the `StatusHero` section inside the scroll container → it owns `rounded-b-[28px]` + `shadow-hero` (as today).
-   - When **tucked** (body collapsed to 0), the bottom of the hero is the pinned header itself → the pinned header takes on `rounded-b-[28px]` + `shadow-hero`, and the collapsed body underneath has no shadow/radius so nothing peeks out.
-   - Drive this with the same `tucked` state that already controls the collapse. Easiest: lift `tucked` into `ApprovalRequired` (or expose it via a callback from `StatusHero`) so the pinned header wrapper can react to it. A small `onTuckedChange` callback prop on `StatusHero` is the least invasive.
+   ```text
+   <main fixed inset-0 overflow-hidden>
+     <div max-w-md flex-col h-[100dvh]>
+       <div shrink-0>           ← pinned hero card (header + collapsible body)
+         <OrderHeader inline />
+         <StatusHero showHeader={false} ... />   ← collapses in place; pushes scroll area up
+       </div>
+       <div flex-1 min-h-0 overflow-y-auto overscroll-contain pb-32 touch-pan-y>
+         <div min-h-[calc(100%+120px)]>          ← keeps over-scroll spacer
+           <ActionCard />
+           <DeliveryCard />
+           <OrderConfirmations />
+           <ServicesSelection />
+           <OrderInstructions />
+         </div>
+       </div>
+     </div>
+   </main>
+   ```
 
-3. **Smooth transition.** Animate `border-radius` and `box-shadow` on the pinned header with the same `duration-300 ease-out` already used for the collapse, so the rounded corners + shadow appear to "travel" from the bottom of the body up to the bottom of the header as it tucks, instead of popping.
+   The `min-h-[calc(100%+120px)]` over-scroll spacer stays — it lives in the scroll body, not the hero — so the rubber-band lock from the previous fix is preserved.
 
-4. **Remove the inline `OrderHeader` from `StatusHero`.** It is already gated by `showHeader={false}` from `ApprovalRequired`, but we will keep that prop and continue to render the pinned one in the page so the layout stays single-source.
+2. **Refactor `StatusHero` so the entire section collapses cleanly**, not just an inner grid row. Replace the current `sticky top-0` `<section>` + inner grid with a regular block whose **whole height** animates:
+   - Wrap the collapsible content (the title + art + subtitle + timeline + the `h-3` breathing-room spacer + the body's `pt-2 pb-6` padding) in a single `<div>` whose `grid-template-rows` animates `1fr → 0fr` and whose child uses `overflow-hidden`. So when tucked, the section contributes literally 0 extra pixels below the header.
+   - Drop the `sticky top-0`, the sentinel-based `IntersectionObserver`, and the `tucked` state from `StatusHero` — pinning is now handled by being inside the non-scrolling shrink-0 wrapper, and tuck state is driven by scroll position of the sibling scroller (see step 4).
 
-5. **No changes to the over-scroll lock.** The `fixed inset-0 overflow-hidden` shell, `overscroll-contain` on the inner scroller, and the `min-h-[calc(100%+120px)]` spacer all stay exactly as they are — this change is purely cosmetic seam-removal.
+3. **Remove the duplicate gradient seam.** Because header + body now sit inside one shared `bg-gradient-hero` wrapper (the pinned hero card), there is exactly one gradient instance covering both — no restart, no seam. `OrderHeader` (inline variant) and `StatusHero` content are both `bg-transparent`.
+
+4. **Drive collapse from scroll position of the content scroller.** Add an `onScroll` handler on the scroll container in `ApprovalRequired.tsx`. When `scrollTop > THRESHOLD` (e.g. 16px), set `tucked = true`; when it returns near 0, `tucked = false`. Pass `tucked` into `StatusHero` as a controlled prop (`tucked?: boolean`) so the section animates accordingly. Keep a small hysteresis (e.g. expand at <8px, collapse at >24px) to avoid flicker. This is simpler and more reliable than the IO sentinel since the section is no longer sticky.
+
+5. **Single rounded bottom + shadow on the pinned hero card.** The outer pinned card owns `rounded-b-[28px]` and `shadow-hero` permanently. When the body collapses, the card shrinks to just the header height, and the rounded bottom + shadow naturally sit right under the header — no separate hand-off logic needed (this also removes the previous round's `transition-[border-radius,box-shadow]` on the header wrapper). Animate the card's `height` change via the inner grid-row collapse so it feels smooth.
+
+6. **Keep the gradient finery variant**: pinned card picks `bg-gradient-hero` vs `bg-gradient-hero-finery` based on `order.orderType` (already wired up).
 
 ### Technical notes
 
-- `StatusHero` will gain an optional `onTuckedChange?: (tucked: boolean) => void` and call it from inside the existing `setTucked` updater (after the commit-lock check) so the page can mirror the state without changing the IO logic.
-- The pinned header wrapper in `ApprovalRequired.tsx` becomes:
+- `StatusHero` props: keep `showHeader`, replace internal `tucked` state with an external `tucked?: boolean` prop. Remove `onTuckedChange`, sentinel `<div>`, IO effect, `ioSettledRef`, and `commitLockUntil` logic.
+- The collapsible region in `StatusHero` should look like:
   ```tsx
   <div
-    className={`z-[60] shrink-0 bg-gradient-hero transition-[border-radius,box-shadow] duration-300 ease-out ${
-      tucked ? "rounded-b-[28px] shadow-hero" : "rounded-b-none shadow-none"
-    }`}
+    className="grid transition-[grid-template-rows,opacity] duration-300 ease-out"
+    style={{ gridTemplateRows: tucked ? "0fr" : "1fr", opacity: tucked ? 0 : 1 }}
+    aria-hidden={tucked}
   >
-    <OrderHeader ... />
+    <div className="overflow-hidden">
+      {/* existing px-6 pt-2 pb-6 body */}
+      {/* the h-3 breathing-room spacer goes INSIDE this overflow-hidden wrapper so it collapses too */}
+    </div>
   </div>
   ```
-- The `StatusHero` `<section>` keeps its current `rounded-b-[28px] ↔ rounded-b-none` + `shadow-hero` logic unchanged; together with the header logic above, exactly one of the two pieces owns the rounded bottom + shadow at any given time.
-- Finery variant: header wrapper picks gradient based on `order.orderType` so the two pieces always match.
+- `ApprovalRequired.tsx`:
+  - Remove the standalone pinned `<div className="z-[60] shrink-0 ... shadow-hero">` wrapping just the header.
+  - New pinned card wrapper: `className="shrink-0 ${headerGradient} shadow-hero rounded-b-[28px] overflow-hidden"` containing `<OrderHeader variant="inline" />` followed by `<StatusHero showHeader={false} tucked={tucked} ... />`.
+  - Add `useState<boolean>(false)` for `tucked` and an `onScroll` handler on the scroll container with hysteresis thresholds.
+- The `OrderHeader` inline variant already uses `bg-transparent`, so it inherits the gradient from the pinned card — no changes needed in `OrderHeader.tsx`.
 
 ## Out of scope
 
-- No changes to timeline, action card, delivery card, or any other content.
-- No changes to scroll/over-scroll behavior.
-- No design token or color changes.
+- No content/copy changes.
+- No design token changes.
+- No changes to `ActionCard`, `DeliveryCard`, timeline, or any other component.
+- Other routes that still use `StatusHero` standalone keep working because `tucked` is optional (defaults to `false`) and `showHeader` defaults to `true`.
