@@ -114,4 +114,6 @@ export interface OrderData {
   cancellable?: boolean;
   /** Only present when status === "cancelled" */
   cancelledAt?: string;
+  /** Reason the order was cancelled (only present when status === "cancelled") */
+  cancelReason?: "pickup_failed" | "expired" | "user_cancelled";
 }
