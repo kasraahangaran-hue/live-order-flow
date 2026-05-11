@@ -64,9 +64,9 @@ export default function ApprovalItem() {
   ];
 
   return (
-    <div className="flex h-screen flex-col bg-background font-sans">
+    <div className="flex h-[100dvh] flex-col bg-background font-sans">
       {/* Header — title + segmented progress bar */}
-      <div className="px-5 pt-6">
+      <div className="sticky top-0 z-20 bg-background px-5 pt-6">
         <div className="flex items-center gap-2">
           <button
             type="button"
