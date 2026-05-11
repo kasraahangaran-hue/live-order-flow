@@ -166,14 +166,14 @@ const PRD = () => {
           <div className="mt-6 space-y-5">
             <ScreenCard
               icon={<Package className="h-5 w-5" />}
-              title="Order received"
-              route="/order-received"
+                title="Order Received"
+                route="/order-received"
               orderId="CUD138"
               currentIndex={0}
               illustration="Phone with notification card (PhoneConfirm)"
               heroAnimation="Float (gentle vertical bob)"
               copy={{
-                status: "Order received",
+                status: "Order Received",
                 subtitle: "Pickup tomorrow · 8:00 – 10:00 AM",
               }}
               flags={[
@@ -194,14 +194,14 @@ const PRD = () => {
 
             <ScreenCard
               icon={<PackageOpen className="h-5 w-5" />}
-              title="Order collected"
+              title="Order Collected"
               route="/order-collected"
               orderId="CUD138"
               currentIndex={1}
               illustration="Delivery truck (DeliveryTruck) — bag in transit to facility"
               heroAnimation="Truck-roll (horizontal sway w/ wheel rotation)"
               copy={{
-                status: "Order collected",
+                status: "Order Collected",
                 subtitle: "Your laundry is on its way to our facility",
               }}
               flags={["cancellable: false", "pickupDone: true", "Active stage renders as completed (blue checkmark)"]}
@@ -223,7 +223,7 @@ const PRD = () => {
               illustration="Washing machine with rotating drum (WashingMachine)"
               heroAnimation="Sway + drum spin-slow"
               copy={{
-                status: "Cleaning at our facility",
+                status: "Cleaning at Our Facility",
                 subtitle: "Your laundry is being cared for",
               }}
               flags={["pickupDone: true", "Items received → review CTA shown"]}
@@ -238,14 +238,14 @@ const PRD = () => {
 
             <ScreenCard
               icon={<Truck className="h-5 w-5" />}
-              title="Out for delivery"
+              title="Out for Drop Off"
               route="/out-for-delivery"
               orderId="CUD137"
               currentIndex={3}
               illustration="Delivery truck (return trip)"
               heroAnimation="Truck-roll"
               copy={{
-                status: "Out for delivery",
+                status: "Out for Drop Off",
                 subtitle: "Today, Sat · Anytime during the day",
               }}
               flags={["No support button in header (different from earlier stages)"]}
@@ -268,7 +268,7 @@ const PRD = () => {
               illustration="Credit card with red alert badge (CardAlert)"
               heroAnimation="Shake (anxious wobble)"
               copy={{
-                status: "Payment required",
+                status: "Payment Required",
                 subtitle: "Delivery on hold · capture payment to release",
               }}
               flags={[
@@ -295,7 +295,7 @@ const PRD = () => {
               illustration="Success check badge (ShirtHanger) — sized smaller (h-16 w-16)"
               heroAnimation="Float + sparkles"
               copy={{
-                status: "Completed order",
+                status: "Completed Order",
                 subtitle: "Delivered Sat 26/03/26 at 4:49 PM",
               }}
               flags={[

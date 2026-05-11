@@ -24,7 +24,7 @@ const Index = () => {
       <div className="mx-auto flex h-screen max-w-md flex-col bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:overflow-hidden md:rounded-[2.25rem] md:border md:border-border">
         <div className="flex-1 overflow-y-auto pb-32">
           <StatusHero
-            status="Out for delivery"
+            status="Out for Drop Off"
             subtitle={`Today · ${order.dropoffWindow}`}
             orderType={order.orderType}
             orderId={order.orderId}

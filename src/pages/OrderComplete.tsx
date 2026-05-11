@@ -20,7 +20,7 @@ const OrderComplete = () => {
   return (
     <OrderShell
       hero={{
-        status: "Completed order",
+        status: "Completed Order",
         subtitle: ts.complete ? `Delivered ${ts.complete}` : "Delivered",
         orderType: order.orderType,
         orderId: order.orderId,

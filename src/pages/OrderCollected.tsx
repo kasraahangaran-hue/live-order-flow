@@ -20,7 +20,7 @@ const OrderCollected = () => {
   return (
     <OrderShell
       hero={{
-        status: "Order collected",
+        status: "Order Collected",
         subtitle: "Your laundry is on its way to our facility",
         orderType: order.orderType,
         orderId: order.orderId,

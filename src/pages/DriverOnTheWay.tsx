@@ -26,7 +26,7 @@ const DriverOnTheWay = () => {
   return (
     <OrderShell
       hero={{
-        status: "Driver on the way",
+        status: "Driver on the Way",
         subtitle: `Arriving ${arriving}`,
         orderType: order.orderType,
         orderId: order.orderId,

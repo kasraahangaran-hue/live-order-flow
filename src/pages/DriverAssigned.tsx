@@ -27,7 +27,7 @@ const DriverAssigned = () => {
   return (
     <OrderShell
       hero={{
-        status: "Driver assigned",
+        status: "Driver Assigned",
         subtitle: "Your driver has been assigned and will be on the way shortly",
         orderType: order.orderType,
         orderId: order.orderId,
