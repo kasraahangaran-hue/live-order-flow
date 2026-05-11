@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { DoorOpen } from "lucide-react";
 import { StatusTimeline, type Stage } from "./StatusTimeline";
 import { CancelButton } from "./CancelButton";
@@ -25,6 +25,8 @@ interface Props {
   /** Externally controlled tuck state. When provided, internal IO sentinel is disabled. */
   tucked?: boolean;
   onTuckedChange?: (tucked: boolean) => void;
+  /** Optional Lucide icon node to replace the default HeroArt SVG. */
+  heroIcon?: ReactNode;
 }
 
 const wrapperAnim: Record<HeroVariant, string> = {
@@ -52,6 +54,7 @@ export const StatusHero = ({
   showHeader = true,
   tucked: tuckedProp,
   onTuckedChange,
+  heroIcon,
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
   const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
@@ -128,7 +131,13 @@ export const StatusHero = ({
                 </h1>
 
                 <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
-                  <HeroArt variant={v} />
+                  {heroIcon ? (
+                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-12 [&_svg]:w-12">
+                      {heroIcon}
+                    </div>
+                  ) : (
+                    <HeroArt variant={v} />
+                  )}
                 </div>
               </div>
 
@@ -200,7 +209,13 @@ export const StatusHero = ({
                 </h1>
 
                 <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
-                  <HeroArt variant={v} />
+                  {heroIcon ? (
+                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-12 [&_svg]:w-12">
+                      {heroIcon}
+                    </div>
+                  ) : (
+                    <HeroArt variant={v} />
+                  )}
                 </div>
               </div>
 

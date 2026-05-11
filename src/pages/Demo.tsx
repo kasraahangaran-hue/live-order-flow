@@ -7,8 +7,10 @@ const PRODUCT_TYPES: OrderType[] = ["laundry", "shoe_bag", "finery"];
 
 const IN_FLIGHT: OrderStatus[] = [
   "received",
+  "driver_assigned",
   "collected",
   "items_in_process",
+  "out_for_drop_off",
   "delivery_today",
   "driver_on_the_way",
 ];
@@ -16,6 +18,7 @@ const ATTENTION: OrderStatus[] = [
   "approval_required",
   "partially_delivered",
   "pending_item_delivery",
+  "drop_off_failed",
   "payment_failed",
 ];
 const COMPLETED: OrderStatus[] = ["complete", "cancelled"];
@@ -51,13 +54,16 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
 
 const STATE_LINKS = [
   { to: "/order-received", label: "Order received" },
+  { to: "/driver-assigned", label: "Driver assigned" },
   { to: "/order-collected", label: "Order collected" },
   { to: "/processing", label: "Processing" },
   { to: "/approval-required", label: "Approval required" },
+  { to: "/out-for-drop-off", label: "Out for drop off" },
   { to: "/out-for-delivery", label: "Out for delivery" },
   { to: "/driver-on-the-way", label: "Driver on the way" },
   { to: "/partial-delivery", label: "Partial delivery" },
   { to: "/pending-item-delivery", label: "Pending item delivery" },
+  { to: "/drop-off-failed", label: "Drop off failed" },
   { to: "/payment-failed", label: "Payment failed" },
   { to: "/cancelled", label: "Cancelled" },
   { to: "/order-complete", label: "Order complete" },

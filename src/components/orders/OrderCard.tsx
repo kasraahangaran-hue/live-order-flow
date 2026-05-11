@@ -15,14 +15,17 @@ export interface OrderCardProps {
 
 const STATUS_TO_ROUTE: Record<OrderStatus, string> = {
   received: "/order-received",
+  driver_assigned: "/driver-assigned",
   collected: "/order-collected",
   items_in_process: "/processing",
+  out_for_drop_off: "/out-for-drop-off",
   delivery_today: "/out-for-delivery",
   driver_on_the_way: "/driver-on-the-way",
   approval_required: "/approval-required",
   partially_delivered: "/partial-delivery",
   pending_item_delivery: "/pending-item-delivery",
   payment_failed: "/payment-failed",
+  drop_off_failed: "/drop-off-failed",
   complete: "/order-complete",
   cancelled: "/cancelled",
   // TODO: build dedicated /laundry-bag-requested page
