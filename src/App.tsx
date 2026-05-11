@@ -23,6 +23,7 @@ import ApprovalRequired from "./pages/ApprovalRequired.tsx";
 import PartialDelivery from "./pages/PartialDelivery.tsx";
 import PendingItemDelivery from "./pages/PendingItemDelivery.tsx";
 import Cancelled from "./pages/Cancelled.tsx";
+import LaundryBagOrder from "./pages/LaundryBagOrder.tsx";
 import PRD from "./pages/PRD.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { ScrollToTop } from "./components/nav/ScrollToTop.tsx";
