@@ -64,9 +64,9 @@ export default function ApprovalItem() {
   ];
 
   return (
-    <div className="flex h-[100dvh] flex-col bg-background font-sans">
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-background font-sans">
       {/* Header — title + segmented progress bar */}
-      <div className="sticky top-0 z-20 bg-background px-5 pt-6">
+      <div className="z-20 shrink-0 bg-background px-5 pt-6">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -307,7 +307,7 @@ export default function ApprovalItem() {
 
       {/* Sticky bottom CTA — both Type A and B */}
       <div
-        className="border-t border-border bg-background px-5 pt-4"
+        className="shrink-0 border-t border-border bg-background px-5 pt-4"
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}
       >
         <button
