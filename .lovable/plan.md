@@ -1,60 +1,20 @@
+## Goal
 
-## Washmen Live Order — Redesign
+On the "Review Your Items" screen (`src/pages/portal/ApprovalItem.tsx`), the top bar (back button + "Review Your Items" title + progress segments) currently scrolls with the page on some devices. Pin it to the top so it never moves while the user scrolls the photo/decision content.
 
-A modernized take on the live order screen. Mobile-first, single page, washmen mint + deep purple identity preserved but with a cleaner hierarchy, an animated horizontal stepper, and quick actions front-and-center.
+## Why it moves today
 
-### Layout (top → bottom)
+The screen uses `flex h-screen flex-col` with the middle section as `flex-1 overflow-y-auto`. On mobile Safari/Chrome, `h-screen` (100vh) includes the browser's collapsible URL bar area, so when the address bar shows/hides the whole layout shifts — making the header appear to move during scroll. Additionally, nothing inside the header explicitly pins it, so any accidental body scroll moves it too.
 
-1. **Header**
-   - Back chevron · "Order CUD137" (smaller, monospaced ID chip) · Support icon button
-   - Soft mint gradient background that fades into the page
+## Changes
 
-2. **Hero status card** (mint background, rounded-3xl)
-   - Big bold current stage label: "Out for delivery"
-   - Sub: "Today, Sat · Anytime during the day"
-   - Subtle floating laundry-bag illustration on the right
-   - **Animated horizontal stepper** below: 5 dots connected by a line
-     - Completed dots filled deep-purple with check
-     - Active dot pulses + animated gradient progress fill from previous dot
-     - Future dots outlined/grey
-     - Stage labels under each dot (Received · Collected · Processing · Delivery · Complete)
-   - Tappable: tapping a completed dot reveals its timestamp in a small popover
+File: `src/pages/portal/ApprovalItem.tsx`
 
-3. **Quick actions row** (4 pill buttons, horizontal scroll on small screens)
-   - Reschedule · Add instructions · Edit address · Contact support
-   - Each: icon on top, label below, soft purple-tinted card, press animation (scale)
+1. Swap `h-screen` for `h-[100dvh]` on the outer wrapper so it uses the dynamic viewport (excludes the collapsing browser chrome) and the layout no longer shifts when the address bar toggles.
+2. Add `sticky top-0 z-20 bg-background` to the header wrapper (the `<div className="px-5 pt-6">` containing the back button, title, and progress segments) so it's locked to the top of its container regardless of scroll source.
+3. Keep all existing styles, content, and behavior otherwise unchanged. The scrollable middle and sticky bottom CTA stay as-is.
 
-4. **Delivery details card**
-   - "Delivery at door" with edit icon
-   - Where / When rows, clean two-column layout
-   - Map thumbnail strip at top of card (static styled SVG, no real map needed)
+## Out of scope
 
-5. **Receipt summary card**
-   - Items count · services chips (Wash & Fold, Iron) · total
-   - "View full receipt" link with chevron
-
-6. **Collapsible sections** (accordion, single-open)
-   - Order Confirmations (Proof of Pickup, Items Received, Proof of Drop-off — each with status badge: done / pending)
-   - Order Instructions
-   - Services Selection
-
-7. **Sticky bottom bar**
-   - Primary "Track delivery" button (deep purple) + secondary ghost "Need help?"
-
-### Visual system
-- Palette: mint `#E8FBF6` surfaces, deep indigo `#1E1B4B` text/primary, lavender `#A78BFA` accents, off-white page bg
-- Typography: large semibold headings, comfortable body, tabular numerals for times
-- Cards: `rounded-2xl`, soft shadow, 1px hairline border
-- Motion: stepper progress animates on mount, active dot pulses, cards fade-in stagger, button press scale-95
-- All tokens defined in `index.css` + `tailwind.config.ts` (HSL semantic tokens, no hardcoded colors in components)
-
-### Components to create
-- `OrderHeader`
-- `StatusHero` (with internal `HorizontalStepper`)
-- `QuickActions`
-- `DeliveryCard`
-- `ReceiptCard`
-- `OrderSections` (accordion)
-- `BottomBar`
-
-All wired into `src/pages/Index.tsx` with mock order data. Mobile-first, max-width container centered on desktop with a phone-frame feel.
+- No changes to `ApprovalEntry.tsx` or other portal pages (let me know if you want the same treatment there).
+- No visual redesign of the header — just pinning behavior.
