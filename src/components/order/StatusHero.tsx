@@ -234,14 +234,16 @@ export const StatusHero = ({
                 </div>
               )}
 
-              <div className="relative mt-6">
-                <StatusTimeline
-                  stages={stages}
-                  currentIndex={currentIndex}
-                  onHold={onHold}
-                  rightSlot={cancellable ? <CancelButton /> : undefined}
-                />
-              </div>
+              {!hideTimeline && (
+                <div className="relative mt-6">
+                  <StatusTimeline
+                    stages={stages}
+                    currentIndex={currentIndex}
+                    onHold={onHold}
+                    rightSlot={cancellable ? <CancelButton /> : undefined}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
