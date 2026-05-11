@@ -56,6 +56,7 @@ export const OrderCard = ({ order }: OrderCardProps) => {
   const cardBg = cardBgForStatus(status);
   const isApproval = status === "approval_required";
   const isPaymentFailed = status === "payment_failed";
+  const isDropOffFailed = status === "drop_off_failed";
 
   return (
     <Link
