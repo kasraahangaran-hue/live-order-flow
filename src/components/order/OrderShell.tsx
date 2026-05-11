@@ -21,7 +21,11 @@ export const OrderShell = ({ hero, children }: OrderShellProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const touchYRef = useRef<number | null>(null);
   const gradientClass =
-    hero.orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
+    hero.heroGradient === "cancelled"
+      ? "bg-gradient-hero-cancelled"
+      : hero.heroGradient === "finery" || hero.orderType === "finery"
+        ? "bg-gradient-hero-finery"
+        : "bg-gradient-hero";
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const top = e.currentTarget.scrollTop;

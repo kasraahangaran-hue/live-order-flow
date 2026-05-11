@@ -339,7 +339,8 @@ export const MOCK_ORDERS: OrderData[] = [
     stageTimestamps: {
       received: "13 Apr, 7:18 pm",
     },
-    cancelledAt: "14 Apr, 9:22 am",
+    cancelledAt: "Today at 2:41 PM",
+    cancelReason: "pickup_failed",
   },
 ];
 

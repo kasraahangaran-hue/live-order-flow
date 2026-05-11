@@ -28,6 +28,8 @@ interface Props {
   onTuckedChange?: (tucked: boolean) => void;
   /** Optional Lucide icon node to replace the default HeroArt SVG. */
   heroIcon?: ReactNode;
+  /** Optional override for the hero background gradient. */
+  heroGradient?: "default" | "finery" | "cancelled";
 }
 
 const wrapperAnim: Record<HeroVariant, string> = {
@@ -57,9 +59,15 @@ export const StatusHero = ({
   tucked: tuckedProp,
   onTuckedChange,
   heroIcon,
+  heroGradient = "default",
 }: Props) => {
   const v: HeroVariant = onHold ? "hold" : completed ? "complete" : variant;
-  const gradientClass = orderType === "finery" ? "bg-gradient-hero-finery" : "bg-gradient-hero";
+  const gradientClass =
+    heroGradient === "cancelled"
+      ? "bg-gradient-hero-cancelled"
+      : heroGradient === "finery" || orderType === "finery"
+        ? "bg-gradient-hero-finery"
+        : "bg-gradient-hero";
   const isControlled = tuckedProp !== undefined;
 
   const [internalTucked, setInternalTucked] = useState(false);
