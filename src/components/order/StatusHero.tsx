@@ -131,7 +131,13 @@ export const StatusHero = ({
                 </h1>
 
                 <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
-                  <HeroArt variant={v} />
+                  {heroIcon ? (
+                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-12 [&_svg]:w-12">
+                      {heroIcon}
+                    </div>
+                  ) : (
+                    <HeroArt variant={v} />
+                  )}
                 </div>
               </div>
 
