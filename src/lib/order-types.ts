@@ -41,6 +41,7 @@ export const STATUS_TO_CATEGORY: Record<OrderStatus, StatusCategory> = {
   complete: "completed",
   cancelled: "completed",
   laundry_bag_requested: "special",
+  laundry_bag_delivered: "completed",
 };
 
 export const STATUS_LABEL: Record<OrderStatus, string> = {
