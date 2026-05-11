@@ -21,7 +21,7 @@ const OrderReceived = () => {
   return (
     <OrderShell
       hero={{
-        status: "Order received",
+        status: "Order Received",
         subtitle: `Pickup ${order.pickupWindow}`,
         orderType: order.orderType,
         orderId: order.orderId,

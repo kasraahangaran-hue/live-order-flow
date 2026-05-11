@@ -33,7 +33,7 @@ const DropOffFailed = () => {
   return (
     <OrderShell
       hero={{
-        status: "Drop off failed",
+        status: "Drop Off Failed",
         subtitle: "We couldn't complete the delivery. Please reschedule to try again.",
         orderType: order.orderType,
         orderId: order.orderId,

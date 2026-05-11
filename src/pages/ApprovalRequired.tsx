@@ -34,7 +34,7 @@ const ApprovalRequired = () => {
   return (
     <OrderShell
       hero={{
-        status: "Approval required",
+        status: "Approval Required",
         subtitle: `${count} ${noun} awaiting your review`,
         orderType: order.orderType,
         orderId: order.orderId,

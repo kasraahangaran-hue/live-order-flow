@@ -32,7 +32,7 @@ const PendingItemDelivery = () => {
   return (
     <OrderShell
       hero={{
-        status: "Pending item delivery",
+        status: "Pending Item Drop Off",
         subtitle: "Today, before 08:00 pm",
         orderType: order.orderType,
         orderId: order.orderId,

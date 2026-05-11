@@ -32,7 +32,7 @@ const PartialDelivery = () => {
   return (
     <OrderShell
       hero={{
-        status: "Order partially delivered",
+        status: "Order Partially Dropped Off",
         subtitle: `${pending} ${noun} pending · coming tomorrow`,
         orderType: order.orderType,
         orderId: order.orderId,
