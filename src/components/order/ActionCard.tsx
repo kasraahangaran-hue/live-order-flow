@@ -76,7 +76,7 @@ export const ActionCard = ({
 
   return (
     <section
-      className={cn("mx-5 mt-4 rounded-xl p-5 animate-fade-in", surfaceClass)}
+      className={cn("mx-5 mt-4 rounded-xl p-4 animate-fade-in", surfaceClass)}
       style={{ animationDelay: "60ms" }}
     >
       <div className="flex items-start gap-3">
@@ -101,7 +101,7 @@ export const ActionCard = ({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className="mt-3 flex flex-wrap items-center gap-2">
         {renderButton(primaryAction, "primary")}
         {secondaryAction && renderButton(secondaryAction, "secondary")}
       </div>
