@@ -161,6 +161,7 @@ export const MOCK_ORDERS: OrderData[] = [
       items_sorted: "20 Apr, 12:18 pm",
       dropoff_today: "Today, 8:15 am",
     },
+    delayedCount: 2,
   },
   {
     orderId: "CUI410",
