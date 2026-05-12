@@ -268,7 +268,7 @@ const PRD = () => {
               illustration="Credit card with red alert badge (CardAlert)"
               heroAnimation="Shake (anxious wobble)"
               copy={{
-                status: "Payment Required",
+                status: "Payment Failed",
                 subtitle: "Delivery on hold · capture payment to release",
               }}
               flags={[
