@@ -126,6 +126,8 @@ export interface OrderData {
   itemsAwaitingApproval?: number;
   approvalDeadline?: string;
   itemsPending?: number;
+  /** Number of items flagged as at-risk for today's dropoff (drives DelayBanner visibility) */
+  delayedCount?: number;
   amountDue?: string;
   /** Door-pickup reminder flag */
   leaveBagsOutside?: boolean;

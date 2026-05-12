@@ -30,7 +30,7 @@ const LaundryBagOrder = () => {
   return (
     <OrderShell
       hero={{
-        status: isDelivered ? "Laundry Bag Delivered" : "Laundry Bag Requested",
+        status: isDelivered ? "Laundry Bag Dropped Off" : "Laundry Bag Requested",
         subtitle: isDelivered
           ? ""
           : "Starter Kit orders placed after 9:00 PM will be delivered the next day",

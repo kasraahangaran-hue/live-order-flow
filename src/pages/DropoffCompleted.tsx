@@ -20,7 +20,7 @@ const DropoffCompleted = () => {
   return (
     <OrderShell
       hero={{
-        status: "Completed Order",
+        status: "Order Completed",
         subtitle: ts.dropoff_completed ? `Delivered ${ts.dropoff_completed}` : "Delivered",
         orderType: order.orderType,
         orderId: order.orderId,

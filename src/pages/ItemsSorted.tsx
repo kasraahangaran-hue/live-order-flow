@@ -19,7 +19,7 @@ const ItemsSorted = () => {
   return (
     <OrderShell
       hero={{
-        status: "Cleaning at Our Facility",
+        status: "Items in Process",
         subtitle: "Your laundry is being cared for",
         orderType: order.orderType,
         orderId: order.orderId,

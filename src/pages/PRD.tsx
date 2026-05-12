@@ -134,7 +134,7 @@ const PRD = () => {
                 <Tr i={0} k="order_received" l="Order received" m="Order placed, awaiting pickup driver." />
                 <Tr i={1} k="pickup_completed" l="Collected" m="Driver has the bag, en route to facility." />
                 <Tr i={2} k="items_sorted" l="Processing" m="Items at facility being cleaned/ironed." />
-                <Tr i={3} k="dropoff_assigned" l="Out for delivery" m="Bag is on its way back to customer." />
+                <Tr i={3} k="dropoff_assigned" l="Driver Assigned" m="Bag is on its way back to customer." />
                 <Tr i={4} k="dropoff_completed" l="Delivered" m="Delivered to customer. Photos & receipt available." />
               </tbody>
             </table>
@@ -223,7 +223,7 @@ const PRD = () => {
               illustration="Washing machine with rotating drum (WashingMachine)"
               heroAnimation="Sway + drum spin-slow"
               copy={{
-                status: "Cleaning at Our Facility",
+                status: "Items in Process",
                 subtitle: "Your laundry is being cared for",
               }}
               flags={["pickupDone: true", "Items received → review CTA shown"]}
@@ -268,7 +268,7 @@ const PRD = () => {
               illustration="Credit card with red alert badge (CardAlert)"
               heroAnimation="Shake (anxious wobble)"
               copy={{
-                status: "Payment Required",
+                status: "Payment Failed",
                 subtitle: "Delivery on hold · capture payment to release",
               }}
               flags={[
@@ -295,7 +295,7 @@ const PRD = () => {
               illustration="Success check badge (ShirtHanger) — sized smaller (h-16 w-16)"
               heroAnimation="Float + sparkles"
               copy={{
-                status: "Completed Order",
+                status: "Order Completed",
                 subtitle: "Delivered Sat 26/03/26 at 4:49 PM",
               }}
               flags={[

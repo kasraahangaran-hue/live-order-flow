@@ -28,7 +28,7 @@ const PaymentFailed = () => {
   return (
     <OrderShell
       hero={{
-        status: "Payment Required",
+        status: "Payment Failed",
         subtitle: "Delivery on hold · capture payment to release",
         orderType: order.orderType,
         orderId: order.orderId,
