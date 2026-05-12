@@ -179,6 +179,20 @@ export const MOCK_ORDERS: OrderData[] = [
     cancellable: true,
   },
   {
+    orderId: "CUI411",
+    orderType: "laundry",
+    status: "pickup_in_progress",
+    listTimestamp: "Today, 7:42 am",
+    pickupLocation: "Apt 1208, Marina Promenade, Dubai Marina",
+    pickupWindow: "Today · 7:00 – 9:00 AM",
+    dropoffWindow: "Thu · 5:00 – 7:00 PM",
+    pickupNote: "Pickup at door",
+    dropoffNote: "Drop off at door",
+    stageTimestamps: {
+      received: "Yesterday, 7:14 pm",
+    },
+  },
+  {
     orderId: "CUI412",
     orderType: "laundry",
     status: "dropoff_assigned",
