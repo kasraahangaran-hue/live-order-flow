@@ -85,7 +85,7 @@ export const OrderCard = ({ order }: OrderCardProps) => {
         </p>
       </div>
 
-      <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" strokeWidth={2.5} />
+      <ChevronRight className="h-6 w-6 shrink-0 text-muted-foreground" strokeWidth={2.5} />
     </Link>
   );
 };
