@@ -12,11 +12,11 @@ const DropoffToday = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.order_received },
-    { key: "collected", label: "Collected", timestamp: ts.pickup_completed },
-    { key: "processing", label: "Processing", timestamp: ts.items_sorted },
-    { key: "delivery", label: "Out for delivery", timestamp: ts.dropoff_today ?? "Today" },
-    { key: "complete", label: "Delivered" },
+    { key: "order_received", label: "Order Received", timestamp: ts.order_received },
+    { key: "pickup_completed", label: "Order Picked-up", timestamp: ts.pickup_completed },
+    { key: "items_sorted", label: "Items in Process", timestamp: ts.items_sorted },
+    { key: "dropoff_today", label: "Drop Off Today", timestamp: ts.dropoff_today ?? "Today" },
+    { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (
