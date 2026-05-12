@@ -17,18 +17,18 @@ const ItemsPendingApproval = () => {
   const noun = count === 1 ? "item" : "items";
 
   const stages: Stage[] = [
-    { key: "received", label: "Order Received", timestamp: ts.order_received },
-    { key: "collected", label: "Order Pick Up", timestamp: ts.pickup_completed },
+    { key: "order_received", label: "Order Received", timestamp: ts.order_received },
+    { key: "pickup_completed", label: "Order Picked-up", timestamp: ts.pickup_completed },
     {
-      key: "items_in_process",
+      key: "items_sorted",
       label: "Items in Process",
       icon: "approval",
       pill: { label: "AWAITING APPROVAL", variant: "attention" },
       timestamp: ts.items_sorted,
     },
-    { key: "delivery_today", label: "Drop Off Today" },
-    { key: "driver_on_the_way", label: "Driver on the Way" },
-    { key: "complete", label: "Delivered" },
+    { key: "dropoff_today", label: "Drop Off Today" },
+    { key: "dropoff_in_progress", label: "Driver on the Way" },
+    { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (

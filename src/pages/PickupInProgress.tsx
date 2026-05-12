@@ -10,17 +10,17 @@ const PickupInProgress = () => {
   const arriving = ts.dropoff_in_progress ?? order.dropoffWindow;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order Received", timestamp: ts.order_received },
-    { key: "collected", label: "Order Pick Up", timestamp: ts.pickup_completed },
-    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_sorted },
-    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.dropoff_today ?? arriving },
+    { key: "order_received", label: "Order Received", timestamp: ts.order_received },
+    { key: "pickup_completed", label: "Order Picked-up", timestamp: ts.pickup_completed },
+    { key: "items_sorted", label: "Items in Process", timestamp: ts.items_sorted },
+    { key: "dropoff_today", label: "Drop Off Today", timestamp: ts.dropoff_today ?? arriving },
     {
-      key: "driver_on_the_way",
+      key: "pickup_in_progress",
       label: "Driver on the Way",
       icon: "truck",
       timestamp: arriving,
     },
-    { key: "complete", label: "Delivered" },
+    { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (
@@ -41,7 +41,7 @@ const PickupInProgress = () => {
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: order.dropoffNote ?? "Delivery at door", when: arriving }}
+        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: arriving }}
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
