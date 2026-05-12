@@ -12,10 +12,10 @@ const DropoffToday = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.received },
-    { key: "collected", label: "Collected", timestamp: ts.collected },
-    { key: "processing", label: "Processing", timestamp: ts.items_in_process },
-    { key: "delivery", label: "Out for delivery", timestamp: ts.delivery_today ?? "Today" },
+    { key: "received", label: "Order received", timestamp: ts.order_received },
+    { key: "collected", label: "Collected", timestamp: ts.pickup_completed },
+    { key: "processing", label: "Processing", timestamp: ts.items_sorted },
+    { key: "delivery", label: "Out for delivery", timestamp: ts.dropoff_today ?? "Today" },
     { key: "complete", label: "Delivered" },
   ];
 
@@ -40,7 +40,7 @@ const DropoffToday = () => {
           <DeliveryCard
             dropoffNote={order.pickupNote ?? "Picked up at door"}
             address={order.pickupLocation}
-            when={ts.collected ?? order.pickupWindow}
+            when={ts.pickup_completed ?? order.pickupWindow}
             pickupDone
             dropoff={{ label: order.dropoffNote ?? "Delivery at door", when: order.dropoffWindow }}
           />

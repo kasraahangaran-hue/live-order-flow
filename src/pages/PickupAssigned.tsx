@@ -17,7 +17,7 @@ const PickupAssigned = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.received },
+    { key: "received", label: "Order received", timestamp: ts.order_received },
     { key: "collected", label: "Collected" },
     { key: "processing", label: "Processing" },
     { key: "delivery", label: "Out for delivery" },
