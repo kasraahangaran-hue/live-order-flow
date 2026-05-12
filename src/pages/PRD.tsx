@@ -195,7 +195,7 @@ const PRD = () => {
             <ScreenCard
               icon={<PackageOpen className="h-5 w-5" />}
               title="Order Collected"
-              route="/order-collected"
+              route="/pickup-completed"
               orderId="CUD138"
               currentIndex={1}
               illustration="Delivery truck (DeliveryTruck) — bag in transit to facility"
@@ -217,7 +217,7 @@ const PRD = () => {
             <ScreenCard
               icon={<Sparkles className="h-5 w-5" />}
               title="Processing"
-              route="/processing"
+              route="/items-sorted"
               orderId="CUD137"
               currentIndex={2}
               illustration="Washing machine with rotating drum (WashingMachine)"
@@ -239,7 +239,7 @@ const PRD = () => {
             <ScreenCard
               icon={<Truck className="h-5 w-5" />}
               title="Out for Drop Off"
-              route="/out-for-delivery"
+              route="/dropoff-today"
               orderId="CUD137"
               currentIndex={3}
               illustration="Delivery truck (return trip)"
@@ -289,7 +289,7 @@ const PRD = () => {
             <ScreenCard
               icon={<PackageCheck className="h-5 w-5" />}
               title="Delivered"
-              route="/order-complete"
+              route="/dropoff-completed"
               orderId="CUD135"
               currentIndex={4}
               illustration="Success check badge (ShirtHanger) — sized smaller (h-16 w-16)"
@@ -453,7 +453,7 @@ const PRD = () => {
             props={["count?: number — number of at-risk items (default 2)"]}
             notes={[
               "Uses warning color tokens (warning/10 surface, warning/30 border) — not destructive.",
-              "Shown on /out-for-delivery when the facility flags possible delay; copy: '{N} items may be delayed' + 'We'll confirm shortly if your drop-off time needs to shift.'",
+              "Shown on /dropoff-today when the facility flags possible delay; copy: '{N} items may be delayed' + 'We'll confirm shortly if your drop-off time needs to shift.'",
               "Singular/plural handled via the count prop. Non-actionable (informational only).",
             ]}
           />
