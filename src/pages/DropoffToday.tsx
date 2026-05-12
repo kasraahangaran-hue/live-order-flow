@@ -42,7 +42,7 @@ const DropoffToday = () => {
             address={order.pickupLocation}
             when={ts.pickup_completed ?? order.pickupWindow}
             pickupDone
-            dropoff={{ label: order.dropoffNote ?? "Delivery at door", when: order.dropoffWindow }}
+            dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
           />
 
           <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
