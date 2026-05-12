@@ -63,13 +63,13 @@ export const OrderCard = ({ order }: OrderCardProps) => {
     <Link
       to={route}
       state={{ order }}
-      className={`flex items-center gap-3 rounded-xl border border-black/[0.06] ${cardBg} px-3.5 py-3.5 transition-transform duration-100 ease-out active:duration-75 active:scale-[0.99]`}
+      className={`flex items-center gap-2 rounded-lg border border-black/[0.06] ${cardBg} p-3 transition-transform duration-100 ease-out active:duration-75 active:scale-[0.99]`}
     >
-      <OrderTypeIcon orderType={orderType} size={40} className="shrink-0" />
+      <OrderTypeIcon orderType={orderType} size={32} className="shrink-0" />
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm tracking-tight">
-          <span className="font-semibold text-primary">{ORDER_TYPE_LABEL[orderType]}</span>{" "}
+        <p className="flex items-center gap-1 truncate text-sm tracking-tight">
+          <span className="font-semibold text-primary">{ORDER_TYPE_LABEL[orderType]}</span>
           <span className="font-medium text-primary/70">{orderId}</span>
         </p>
         <p
