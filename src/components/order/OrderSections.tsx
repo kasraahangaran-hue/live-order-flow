@@ -157,7 +157,6 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
               <WashingMachine className="h-4 w-4" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Selected</p>
               <p className="truncate text-sm font-semibold text-primary tabular">Wash & Fold</p>
             </div>
             <span
