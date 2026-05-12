@@ -243,7 +243,7 @@ export const StatusHero = ({
               )}
 
               {!hideTimeline && (
-                <div className="relative mt-6">
+                <div className="relative mt-5">
                   <StatusTimeline
                     stages={stages}
                     currentIndex={currentIndex}
