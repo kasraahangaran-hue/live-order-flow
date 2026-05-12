@@ -145,82 +145,80 @@ export const OrderConfirmations = ({ stage = "delivery", orderId = "", order }: 
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
   return (
     <section
-      className="mx-5 mt-4 animate-fade-in"
+      className="mx-5 mt-4 rounded-lg border border-border bg-card animate-fade-in p-4"
       style={{ animationDelay: "250ms" }}
     >
-      <h3 className="mb-3 font-sans text-base font-bold text-primary">Services Selection</h3>
-      <div className="rounded-xl border border-border bg-card px-5 py-1">
-        <ul className="divide-y divide-border/60">
-          {/* Selected: Wash & Fold (with nested Press & Hang add-on) */}
-          <li className="py-2.5">
-            <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
-                <WashingMachine className="h-4 w-4" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Selected</p>
-                <p className="truncate text-sm font-semibold text-primary tabular">Wash & Fold</p>
-              </div>
-              <span
-                aria-label="Wash & Fold selected"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
-              >
-                <Check className="h-3.5 w-3.5" strokeWidth={3} />
-              </span>
+      <h3 className="font-sans text-sm font-bold text-primary leading-tight">Services Selection</h3>
+      <ul className="mt-3 divide-y divide-border/60">
+        {/* Selected: Wash & Fold (with nested Press & Hang add-on) */}
+        <li className="py-2.5">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-secondary text-primary">
+              <WashingMachine className="h-4 w-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Selected</p>
+              <p className="truncate text-sm font-semibold text-primary tabular">Wash & Fold</p>
             </div>
+            <span
+              aria-label="Wash & Fold selected"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+            >
+              <Check className="h-3.5 w-3.5" strokeWidth={3} />
+            </span>
+          </div>
 
-            {/* nested add-on under Wash & Fold */}
-            <div className="mt-2 ml-[22px] flex items-center gap-3 border-l-2 border-border/70 pl-3 py-1.5">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-secondary/70 text-muted-foreground">
-                <Shirt className="h-3.5 w-3.5" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5">
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Add-on</p>
-                  <span className="rounded-md bg-warning px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-warning-foreground">
-                    New
-                  </span>
-                </div>
-                <p className="truncate text-xs font-semibold text-primary tabular">Press & Hang · +AED 9/item</p>
-              </div>
-              {!locked && (
-                <button
-                  aria-label="Add Press & Hang"
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
-                >
-                  <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-                </button>
-              )}
-            </div>
-          </li>
-
-          {/* Other services — only shown while still editable */}
-          {!locked &&
-            [
-              { label: "Clean & Press", Icon: Crown },
-              { label: "Bed & Bath", Icon: BedDouble },
-              { label: "Press Only", Icon: Wind },
-              { label: "Try ShoeCare", Icon: Footprints },
-              { label: "The Finery", Icon: Crown },
-            ].map(({ label, Icon }) => (
-              <li key={label} className="flex items-center gap-3 py-2.5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
-                  <Icon className="h-4 w-4" />
+          {/* nested add-on under Wash & Fold */}
+          <div className="mt-2 ml-[22px] flex items-center gap-3 border-l-2 border-border/70 pl-3 py-1.5">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-secondary/70 text-muted-foreground">
+              <Shirt className="h-3.5 w-3.5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Add-on</p>
+                <span className="rounded-md bg-warning px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-warning-foreground">
+                  New
                 </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Available</p>
-                  <p className="truncate text-sm font-semibold text-primary tabular">{label}</p>
-                </div>
-                <button
-                  aria-label={`Add ${label}`}
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
-                >
-                  <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-                </button>
-              </li>
-            ))}
-        </ul>
-      </div>
+              </div>
+              <p className="truncate text-xs font-semibold text-primary tabular">Press & Hang · +AED 9/item</p>
+            </div>
+            {!locked && (
+              <button
+                aria-label="Add Press & Hang"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
+              >
+                <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+              </button>
+            )}
+          </div>
+        </li>
+
+        {/* Other services — only shown while still editable */}
+        {!locked &&
+          [
+            { label: "Clean & Press", Icon: Crown },
+            { label: "Bed & Bath", Icon: BedDouble },
+            { label: "Press Only", Icon: Wind },
+            { label: "Try ShoeCare", Icon: Footprints },
+            { label: "The Finery", Icon: Crown },
+          ].map(({ label, Icon }) => (
+            <li key={label} className="flex items-center gap-3 py-2.5">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-secondary text-primary">
+                <Icon className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Available</p>
+                <p className="truncate text-sm font-semibold text-primary tabular">{label}</p>
+              </div>
+              <button
+                aria-label={`Add ${label}`}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
+              >
+                <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+              </button>
+            </li>
+          ))}
+      </ul>
     </section>
   );
 };
