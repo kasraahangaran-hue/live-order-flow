@@ -46,7 +46,7 @@ const Row = ({
     {editable && !done && (
       <button
         aria-label={ariaLabel}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-transparent text-primary transition-[transform,background-color] duration-100 ease-out hover:bg-secondary/40 active:scale-90 active:duration-75"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-transparent text-primary transition-[transform,background-color] duration-100 ease-out hover:bg-secondary/40 active:scale-90 active:duration-75"
       >
         <Pencil className="h-3.5 w-3.5" />
       </button>
