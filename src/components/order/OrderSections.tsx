@@ -88,17 +88,17 @@ export const OrderConfirmations = ({ stage = "delivery", orderId = "", order }: 
   return (
     <section
       key="confirmations"
-      className="mx-5 mt-4 rounded-xl border border-border bg-card animate-fade-in p-5"
+      className="mx-5 mt-4 rounded-lg border border-border bg-card animate-fade-in p-4"
       style={{ animationDelay: "260ms" }}
     >
       <div>
-        <h3 className="font-sans text-base font-bold text-primary leading-tight">Order Confirmations</h3>
+        <h3 className="font-sans text-sm font-bold text-primary leading-tight">Order Confirmations</h3>
         <p className="mt-1 text-xs font-medium text-muted-foreground leading-relaxed">
           We capture photos at every step — from your doorstep to our facility and back.
         </p>
       </div>
 
-      <ul className="mt-4 divide-y divide-border">
+      <ul className="mt-3 divide-y divide-border">
         {confirmations.map((c) => {
           const done = c.status === "done";
           return (
