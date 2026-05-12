@@ -295,7 +295,7 @@ const PRD = () => {
               illustration="Success check badge (ShirtHanger) — sized smaller (h-16 w-16)"
               heroAnimation="Float + sparkles"
               copy={{
-                status: "Completed Order",
+                status: "Order Completed",
                 subtitle: "Delivered Sat 26/03/26 at 4:49 PM",
               }}
               flags={[
