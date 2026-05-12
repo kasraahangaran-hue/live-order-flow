@@ -39,7 +39,7 @@ const DropoffCompleted = () => {
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
         dropoff={{
-          label: order.dropoffNote ?? "Delivered at door",
+          label: order.dropoffNote ?? "Dropped off at door",
           when: ts.dropoff_completed ?? order.dropoffWindow,
           done: true,
         }}
