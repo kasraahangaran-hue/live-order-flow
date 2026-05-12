@@ -1,17 +1,22 @@
-import { Package } from "lucide-react";
+import { Package, Truck } from "lucide-react";
 
 import { OrderShell } from "@/components/order/OrderShell";
 import { ActionCard } from "@/components/order/ActionCard";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
-import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
+import {
+  OrderConfirmations,
+  ServicesSelection,
+  OrderInstructions,
+} from "@/components/order/OrderSections";
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const PendingItemsDeliveryFollowup = () => {
+const PendingItemsDelivery = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
   const pending = order.itemsPending ?? 3;
   const noun = pending === 1 ? "item" : "items";
+  const isFollowup = order.status === "pending_items_delivery_followup";
 
   const stages: Stage[] = [
     { key: "order_received", label: "Order Received", timestamp: ts.order_received },
@@ -24,29 +29,45 @@ const PendingItemsDeliveryFollowup = () => {
       timestamp: ts.items_pending_approval ?? "22 Aug, 10:00 am",
     },
     { key: "dropoff_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
-    { key: "pending_items_delivery_partial", label: "Order Partially Dropped Off", timestamp: ts.pending_items_delivery_partial },
-    { key: "pending_items_delivery_followup", label: "Pending Item Drop Off", icon: "truck" },
+    {
+      key: "pending_items_delivery_partial",
+      label: "Order Partially Dropped Off",
+      ...(isFollowup
+        ? { timestamp: ts.pending_items_delivery_partial }
+        : { icon: "package" }),
+    },
+    {
+      key: "pending_items_delivery_followup",
+      label: "Pending Item Drop Off",
+      ...(isFollowup ? { icon: "truck" } : {}),
+    },
     { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (
     <OrderShell
       hero={{
-        status: "Pending Item Drop Off",
-        subtitle: "Today, before 08:00 pm",
+        status: isFollowup ? "Pending Item Drop Off" : "Order Partially Dropped Off",
+        subtitle: isFollowup
+          ? "Today, before 08:00 pm"
+          : `${pending} ${noun} pending · coming tomorrow`,
         orderType: order.orderType,
         orderId: order.orderId,
         showSupport: true,
         stages,
-        currentIndex: 6,
-        variant: "delivery",
+        currentIndex: isFollowup ? 6 : 5,
+        variant: isFollowup ? "delivery" : "complete",
       }}
     >
       <ActionCard
         variant="attention"
-        icon={<Package strokeWidth={2.4} />}
-        title={`Pending delivery today`}
-        message={`Your remaining ${pending} ${noun} arrive today before 08:00 pm.`}
+        icon={isFollowup ? <Truck strokeWidth={2.4} /> : <Package strokeWidth={2.4} />}
+        title={isFollowup ? "Pending delivery today" : `${pending} ${noun} pending delivery`}
+        message={
+          isFollowup
+            ? `Your remaining ${pending} ${noun} arrive today before 08:00 pm.`
+            : "Your remaining items will be delivered tomorrow before 08:00 pm."
+        }
         primaryAction={{ label: "View pending items", variant: "primary" }}
       />
 
@@ -55,7 +76,11 @@ const PendingItemsDeliveryFollowup = () => {
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: "Remaining items", when: "Today · before 08:00 PM" }}
+        dropoff={
+          isFollowup
+            ? { label: "Remaining items", when: "Today · before 08:00 PM" }
+            : { label: "Partially Dropped Off", when: order.dropoffWindow, done: true }
+        }
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
@@ -65,4 +90,4 @@ const PendingItemsDeliveryFollowup = () => {
   );
 };
 
-export default PendingItemsDeliveryFollowup;
+export default PendingItemsDelivery;
