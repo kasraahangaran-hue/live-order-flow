@@ -1,9 +1,14 @@
+import { Truck } from "lucide-react";
 
-import { StatusHero } from "@/components/order/StatusHero";
+import { OrderShell } from "@/components/order/OrderShell";
 import { QuickActions } from "@/components/order/QuickActions";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 import { DelayBanner } from "@/components/order/DelayBanner";
-import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
+import {
+  OrderConfirmations,
+  ServicesSelection,
+  OrderInstructions,
+} from "@/components/order/OrderSections";
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
@@ -20,37 +25,36 @@ const DropoffToday = () => {
   ];
 
   return (
-    <main className="h-screen bg-background font-sans antialiased">
-      <div className="mx-auto flex h-screen max-w-md flex-col bg-background shadow-hero md:my-6 md:h-[calc(100vh-3rem)] md:overflow-hidden md:rounded-[2.25rem] md:border md:border-border">
-        <div className="flex-1 overflow-y-auto pb-32">
-          <StatusHero
-            status="Out for Drop Off"
-            subtitle={`Today · ${order.dropoffWindow}`}
-            orderType={order.orderType}
-            orderId={order.orderId}
-            stages={stages}
-            currentIndex={3}
-            variant="delivery"
-          />
+    <OrderShell
+      hero={{
+        status: "Drop Off Today",
+        subtitle: `Today · ${order.dropoffWindow}`,
+        orderType: order.orderType,
+        orderId: order.orderId,
+        showSupport: true,
+        stages,
+        currentIndex: 3,
+        heroIcon: <Truck strokeWidth={2.2} />,
+      }}
+    >
+      {order.delayedCount && order.delayedCount > 0 ? (
+        <DelayBanner count={order.delayedCount} />
+      ) : null}
 
-          <DelayBanner count={2} />
+      <QuickActions />
 
-          <QuickActions />
+      <DeliveryCard
+        dropoffNote={order.pickupNote ?? "Picked up at door"}
+        address={order.pickupLocation}
+        when={ts.pickup_completed ?? order.pickupWindow}
+        pickupDone
+        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
+      />
 
-          <DeliveryCard
-            dropoffNote={order.pickupNote ?? "Picked up at door"}
-            address={order.pickupLocation}
-            when={ts.pickup_completed ?? order.pickupWindow}
-            pickupDone
-            dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
-          />
-
-          <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
-          <ServicesSelection locked />
-          <OrderInstructions locked />
-        </div>
-      </div>
-    </main>
+      <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
+      <ServicesSelection locked />
+      <OrderInstructions locked />
+    </OrderShell>
   );
 };
 
