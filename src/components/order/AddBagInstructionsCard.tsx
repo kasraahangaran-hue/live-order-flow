@@ -7,7 +7,7 @@ interface AddBagInstructionsCardProps {
 export const AddBagInstructionsCard = ({ onClick }: AddBagInstructionsCardProps) => {
   const handleClick = () => {
     if (onClick) return onClick();
-    console.log("add bag instructions clicked");
+    // No-op fallback when no onClick handler is provided (prototype state).
   };
 
   return (

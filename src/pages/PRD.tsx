@@ -194,14 +194,14 @@ const PRD = () => {
 
             <ScreenCard
               icon={<PackageOpen className="h-5 w-5" />}
-              title="Order Collected"
+              title="Order Picked-up"
               route="/pickup-completed"
               orderId="CUD138"
               currentIndex={1}
               illustration="Delivery truck (DeliveryTruck) — bag in transit to facility"
               heroAnimation="Truck-roll (horizontal sway w/ wheel rotation)"
               copy={{
-                status: "Order Collected",
+                status: "Order Picked-up",
                 subtitle: "Your laundry is on its way to our facility",
               }}
               flags={["cancellable: false", "pickupDone: true", "Active stage renders as completed (blue checkmark)"]}
