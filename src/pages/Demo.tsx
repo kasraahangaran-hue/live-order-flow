@@ -6,27 +6,27 @@ import type { OrderData, OrderStatus, OrderType } from "@/lib/order-types";
 const PRODUCT_TYPES: OrderType[] = ["laundry", "shoe_bag", "finery"];
 
 const IN_FLIGHT: OrderStatus[] = [
-  "received",
-  "driver_assigned",
-  "collected",
-  "items_in_process",
-  "out_for_drop_off",
-  "delivery_today",
-  "driver_on_the_way",
+  "order_received",
+  "pickup_assigned",
+  "pickup_completed",
+  "items_sorted",
+  "dropoff_assigned",
+  "dropoff_today",
+  "dropoff_in_progress",
 ];
 const ATTENTION: OrderStatus[] = [
-  "approval_required",
-  "partially_delivered",
-  "pending_item_delivery",
-  "drop_off_failed",
+  "items_pending_approval",
+  "pending_items_delivery_partial",
+  "pending_items_delivery_followup",
+  "dropoff_failed",
   "payment_failed",
 ];
-const COMPLETED: OrderStatus[] = ["complete", "cancelled"];
+const COMPLETED: OrderStatus[] = ["dropoff_completed", "order_cancelled"];
 
 const fakeId = (i: number) => `DMO${String(100 + i).padStart(3, "0")}`;
 
 const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus): OrderData => {
-  const isComplete = status === "complete" || status === "cancelled";
+  const isComplete = status === "dropoff_completed" || status === "order_cancelled";
   return {
     orderId,
     orderType,
@@ -44,11 +44,11 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
       delivery_today: "22 Apr, 11:20 am",
       complete: "22 Apr, 12:41 pm",
     },
-    itemsAwaitingApproval: status === "approval_required" ? 2 : undefined,
-    approvalDeadline: status === "approval_required" ? "2h 5m left to action" : undefined,
+    itemsAwaitingApproval: status === "items_pending_approval" ? 2 : undefined,
+    approvalDeadline: status === "items_pending_approval" ? "2h 5m left to action" : undefined,
     amountDue: status === "payment_failed" ? "AED 142.00 due" : undefined,
-    leaveBagsOutside: status === "received",
-    cancellable: status === "received",
+    leaveBagsOutside: status === "order_received",
+    cancellable: status === "order_received",
   };
 };
 
