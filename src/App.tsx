@@ -55,8 +55,8 @@ const App = () => (
           <Route path="/dropoff-assigned" element={<DropoffAssigned />} />
           <Route path="/dropoff-failed" element={<DropoffFailed />} />
           <Route path="/items-pending-approval" element={<ItemsPendingApproval />} />
-          <Route path="/pending-items-delivery-partial" element={<PendingItemsDeliveryPartial />} />
-          <Route path="/pending-items-delivery-followup" element={<PendingItemsDeliveryFollowup />} />
+          <Route path="/pending-items-delivery-partial" element={<PendingItemsDelivery />} />
+          <Route path="/pending-items-delivery-followup" element={<PendingItemsDelivery />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="/order-cancelled" element={<OrderCancelled />} />
           <Route path="/laundry-bag" element={<LaundryBagOrder />} />
