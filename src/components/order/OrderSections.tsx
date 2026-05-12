@@ -206,7 +206,6 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                 <Icon className="h-4 w-4" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Available</p>
                 <p className="truncate text-sm font-semibold text-primary tabular">{label}</p>
               </div>
               <button
