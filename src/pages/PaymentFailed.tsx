@@ -56,7 +56,7 @@ const PaymentFailed = () => {
         dropoff={{ label: "Delivery on hold", when: "Pending payment" }}
       />
 
-      <OrderConfirmations stage="delivery" />
+      <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
       <ServicesSelection locked />
       <OrderInstructions locked />
     </OrderShell>
