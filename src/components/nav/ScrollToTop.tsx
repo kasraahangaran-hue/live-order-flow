@@ -51,9 +51,12 @@ export const ScrollToTop = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  // Restore (POP) or reset (PUSH/REPLACE) on route change
+  // Restore on browser back/forward and whenever returning to the orders list.
+  // The in-app order back button links to /orders, so it is a PUSH navigation rather than POP.
   useLayoutEffect(() => {
-    if (navType === "POP") {
+    const shouldRestore = navType === "POP" || pathname === "/orders";
+
+    if (shouldRestore) {
       const target = readPositions()[pathname] ?? 0;
       // Try across several frames in case content height grows after mount
       let attempts = 0;
