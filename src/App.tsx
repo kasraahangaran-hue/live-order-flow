@@ -4,25 +4,26 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Demo from "./pages/Demo.tsx";
-import Index from "./pages/Index.tsx";
+import DropoffToday from "./pages/DropoffToday.tsx";
 import Orders from "./pages/Orders.tsx";
 import Home from "./pages/Home.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import Help from "./pages/Help.tsx";
 import More from "./pages/More.tsx";
 import OrderReceived from "./pages/OrderReceived.tsx";
-import OrderCollected from "./pages/OrderCollected.tsx";
-import Processing from "./pages/Processing.tsx";
+import PickupCompleted from "./pages/PickupCompleted.tsx";
+import ItemsSorted from "./pages/ItemsSorted.tsx";
 import PaymentFailed from "./pages/PaymentFailed.tsx";
-import OrderComplete from "./pages/OrderComplete.tsx";
-import DriverOnTheWay from "./pages/DriverOnTheWay.tsx";
-import DriverAssigned from "./pages/DriverAssigned.tsx";
-import OutForDropOff from "./pages/OutForDropOff.tsx";
-import DropOffFailed from "./pages/DropOffFailed.tsx";
-import ApprovalRequired from "./pages/ApprovalRequired.tsx";
-import PartialDelivery from "./pages/PartialDelivery.tsx";
-import PendingItemDelivery from "./pages/PendingItemDelivery.tsx";
-import Cancelled from "./pages/Cancelled.tsx";
+import DropoffCompleted from "./pages/DropoffCompleted.tsx";
+import PickupInProgress from "./pages/PickupInProgress.tsx";
+import DropoffInProgress from "./pages/DropoffInProgress.tsx";
+import PickupAssigned from "./pages/PickupAssigned.tsx";
+import DropoffAssigned from "./pages/DropoffAssigned.tsx";
+import DropoffFailed from "./pages/DropoffFailed.tsx";
+import ItemsPendingApproval from "./pages/ItemsPendingApproval.tsx";
+import PendingItemsDeliveryPartial from "./pages/PendingItemsDeliveryPartial.tsx";
+import PendingItemsDeliveryFollowup from "./pages/PendingItemsDeliveryFollowup.tsx";
+import OrderCancelled from "./pages/OrderCancelled.tsx";
 import LaundryBagOrder from "./pages/LaundryBagOrder.tsx";
 import PRD from "./pages/PRD.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -46,20 +47,21 @@ const App = () => (
           <Route path="/more" element={<More />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/order-received" element={<OrderReceived />} />
-          <Route path="/order-collected" element={<OrderCollected />} />
-          <Route path="/processing" element={<Processing />} />
-          <Route path="/out-for-delivery" element={<Index />} />
-          <Route path="/driver-on-the-way" element={<DriverOnTheWay />} />
-          <Route path="/driver-assigned" element={<DriverAssigned />} />
-          <Route path="/out-for-drop-off" element={<OutForDropOff />} />
-          <Route path="/drop-off-failed" element={<DropOffFailed />} />
-          <Route path="/approval-required" element={<ApprovalRequired />} />
-          <Route path="/partial-delivery" element={<PartialDelivery />} />
-          <Route path="/pending-item-delivery" element={<PendingItemDelivery />} />
+          <Route path="/pickup-completed" element={<PickupCompleted />} />
+          <Route path="/items-sorted" element={<ItemsSorted />} />
+          <Route path="/dropoff-today" element={<DropoffToday />} />
+          <Route path="/pickup-in-progress" element={<PickupInProgress />} />
+          <Route path="/dropoff-in-progress" element={<DropoffInProgress />} />
+          <Route path="/pickup-assigned" element={<PickupAssigned />} />
+          <Route path="/dropoff-assigned" element={<DropoffAssigned />} />
+          <Route path="/dropoff-failed" element={<DropoffFailed />} />
+          <Route path="/items-pending-approval" element={<ItemsPendingApproval />} />
+          <Route path="/pending-items-delivery-partial" element={<PendingItemsDeliveryPartial />} />
+          <Route path="/pending-items-delivery-followup" element={<PendingItemsDeliveryFollowup />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
-          <Route path="/cancelled" element={<Cancelled />} />
+          <Route path="/order-cancelled" element={<OrderCancelled />} />
           <Route path="/laundry-bag" element={<LaundryBagOrder />} />
-          <Route path="/order-complete" element={<OrderComplete />} />
+          <Route path="/dropoff-completed" element={<DropoffCompleted />} />
           <Route path="/prd" element={<PRD />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -4,7 +4,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const DriverOnTheWay = () => {
+const DropoffInProgress = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
   const arriving = ts.driver_on_the_way ?? order.dropoffWindow;
@@ -51,4 +51,4 @@ const DriverOnTheWay = () => {
   );
 };
 
-export default DriverOnTheWay;
+export default DropoffInProgress;

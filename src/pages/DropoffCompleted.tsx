@@ -1,16 +1,11 @@
-import { Truck } from "lucide-react";
-
 import { OrderShell } from "@/components/order/OrderShell";
+import { QuickActions } from "@/components/order/QuickActions";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
-import {
-  ServicesSelection,
-  OrderInstructions,
-  OrderConfirmations,
-} from "@/components/order/OrderSections";
+import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/components/order/OrderSections";
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const OutForDropOff = () => {
+const DropoffCompleted = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
@@ -18,37 +13,43 @@ const OutForDropOff = () => {
     { key: "received", label: "Order received", timestamp: ts.received },
     { key: "collected", label: "Collected", timestamp: ts.collected },
     { key: "processing", label: "Processing", timestamp: ts.items_in_process },
-    { key: "delivery", label: "Out for drop off" },
-    { key: "complete", label: "Delivered" },
+    { key: "delivery", label: "Out for delivery", timestamp: ts.delivery_today },
+    { key: "complete", label: "Delivered", timestamp: ts.complete },
   ];
 
   return (
     <OrderShell
       hero={{
-        status: "Out for Drop Off",
-        subtitle: "Your items are with the driver and on their way back to you",
+        status: "Completed Order",
+        subtitle: ts.complete ? `Delivered ${ts.complete}` : "Delivered",
         orderType: order.orderType,
         orderId: order.orderId,
-        showSupport: true,
         stages,
-        currentIndex: 3,
-        variant: "delivery",
-        heroIcon: <Truck strokeWidth={2.2} />,
+        currentIndex: 4,
+        completed: true,
       }}
     >
+      <QuickActions />
+
+      <OrderConfirmations stage="delivered" orderId={order.orderId} order={order} />
+
       <DeliveryCard
         dropoffNote={order.pickupNote ?? "Picked up at door"}
         address={order.pickupLocation}
         when={ts.collected ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: order.dropoffWindow }}
+        dropoff={{
+          label: order.dropoffNote ?? "Delivered at door",
+          when: ts.complete ?? order.dropoffWindow,
+          done: true,
+        }}
+        defaultOpen={false}
       />
 
-      <OrderConfirmations stage="items-in" orderId={order.orderId} order={order} />
       <ServicesSelection locked />
       <OrderInstructions locked />
     </OrderShell>
   );
 };
 
-export default OutForDropOff;
+export default DropoffCompleted;

@@ -7,7 +7,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const PartialDelivery = () => {
+const PendingItemsDeliveryFollowup = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
   const pending = order.itemsPending ?? 3;
@@ -24,29 +24,29 @@ const PartialDelivery = () => {
       timestamp: ts.approval_completed ?? "22 Aug, 10:00 am",
     },
     { key: "delivery_today", label: "Drop Off Today", timestamp: ts.delivery_today },
-    { key: "partially_delivered", label: "Order Partially Delivered", icon: "package" },
-    { key: "pending_item_delivery", label: "Pending Item Delivery" },
+    { key: "partially_delivered", label: "Order Partially Delivered", timestamp: ts.partially_delivered },
+    { key: "pending_item_delivery", label: "Pending Item Delivery", icon: "truck" },
     { key: "complete", label: "Delivered" },
   ];
 
   return (
     <OrderShell
       hero={{
-        status: "Order Partially Dropped Off",
-        subtitle: `${pending} ${noun} pending · coming tomorrow`,
+        status: "Pending Item Drop Off",
+        subtitle: "Today, before 08:00 pm",
         orderType: order.orderType,
         orderId: order.orderId,
         showSupport: true,
         stages,
-        currentIndex: 5,
-        variant: "complete",
+        currentIndex: 6,
+        variant: "delivery",
       }}
     >
       <ActionCard
         variant="attention"
         icon={<Package strokeWidth={2.4} />}
-        title={`${pending} ${noun} pending delivery`}
-        message="Your remaining items will be delivered tomorrow before 08:00 pm."
+        title={`Pending delivery today`}
+        message={`Your remaining ${pending} ${noun} arrive today before 08:00 pm.`}
         primaryAction={{ label: "View pending items", variant: "primary" }}
       />
 
@@ -55,7 +55,7 @@ const PartialDelivery = () => {
         address={order.pickupLocation}
         when={ts.collected ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: "Partially delivered", when: order.dropoffWindow, done: true }}
+        dropoff={{ label: "Remaining items", when: "Today · before 08:00 PM" }}
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
@@ -65,4 +65,4 @@ const PartialDelivery = () => {
   );
 };
 
-export default PartialDelivery;
+export default PendingItemsDeliveryFollowup;

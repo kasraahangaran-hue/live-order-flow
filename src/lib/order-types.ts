@@ -1,19 +1,32 @@
+/**
+ * Customer-app status keys aligned with backend status mapping.
+ * Source: Notion "Order Status Mapping — Backend → Customer App".
+ *
+ * Notes:
+ * - `pickup_assigned` and `order_received` collapse to the same customer-facing
+ *   id (ORDER_RECEIVED) per backend, but we render them as distinct UX states.
+ * - `pickup_in_progress` rarely surfaces; backend mapping has isRequired: false.
+ * - `pending_items_delivery_partial` and `pending_items_delivery_followup` both
+ *   collapse to PENDING_ITEMS_DELIVERY on the backend; we keep them split because
+ *   they render as distinct UX states in multi-delivery flows.
+ */
 export type OrderType = "laundry" | "shoe_bag" | "finery" | "laundry_bag";
 
 export type OrderStatus =
-  | "received"
-  | "driver_assigned"
-  | "collected"
-  | "items_in_process"
-  | "approval_required"
-  | "out_for_drop_off"
-  | "delivery_today"
-  | "driver_on_the_way"
-  | "drop_off_failed"
-  | "partially_delivered"
-  | "pending_item_delivery"
-  | "complete"
-  | "cancelled"
+  | "order_received"
+  | "pickup_assigned"
+  | "pickup_in_progress"
+  | "pickup_completed"
+  | "items_sorted"
+  | "items_pending_approval"
+  | "dropoff_assigned"
+  | "dropoff_today"
+  | "dropoff_in_progress"
+  | "dropoff_failed"
+  | "pending_items_delivery_partial"
+  | "pending_items_delivery_followup"
+  | "dropoff_completed"
+  | "order_cancelled"
   | "payment_failed"
   | "laundry_bag_requested"
   | "laundry_bag_delivered";
@@ -26,38 +39,40 @@ export type StatusCategory =
   | "special";
 
 export const STATUS_TO_CATEGORY: Record<OrderStatus, StatusCategory> = {
-  received: "in_flight",
-  driver_assigned: "in_flight",
-  collected: "in_flight",
-  items_in_process: "in_flight",
-  out_for_drop_off: "in_flight",
-  delivery_today: "in_flight",
-  driver_on_the_way: "in_flight",
-  approval_required: "needs_attention_soft",
-  partially_delivered: "in_flight",
-  pending_item_delivery: "in_flight",
-  drop_off_failed: "needs_attention_urgent",
+  order_received: "in_flight",
+  pickup_assigned: "in_flight",
+  pickup_in_progress: "in_flight",
+  pickup_completed: "in_flight",
+  items_sorted: "in_flight",
+  items_pending_approval: "needs_attention_soft",
+  dropoff_assigned: "in_flight",
+  dropoff_today: "in_flight",
+  dropoff_in_progress: "in_flight",
+  dropoff_failed: "needs_attention_urgent",
+  pending_items_delivery_partial: "in_flight",
+  pending_items_delivery_followup: "in_flight",
   payment_failed: "needs_attention_urgent",
-  complete: "completed",
-  cancelled: "completed",
+  dropoff_completed: "completed",
+  order_cancelled: "completed",
   laundry_bag_requested: "special",
   laundry_bag_delivered: "completed",
 };
 
 export const STATUS_LABEL: Record<OrderStatus, string> = {
-  received: "Order Received",
-  collected: "Order Collected",
-  driver_assigned: "Driver Assigned",
-  items_in_process: "Items in Process",
-  approval_required: "Approval Required",
-  out_for_drop_off: "Out for Drop Off",
-  delivery_today: "Delivery Today",
-  driver_on_the_way: "Driver on the Way",
-  drop_off_failed: "Drop Off Failed",
-  partially_delivered: "Order Partially Dropped Off",
-  pending_item_delivery: "Pending Item Drop Off",
-  complete: "Completed",
-  cancelled: "Cancelled",
+  order_received: "Order Received",
+  pickup_assigned: "Driver Assigned",
+  pickup_in_progress: "Driver on the Way",
+  pickup_completed: "Order Picked-up",
+  items_sorted: "Items in Process",
+  items_pending_approval: "Approval Required",
+  dropoff_assigned: "Out for Drop Off",
+  dropoff_today: "Drop Off Today",
+  dropoff_in_progress: "Driver on the Way",
+  dropoff_failed: "Drop Off Failed",
+  pending_items_delivery_partial: "Order Partially Dropped Off",
+  pending_items_delivery_followup: "Pending Item Drop Off",
+  dropoff_completed: "Completed",
+  order_cancelled: "Cancelled",
   payment_failed: "Payment Failed",
   laundry_bag_requested: "Laundry Bag Requested",
   laundry_bag_delivered: "Laundry Bag Delivered",
@@ -112,8 +127,8 @@ export interface OrderData {
   leaveBagsOutside?: boolean;
   /** Whether the order can still be cancelled */
   cancellable?: boolean;
-  /** Only present when status === "cancelled" */
+  /** Only present when status === "order_cancelled" */
   cancelledAt?: string;
-  /** Reason the order was cancelled (only present when status === "cancelled") */
+  /** Reason the order was cancelled (only present when status === "order_cancelled") */
   cancelReason?: "pickup_failed" | "expired" | "user_cancelled";
 }

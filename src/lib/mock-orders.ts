@@ -5,7 +5,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI398",
     orderType: "laundry",
-    status: "received",
+    status: "order_received",
     listTimestamp: "23 Apr 2026, 09:14 AM",
     pickupLocation: "Apt 1402, Marina Heights, Dubai Marina",
     pickupWindow: "Tomorrow · 8:00 – 10:00 AM",
@@ -22,7 +22,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "SHB201",
     orderType: "shoe_bag",
-    status: "items_in_process",
+    status: "items_sorted",
     listTimestamp: "22 Apr 2026, 03:48 PM",
     pickupLocation: "Tower B, Jumeirah Beach Residence",
     pickupWindow: "Mon · 7:00 – 9:00 AM",
@@ -38,7 +38,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "TFY104",
     orderType: "finery",
-    status: "collected",
+    status: "pickup_completed",
     listTimestamp: "22 Apr 2026, 11:02 AM",
     pickupLocation: "Villa 27, Emirates Hills",
     pickupWindow: "Today · 10:00 AM – 12:00 PM",
@@ -53,7 +53,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI376",
     orderType: "laundry",
-    status: "approval_required",
+    status: "items_pending_approval",
     listTimestamp: "21 Apr 2026, 06:30 PM",
     pickupLocation: "Apt 905, Boulevard Plaza, Downtown",
     pickupWindow: "Mon · 6:00 – 8:00 PM",
@@ -90,7 +90,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "TFY108",
     orderType: "finery",
-    status: "driver_on_the_way",
+    status: "dropoff_in_progress",
     listTimestamp: "Today, 9:42 am",
     pickupLocation: "Villa 8, Al Wasl Road, Jumeirah 1",
     pickupWindow: "18 Apr · 9:00 – 11:00 AM",
@@ -108,7 +108,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "SHB205",
     orderType: "shoe_bag",
-    status: "partially_delivered",
+    status: "pending_items_delivery_partial",
     listTimestamp: "Yesterday, 6:42 pm",
     pickupLocation: "Apt 1810, Address Sky View, Downtown",
     pickupWindow: "16 Apr · 8:00 – 10:00 AM",
@@ -128,7 +128,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "PND472",
     orderType: "shoe_bag",
-    status: "pending_item_delivery",
+    status: "pending_items_delivery_followup",
     listTimestamp: "Today, 5:30 pm",
     pickupLocation: "Apt 1810, Address Sky View, Downtown",
     pickupWindow: "16 Apr · 8:00 – 10:00 AM",
@@ -148,7 +148,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI403",
     orderType: "laundry",
-    status: "delivery_today",
+    status: "dropoff_today",
     listTimestamp: "Today, 8:15 am",
     pickupLocation: "Apt 604, The Greens, Al Thayyal",
     pickupWindow: "20 Apr · 7:00 – 9:00 AM",
@@ -165,7 +165,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI410",
     orderType: "laundry",
-    status: "driver_assigned",
+    status: "pickup_assigned",
     listTimestamp: "Today, 12:18 am",
     pickupLocation: "Apt 305, Burj Vista, Downtown",
     pickupWindow: "Today · 8:00 – 10:00 AM",
@@ -179,9 +179,23 @@ export const MOCK_ORDERS: OrderData[] = [
     cancellable: true,
   },
   {
+    orderId: "CUI411",
+    orderType: "laundry",
+    status: "pickup_in_progress",
+    listTimestamp: "Today, 7:42 am",
+    pickupLocation: "Apt 1208, Marina Promenade, Dubai Marina",
+    pickupWindow: "Today · 7:00 – 9:00 AM",
+    dropoffWindow: "Thu · 5:00 – 7:00 PM",
+    pickupNote: "Pickup at door",
+    dropoffNote: "Drop off at door",
+    stageTimestamps: {
+      received: "Yesterday, 7:14 pm",
+    },
+  },
+  {
     orderId: "CUI412",
     orderType: "laundry",
-    status: "out_for_drop_off",
+    status: "dropoff_assigned",
     listTimestamp: "Today, 2:14 pm",
     pickupLocation: "Apt 1502, Damac Heights, Dubai Marina",
     pickupWindow: "19 Apr · 8:00 – 10:00 AM",
@@ -197,7 +211,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI415",
     orderType: "laundry",
-    status: "drop_off_failed",
+    status: "dropoff_failed",
     listTimestamp: "Today, 6:42 pm",
     pickupLocation: "Villa 14, Al Sufouh, Jumeirah",
     pickupWindow: "18 Apr · 7:00 – 9:00 AM",
@@ -215,7 +229,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "PND472",
     orderType: "laundry",
-    status: "pending_item_delivery",
+    status: "pending_items_delivery_followup",
     listTimestamp: "Awaiting follow-up drop off",
     pickupLocation: "Apt 1208, Sky Gardens, DIFC",
     pickupWindow: "20 Apr · 7:00 – 9:00 AM",
@@ -248,7 +262,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CUI392",
     orderType: "laundry",
-    status: "complete",
+    status: "dropoff_completed",
     listTimestamp: "Completed on 22 Apr 2026, 12:41 PM",
     pickupLocation: "Apt 712, JLT Cluster G",
     pickupWindow: "18 Apr · 8:00 – 10:00 AM",
@@ -266,7 +280,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CTN375",
     orderType: "laundry",
-    status: "complete",
+    status: "dropoff_completed",
     listTimestamp: "Completed on 5 Apr 2026, 2:39 PM",
     pickupLocation: "Apt 304, Al Barsha Heights",
     pickupWindow: "1 Apr · 7:00 – 9:00 AM",
@@ -284,7 +298,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CRC070",
     orderType: "finery",
-    status: "complete",
+    status: "dropoff_completed",
     listTimestamp: "Completed on 17 Feb 2026, 7:32 PM",
     pickupLocation: "Villa 12, Palm Jumeirah",
     pickupWindow: "13 Feb · 9:00 – 11:00 AM",
@@ -315,7 +329,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CSO663",
     orderType: "laundry",
-    status: "complete",
+    status: "dropoff_completed",
     listTimestamp: "Completed on 13 Mar 2026, 4:31 PM",
     pickupLocation: "Apt 808, Dubai Hills Estate",
     pickupWindow: "9 Mar · 8:00 – 10:00 AM",
@@ -333,7 +347,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CTB988",
     orderType: "laundry",
-    status: "complete",
+    status: "dropoff_completed",
     listTimestamp: "Completed on 25 Mar 2026, 7:47 PM",
     pickupLocation: "Apt 506, City Walk",
     pickupWindow: "21 Mar · 6:00 – 8:00 PM",
@@ -351,7 +365,7 @@ export const MOCK_ORDERS: OrderData[] = [
   {
     orderId: "CNX331",
     orderType: "laundry",
-    status: "cancelled",
+    status: "order_cancelled",
     listTimestamp: "Cancelled on 14 Apr 2026, 9:22 AM",
     pickupLocation: "Apt 1108, Vision Tower, Business Bay",
     pickupWindow: "14 Apr · 11:00 AM – 1:00 PM",

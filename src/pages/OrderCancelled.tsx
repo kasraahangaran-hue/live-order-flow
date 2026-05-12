@@ -8,11 +8,11 @@ import {
 } from "@/components/order/OrderSections";
 import { useOrderData } from "@/lib/useOrderData";
 
-const Cancelled = () => {
+const OrderCancelled = () => {
   const order = useOrderData();
   const cancelledAt = order.cancelledAt ?? "—";
   const status =
-    order.cancelReason === "pickup_failed" ? "Cancelled, pick up failed!" : "Cancelled";
+    order.cancelReason === "pickup_failed" ? "OrderCancelled, pick up failed!" : "OrderCancelled";
 
   return (
     <OrderShell
@@ -34,4 +34,4 @@ const Cancelled = () => {
   );
 };
 
-export default Cancelled;
+export default OrderCancelled;

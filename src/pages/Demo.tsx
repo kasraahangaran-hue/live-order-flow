@@ -6,27 +6,28 @@ import type { OrderData, OrderStatus, OrderType } from "@/lib/order-types";
 const PRODUCT_TYPES: OrderType[] = ["laundry", "shoe_bag", "finery"];
 
 const IN_FLIGHT: OrderStatus[] = [
-  "received",
-  "driver_assigned",
-  "collected",
-  "items_in_process",
-  "out_for_drop_off",
-  "delivery_today",
-  "driver_on_the_way",
+  "order_received",
+  "pickup_assigned",
+  "pickup_in_progress",
+  "pickup_completed",
+  "items_sorted",
+  "dropoff_assigned",
+  "dropoff_today",
+  "dropoff_in_progress",
 ];
 const ATTENTION: OrderStatus[] = [
-  "approval_required",
-  "partially_delivered",
-  "pending_item_delivery",
-  "drop_off_failed",
+  "items_pending_approval",
+  "pending_items_delivery_partial",
+  "pending_items_delivery_followup",
+  "dropoff_failed",
   "payment_failed",
 ];
-const COMPLETED: OrderStatus[] = ["complete", "cancelled"];
+const COMPLETED: OrderStatus[] = ["dropoff_completed", "order_cancelled"];
 
 const fakeId = (i: number) => `DMO${String(100 + i).padStart(3, "0")}`;
 
 const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus): OrderData => {
-  const isComplete = status === "complete" || status === "cancelled";
+  const isComplete = status === "dropoff_completed" || status === "order_cancelled";
   return {
     orderId,
     orderType,
@@ -44,29 +45,30 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
       delivery_today: "22 Apr, 11:20 am",
       complete: "22 Apr, 12:41 pm",
     },
-    itemsAwaitingApproval: status === "approval_required" ? 2 : undefined,
-    approvalDeadline: status === "approval_required" ? "2h 5m left to action" : undefined,
+    itemsAwaitingApproval: status === "items_pending_approval" ? 2 : undefined,
+    approvalDeadline: status === "items_pending_approval" ? "2h 5m left to action" : undefined,
     amountDue: status === "payment_failed" ? "AED 142.00 due" : undefined,
-    leaveBagsOutside: status === "received",
-    cancellable: status === "received",
+    leaveBagsOutside: status === "order_received",
+    cancellable: status === "order_received",
   };
 };
 
 const STATE_LINKS = [
   { to: "/order-received", label: "Order received" },
-  { to: "/driver-assigned", label: "Driver assigned" },
-  { to: "/order-collected", label: "Order collected" },
-  { to: "/processing", label: "Processing" },
-  { to: "/approval-required", label: "Approval required" },
-  { to: "/out-for-drop-off", label: "Out for drop off" },
-  { to: "/out-for-delivery", label: "Out for delivery" },
-  { to: "/driver-on-the-way", label: "Driver on the way" },
-  { to: "/partial-delivery", label: "Partial delivery" },
-  { to: "/pending-item-delivery", label: "Pending item delivery" },
-  { to: "/drop-off-failed", label: "Drop off failed" },
+  { to: "/pickup-assigned", label: "Pickup assigned" },
+  { to: "/pickup-in-progress", label: "Pickup in progress" },
+  { to: "/pickup-completed", label: "Pickup completed" },
+  { to: "/items-sorted", label: "Items sorted" },
+  { to: "/items-pending-approval", label: "Items pending approval" },
+  { to: "/dropoff-assigned", label: "Dropoff assigned" },
+  { to: "/dropoff-today", label: "Dropoff today" },
+  { to: "/dropoff-in-progress", label: "Dropoff in progress" },
+  { to: "/pending-items-delivery-partial", label: "Pending items delivery (partial)" },
+  { to: "/pending-items-delivery-followup", label: "Pending items delivery (followup)" },
+  { to: "/dropoff-failed", label: "Dropoff failed" },
   { to: "/payment-failed", label: "Payment failed" },
-  { to: "/cancelled", label: "Cancelled" },
-  { to: "/order-complete", label: "Order complete" },
+  { to: "/order-cancelled", label: "Order cancelled" },
+  { to: "/dropoff-completed", label: "Dropoff completed" },
 ];
 
 const Demo = () => {
