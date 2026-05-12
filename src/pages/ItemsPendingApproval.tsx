@@ -9,7 +9,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const ApprovalRequired = () => {
+const ItemsPendingApproval = () => {
   const order = useOrderData();
   const navigate = useNavigate();
   const ts = order.stageTimestamps;
@@ -72,4 +72,4 @@ const ApprovalRequired = () => {
   );
 };
 
-export default ApprovalRequired;
+export default ItemsPendingApproval;

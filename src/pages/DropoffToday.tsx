@@ -7,7 +7,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const Index = () => {
+const DropoffToday = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
@@ -54,4 +54,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default DropoffToday;

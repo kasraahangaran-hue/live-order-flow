@@ -7,7 +7,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const PartialDelivery = () => {
+const PendingItemsDeliveryPartial = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
   const pending = order.itemsPending ?? 3;
@@ -65,4 +65,4 @@ const PartialDelivery = () => {
   );
 };
 
-export default PartialDelivery;
+export default PendingItemsDeliveryPartial;

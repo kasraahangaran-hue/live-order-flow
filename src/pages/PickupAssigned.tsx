@@ -12,7 +12,7 @@ import {
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const DriverAssigned = () => {
+const PickupAssigned = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
@@ -59,4 +59,4 @@ const DriverAssigned = () => {
   );
 };
 
-export default DriverAssigned;
+export default PickupAssigned;

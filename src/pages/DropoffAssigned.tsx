@@ -10,7 +10,7 @@ import {
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const OutForDropOff = () => {
+const DropoffAssigned = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
@@ -51,4 +51,4 @@ const OutForDropOff = () => {
   );
 };
 
-export default OutForDropOff;
+export default DropoffAssigned;

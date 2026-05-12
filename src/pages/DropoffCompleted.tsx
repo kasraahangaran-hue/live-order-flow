@@ -5,7 +5,7 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const OrderComplete = () => {
+const DropoffCompleted = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
@@ -52,4 +52,4 @@ const OrderComplete = () => {
   );
 };
 
-export default OrderComplete;
+export default DropoffCompleted;

@@ -4,14 +4,14 @@ import { OrderConfirmations, ServicesSelection, OrderInstructions } from "@/comp
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
 
-const Processing = () => {
+const ItemsSorted = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
     { key: "received", label: "Order received", timestamp: ts.received },
     { key: "collected", label: "Collected", timestamp: ts.collected },
-    { key: "processing", label: "Processing", timestamp: ts.items_in_process },
+    { key: "processing", label: "ItemsSorted", timestamp: ts.items_in_process },
     { key: "delivery", label: "Out for delivery" },
     { key: "complete", label: "Delivered" },
   ];
@@ -44,4 +44,4 @@ const Processing = () => {
   );
 };
 
-export default Processing;
+export default ItemsSorted;
