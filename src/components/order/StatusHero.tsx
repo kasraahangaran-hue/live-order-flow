@@ -134,15 +134,15 @@ export const StatusHero = ({
           aria-hidden={tucked}
         >
           <div className="overflow-hidden">
-            <div className="relative px-6 pt-2 pb-6">
-              <div className="flex items-center gap-4">
-                <h1 className="min-w-0 flex-1 text-2xl font-extrabold leading-tight text-primary [text-wrap:balance]">
+            <div className="relative px-5 pt-2 pb-5">
+              <div className="flex items-center gap-3">
+                <h1 className="min-w-0 flex-1 text-xl font-extrabold leading-tight text-primary [text-wrap:balance]">
                   {status}
                 </h1>
 
-                <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
+                <div className={`pointer-events-none shrink-0 opacity-95 h-14 w-14 ${wrapperAnim[v]}`}>
                   {heroIcon ? (
-                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-12 [&_svg]:w-12">
+                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-10 [&_svg]:w-10">
                       {heroIcon}
                     </div>
                   ) : (
@@ -163,7 +163,7 @@ export const StatusHero = ({
               )}
 
               {!hideTimeline && (
-                <div className="relative mt-6">
+                <div className="relative mt-5">
                   <StatusTimeline
                     stages={stages}
                     currentIndex={currentIndex}
@@ -214,15 +214,15 @@ export const StatusHero = ({
           aria-hidden={tucked}
         >
           <div className="overflow-hidden">
-            <div className="relative px-6 pt-2 pb-6">
-              <div className="flex items-center gap-4">
-                <h1 className="min-w-0 flex-1 text-2xl font-extrabold leading-tight text-primary [text-wrap:balance]">
+            <div className="relative px-5 pt-2 pb-5">
+              <div className="flex items-center gap-3">
+                <h1 className="min-w-0 flex-1 text-xl font-extrabold leading-tight text-primary [text-wrap:balance]">
                   {status}
                 </h1>
 
-                <div className={`pointer-events-none shrink-0 opacity-95 h-16 w-16 ${wrapperAnim[v]}`}>
+                <div className={`pointer-events-none shrink-0 opacity-95 h-14 w-14 ${wrapperAnim[v]}`}>
                   {heroIcon ? (
-                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-12 [&_svg]:w-12">
+                    <div className="flex h-full w-full items-center justify-center text-primary [&_svg]:h-10 [&_svg]:w-10">
                       {heroIcon}
                     </div>
                   ) : (
