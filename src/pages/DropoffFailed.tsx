@@ -16,18 +16,18 @@ const DropoffFailed = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.order_received },
-    { key: "collected", label: "Collected", timestamp: ts.pickup_completed },
-    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_sorted },
-    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
+    { key: "order_received", label: "Order Received", timestamp: ts.order_received },
+    { key: "pickup_completed", label: "Order Picked-up", timestamp: ts.pickup_completed },
+    { key: "items_sorted", label: "Items in Process", timestamp: ts.items_sorted },
+    { key: "dropoff_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
     {
-      key: "driver_on_the_way",
+      key: "dropoff_in_progress",
       label: "Driver on the Way",
       icon: "hold",
       pill: { label: "DROP OFF FAILED", variant: "urgent" },
       timestamp: ts.dropoff_in_progress,
     },
-    { key: "complete", label: "Delivered" },
+    { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (
