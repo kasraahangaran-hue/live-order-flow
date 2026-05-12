@@ -1,6 +1,6 @@
 import { OrderShell } from "@/components/order/OrderShell";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
-import { AddBagInstructionsCard } from "@/components/order/AddBagInstructionsCard";
+
 import { ServicesSelection, OrderInstructions, OrderConfirmations } from "@/components/order/OrderSections";
 import { useOrderData } from "@/lib/useOrderData";
 import type { Stage } from "@/components/order/StatusTimeline";
@@ -30,8 +30,6 @@ const OrderCollected = () => {
         variant: "delivery",
       }}
     >
-      <AddBagInstructionsCard />
-
       <DeliveryCard
         dropoffNote={order.pickupNote ?? "Picked up at door"}
         address={order.pickupLocation}
