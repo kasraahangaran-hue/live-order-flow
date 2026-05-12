@@ -55,9 +55,9 @@ export const OrderCard = ({ order }: OrderCardProps) => {
   const isCompleted = STATUS_TO_CATEGORY[status] === "completed";
   const route = STATUS_TO_ROUTE[status];
   const cardBg = cardBgForStatus(status);
-  const isApproval = status === "approval_required";
+  const isApproval = status === "items_pending_approval";
   const isPaymentFailed = status === "payment_failed";
-  const isDropOffFailed = status === "drop_off_failed";
+  const isDropOffFailed = status === "dropoff_failed";
 
   return (
     <Link
