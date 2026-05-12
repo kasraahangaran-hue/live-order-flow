@@ -114,7 +114,7 @@ export const OrderConfirmations = ({ stage = "delivery", orderId = "", order }: 
               >
                 <span
                   className={cn(
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md",
                     done
                       ? "bg-secondary text-primary"
                       : "border border-dashed border-muted-foreground/40 text-muted-foreground",
