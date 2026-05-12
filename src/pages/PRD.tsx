@@ -223,7 +223,7 @@ const PRD = () => {
               illustration="Washing machine with rotating drum (WashingMachine)"
               heroAnimation="Sway + drum spin-slow"
               copy={{
-                status: "Cleaning at Our Facility",
+                status: "Items in Process",
                 subtitle: "Your laundry is being cared for",
               }}
               flags={["pickupDone: true", "Items received → review CTA shown"]}
