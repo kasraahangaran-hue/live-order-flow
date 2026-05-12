@@ -235,7 +235,7 @@ const InstructionCard = ({ title, summary, subtitle, onClick, locked }: Instruct
     onClick={locked ? undefined : onClick}
     disabled={locked}
     className={cn(
-      "flex w-full items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 text-left transition-colors",
+      "flex w-full items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 text-left transition-colors",
       !locked && "hover:bg-muted/30 active:bg-muted/50",
       locked && "opacity-60 cursor-not-allowed",
     )}
@@ -274,9 +274,9 @@ export const OrderInstructions = ({ locked = false }: { locked?: boolean }) => {
       className="mx-5 mt-4 animate-fade-in"
       style={{ animationDelay: "300ms" }}
     >
-      <div className="rounded-xl border border-border bg-card">
-        <div className="flex items-center justify-between px-5 py-4">
-          <h3 className="font-sans text-base font-bold text-primary">Order Instructions</h3>
+      <div className="rounded-lg border border-border bg-card">
+        <div className="flex items-center justify-between px-4 py-3">
+          <h3 className="font-sans text-sm font-bold text-primary">Order Instructions</h3>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
