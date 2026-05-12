@@ -53,7 +53,7 @@ const PaymentFailed = () => {
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: "Delivery on hold", when: "Pending payment" }}
+        dropoff={{ label: "Drop Off on Hold", when: "Pending payment" }}
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
