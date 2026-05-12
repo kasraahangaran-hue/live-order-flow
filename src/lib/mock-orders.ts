@@ -269,7 +269,7 @@ export const MOCK_ORDERS: OrderData[] = [
     pickupWindow: "18 Apr · 8:00 – 10:00 AM",
     dropoffWindow: "22 Apr · 12:00 – 2:00 PM",
     pickupNote: "Picked up at door",
-    dropoffNote: "Delivered at door",
+    dropoffNote: "Dropped off at door",
     stageTimestamps: {
       order_received: "17 Apr, 7:20 pm",
       pickup_completed: "18 Apr, 8:32 am",
@@ -287,7 +287,7 @@ export const MOCK_ORDERS: OrderData[] = [
     pickupWindow: "1 Apr · 7:00 – 9:00 AM",
     dropoffWindow: "5 Apr · 1:00 – 3:00 PM",
     pickupNote: "Picked up at door",
-    dropoffNote: "Delivered at door",
+    dropoffNote: "Dropped off at door",
     stageTimestamps: {
       order_received: "31 Mar, 8:14 pm",
       pickup_completed: "1 Apr, 7:38 am",
@@ -305,7 +305,7 @@ export const MOCK_ORDERS: OrderData[] = [
     pickupWindow: "13 Feb · 9:00 – 11:00 AM",
     dropoffWindow: "17 Feb · 6:00 – 8:00 PM",
     pickupNote: "Picked up at door",
-    dropoffNote: "Delivered at door",
+    dropoffNote: "Dropped off at door",
     stageTimestamps: {
       order_received: "12 Feb, 9:02 pm",
       pickup_completed: "13 Feb, 9:24 am",
@@ -336,7 +336,7 @@ export const MOCK_ORDERS: OrderData[] = [
     pickupWindow: "9 Mar · 8:00 – 10:00 AM",
     dropoffWindow: "13 Mar · 3:00 – 5:00 PM",
     pickupNote: "Picked up at door",
-    dropoffNote: "Delivered at door",
+    dropoffNote: "Dropped off at door",
     stageTimestamps: {
       order_received: "8 Mar, 7:40 pm",
       pickup_completed: "9 Mar, 8:18 am",
@@ -354,7 +354,7 @@ export const MOCK_ORDERS: OrderData[] = [
     pickupWindow: "21 Mar · 6:00 – 8:00 PM",
     dropoffWindow: "25 Mar · 6:00 – 8:00 PM",
     pickupNote: "Picked up at door",
-    dropoffNote: "Delivered at door",
+    dropoffNote: "Dropped off at door",
     stageTimestamps: {
       order_received: "20 Mar, 8:24 pm",
       pickup_completed: "21 Mar, 6:32 pm",

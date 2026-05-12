@@ -5,7 +5,7 @@ import { CancelButton } from "./CancelButton";
 import { OrderHeader } from "./OrderHeader";
 import type { OrderType } from "@/lib/order-types";
 
-export type HeroVariant = "received" | "processing" | "delivery" | "complete" | "hold";
+type HeroVariant = "received" | "processing" | "delivery" | "complete" | "hold";
 
 interface Props {
   status: string;

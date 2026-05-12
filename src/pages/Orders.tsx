@@ -92,7 +92,7 @@ const EmptyActive = () => (
     </div>
     <button
       type="button"
-      onClick={() => console.log("place order clicked")}
+      onClick={() => { /* no-op: place-order CTA is not wired in the prototype */ }}
       className="mt-2 w-full rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground shadow-press transition-transform duration-100 ease-out active:duration-75 active:scale-[0.97]"
     >
       Place an order

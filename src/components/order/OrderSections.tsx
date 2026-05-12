@@ -48,7 +48,7 @@ type Confirmation = {
   status: "done" | "pending";
 };
 
-export type OrderStage = "received" | "collected" | "items-in" | "delivery" | "delivered";
+type OrderStage = "received" | "collected" | "items-in" | "delivery" | "delivered";
 
 const buildConfirmations = (stage: OrderStage): Confirmation[] => {
   const pickupDone = stage !== "received";

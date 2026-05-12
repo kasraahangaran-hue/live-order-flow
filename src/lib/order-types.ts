@@ -71,11 +71,11 @@ export const STATUS_LABEL: Record<OrderStatus, string> = {
   dropoff_failed: "Drop Off Failed",
   pending_items_delivery_partial: "Order Partially Dropped Off",
   pending_items_delivery_followup: "Pending Item Drop Off",
-  dropoff_completed: "Completed",
+  dropoff_completed: "Order Completed",
   order_cancelled: "Cancelled",
   payment_failed: "Payment Failed",
   laundry_bag_requested: "Laundry Bag Requested",
-  laundry_bag_delivered: "Laundry Bag Delivered",
+  laundry_bag_delivered: "Laundry Bag Dropped Off",
 };
 
 export const ORDER_TYPE_LABEL: Record<OrderType, string> = {
