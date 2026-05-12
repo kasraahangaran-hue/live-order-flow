@@ -25,7 +25,7 @@ const DropoffAssigned = () => {
   return (
     <OrderShell
       hero={{
-        status: "Out for Drop Off",
+        status: "Driver Assigned",
         subtitle: "Your items are with the driver and on their way back to you",
         orderType: order.orderType,
         orderId: order.orderId,
