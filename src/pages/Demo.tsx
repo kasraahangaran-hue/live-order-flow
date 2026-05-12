@@ -8,6 +8,7 @@ const PRODUCT_TYPES: OrderType[] = ["laundry", "shoe_bag", "finery"];
 const IN_FLIGHT: OrderStatus[] = [
   "order_received",
   "pickup_assigned",
+  "pickup_in_progress",
   "pickup_completed",
   "items_sorted",
   "dropoff_assigned",
