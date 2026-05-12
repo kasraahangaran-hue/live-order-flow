@@ -14,19 +14,19 @@ const PendingItemsDeliveryFollowup = () => {
   const noun = pending === 1 ? "item" : "items";
 
   const stages: Stage[] = [
-    { key: "received", label: "Order Received", timestamp: ts.order_received },
-    { key: "collected", label: "Order Pick Up", timestamp: ts.pickup_completed },
-    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_sorted },
+    { key: "order_received", label: "Order Received", timestamp: ts.order_received },
+    { key: "pickup_completed", label: "Order Picked-up", timestamp: ts.pickup_completed },
+    { key: "items_sorted", label: "Items in Process", timestamp: ts.items_sorted },
     {
-      key: "approval_done",
+      key: "items_pending_approval",
       label: "2 items needed approval",
       icon: "approval",
       timestamp: ts.items_pending_approval ?? "22 Aug, 10:00 am",
     },
-    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
-    { key: "partially_delivered", label: "Order Partially Delivered", timestamp: ts.pending_items_delivery_partial },
-    { key: "pending_item_delivery", label: "Pending Item Delivery", icon: "truck" },
-    { key: "complete", label: "Delivered" },
+    { key: "dropoff_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
+    { key: "pending_items_delivery_partial", label: "Order Partially Dropped Off", timestamp: ts.pending_items_delivery_partial },
+    { key: "pending_items_delivery_followup", label: "Pending Item Drop Off", icon: "truck" },
+    { key: "dropoff_completed", label: "Dropped Off" },
   ];
 
   return (
