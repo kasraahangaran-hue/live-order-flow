@@ -14,16 +14,16 @@ const PendingItemsDeliveryPartial = () => {
   const noun = pending === 1 ? "item" : "items";
 
   const stages: Stage[] = [
-    { key: "received", label: "Order Received", timestamp: ts.received },
-    { key: "collected", label: "Order Pick Up", timestamp: ts.collected },
-    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_in_process },
+    { key: "received", label: "Order Received", timestamp: ts.order_received },
+    { key: "collected", label: "Order Pick Up", timestamp: ts.pickup_completed },
+    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_sorted },
     {
       key: "approval_done",
       label: "2 items needed approval",
       icon: "approval",
-      timestamp: ts.approval_completed ?? "22 Aug, 10:00 am",
+      timestamp: ts.items_pending_approval ?? "22 Aug, 10:00 am",
     },
-    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.delivery_today },
+    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
     { key: "partially_delivered", label: "Order Partially Delivered", icon: "package" },
     { key: "pending_item_delivery", label: "Pending Item Delivery" },
     { key: "complete", label: "Delivered" },
@@ -53,7 +53,7 @@ const PendingItemsDeliveryPartial = () => {
       <DeliveryCard
         dropoffNote={order.pickupNote ?? "Picked up at door"}
         address={order.pickupLocation}
-        when={ts.collected ?? order.pickupWindow}
+        when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
         dropoff={{ label: "Partially delivered", when: order.dropoffWindow, done: true }}
       />

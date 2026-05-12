@@ -16,16 +16,16 @@ const DropoffFailed = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.received },
-    { key: "collected", label: "Collected", timestamp: ts.collected },
-    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_in_process },
-    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.delivery_today },
+    { key: "received", label: "Order received", timestamp: ts.order_received },
+    { key: "collected", label: "Collected", timestamp: ts.pickup_completed },
+    { key: "items_in_process", label: "Items in Process", timestamp: ts.items_sorted },
+    { key: "delivery_today", label: "Drop Off Today", timestamp: ts.dropoff_today },
     {
       key: "driver_on_the_way",
       label: "Driver on the Way",
       icon: "hold",
       pill: { label: "DROP OFF FAILED", variant: "urgent" },
-      timestamp: ts.driver_on_the_way,
+      timestamp: ts.dropoff_in_progress,
     },
     { key: "complete", label: "Delivered" },
   ];
@@ -55,7 +55,7 @@ const DropoffFailed = () => {
       <DeliveryCard
         dropoffNote={order.pickupNote ?? "Picked up at door"}
         address={order.pickupLocation}
-        when={ts.collected ?? order.pickupWindow}
+        when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
         dropoff={{ label: "Drop off failed", when: "Awaiting reschedule" }}
       />

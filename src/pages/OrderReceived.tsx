@@ -11,7 +11,7 @@ const OrderReceived = () => {
   const ts = order.stageTimestamps;
 
   const stages: Stage[] = [
-    { key: "received", label: "Order received", timestamp: ts.received ?? "Just now" },
+    { key: "received", label: "Order received", timestamp: ts.order_received ?? "Just now" },
     { key: "collected", label: "Collected" },
     { key: "processing", label: "Processing" },
     { key: "delivery", label: "Out for delivery" },

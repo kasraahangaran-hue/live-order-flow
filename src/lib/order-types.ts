@@ -94,14 +94,18 @@ export const STATUS_TO_BG_CLASS: Record<StatusCategory, string> = {
 };
 
 export interface OrderStageTimestamps {
-  received?: string;
-  collected?: string;
-  items_in_process?: string;
-  approval_completed?: string;
-  delivery_today?: string;
-  driver_on_the_way?: string;
-  partially_delivered?: string;
-  complete?: string;
+  order_received?: string;
+  pickup_assigned?: string;
+  pickup_in_progress?: string;
+  pickup_completed?: string;
+  items_sorted?: string;
+  items_pending_approval?: string;
+  dropoff_assigned?: string;
+  dropoff_today?: string;
+  dropoff_in_progress?: string;
+  dropoff_completed?: string;
+  pending_items_delivery_partial?: string;
+  pending_items_delivery_followup?: string;
 }
 
 export interface OrderData {
