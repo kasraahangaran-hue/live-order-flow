@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 
 /**
  * Scroll management on route changes.
- * - Saves scroll position per pathname in sessionStorage on unload.
+ * - Saves scroll position per pathname whenever the user scrolls.
  * - On POP navigation (back/forward), restores the saved position.
  * - On PUSH/REPLACE navigation, scrolls to top.
  */
@@ -26,28 +26,47 @@ const writePosition = (path: string, y: number) => {
 export const ScrollToTop = () => {
   const { pathname } = useLocation();
   const navType = useNavigationType();
+  const pathnameRef = useRef(pathname);
 
-  // Save position before leaving the current path
+  // Disable the browser's own restoration so we control it
   useEffect(() => {
-    return () => {
-      writePosition(pathname, window.scrollY);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  // Continuously track scroll position for the current pathname
+  useEffect(() => {
+    pathnameRef.current = pathname;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        writePosition(pathnameRef.current, window.scrollY);
+        ticking = false;
+      });
     };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  // Restore or reset on route change
-  useEffect(() => {
+  // Restore (POP) or reset (PUSH/REPLACE) on route change
+  useLayoutEffect(() => {
     if (navType === "POP") {
-      const positions = readPositions();
-      const y = positions[pathname] ?? 0;
-      // Defer to allow content to render before scrolling
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: y, left: 0, behavior: "instant" as ScrollBehavior });
-        document.querySelectorAll<HTMLElement>("[data-scroll-root]").forEach((el) => {
-          el.scrollTop = y;
-        });
-      });
+      const target = readPositions()[pathname] ?? 0;
+      // Try across several frames in case content height grows after mount
+      let attempts = 0;
+      const tryScroll = () => {
+        window.scrollTo(0, target);
+        attempts += 1;
+        if (attempts < 5 && Math.abs(window.scrollY - target) > 2) {
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+      window.scrollTo(0, 0);
       document.querySelectorAll<HTMLElement>("[data-scroll-root]").forEach((el) => {
         el.scrollTop = 0;
       });
