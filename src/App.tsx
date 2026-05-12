@@ -6,10 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Demo from "./pages/Demo.tsx";
 import DropoffToday from "./pages/DropoffToday.tsx";
 import Orders from "./pages/Orders.tsx";
-import Home from "./pages/Home.tsx";
-import Pricing from "./pages/Pricing.tsx";
-import Help from "./pages/Help.tsx";
-import More from "./pages/More.tsx";
 import OrderReceived from "./pages/OrderReceived.tsx";
 import PickupCompleted from "./pages/PickupCompleted.tsx";
 import ItemsSorted from "./pages/ItemsSorted.tsx";
@@ -40,10 +36,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Navigate to="/orders" replace />} />
           <Route path="/orders" element={<Orders />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/more" element={<More />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/order-received" element={<OrderReceived />} />
           <Route path="/pickup-completed" element={<PickupCompleted />} />
