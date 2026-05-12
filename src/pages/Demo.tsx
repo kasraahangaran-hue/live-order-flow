@@ -41,8 +41,8 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
     stageTimestamps: {
       received: "20 Apr, 9:12 pm",
       collected: "21 Apr, 8:42 am",
-      items_in_process: "21 Apr, 1:05 pm",
-      delivery_today: "22 Apr, 11:20 am",
+      items_sorted: "21 Apr, 1:05 pm",
+      dropoff_today: "22 Apr, 11:20 am",
       complete: "22 Apr, 12:41 pm",
     },
     itemsAwaitingApproval: status === "items_pending_approval" ? 2 : undefined,
