@@ -55,7 +55,7 @@ const PendingItemsDeliveryPartial = () => {
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: "Partially delivered", when: order.dropoffWindow, done: true }}
+        dropoff={{ label: "Partially Dropped Off", when: order.dropoffWindow, done: true }}
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
