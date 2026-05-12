@@ -76,7 +76,7 @@ export const ActionCard = ({
 
   return (
     <section
-      className={cn("mx-5 mt-4 rounded-xl p-4 animate-fade-in", surfaceClass)}
+      className={cn("mx-5 mt-4 rounded-lg p-4 animate-fade-in", surfaceClass)}
       style={{ animationDelay: "60ms" }}
     >
       <div className="flex items-start gap-3">
