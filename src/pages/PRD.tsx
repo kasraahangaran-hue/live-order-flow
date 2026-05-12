@@ -134,7 +134,7 @@ const PRD = () => {
                 <Tr i={0} k="order_received" l="Order received" m="Order placed, awaiting pickup driver." />
                 <Tr i={1} k="pickup_completed" l="Collected" m="Driver has the bag, en route to facility." />
                 <Tr i={2} k="items_sorted" l="Processing" m="Items at facility being cleaned/ironed." />
-                <Tr i={3} k="dropoff_assigned" l="Out for delivery" m="Bag is on its way back to customer." />
+                <Tr i={3} k="dropoff_assigned" l="Driver Assigned" m="Bag is on its way back to customer." />
                 <Tr i={4} k="dropoff_completed" l="Delivered" m="Delivered to customer. Photos & receipt available." />
               </tbody>
             </table>
