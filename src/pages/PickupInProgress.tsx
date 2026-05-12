@@ -37,7 +37,7 @@ const PickupInProgress = () => {
       }}
     >
       <DeliveryCard
-        dropoffNote={order.pickupNote ?? "Picked up at door"}
+        dropoffNote={order.pickupNote ?? "Pickup at door"}
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
