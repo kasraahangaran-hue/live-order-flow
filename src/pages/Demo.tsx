@@ -55,19 +55,20 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
 
 const STATE_LINKS = [
   { to: "/order-received", label: "Order received" },
-  { to: "/driver-assigned", label: "Driver assigned" },
-  { to: "/order-collected", label: "Order collected" },
-  { to: "/processing", label: "Processing" },
-  { to: "/approval-required", label: "Approval required" },
-  { to: "/out-for-drop-off", label: "Out for drop off" },
-  { to: "/out-for-delivery", label: "Out for delivery" },
-  { to: "/driver-on-the-way", label: "Driver on the way" },
-  { to: "/partial-delivery", label: "Partial delivery" },
-  { to: "/pending-item-delivery", label: "Pending item delivery" },
-  { to: "/drop-off-failed", label: "Drop off failed" },
+  { to: "/pickup-assigned", label: "Pickup assigned" },
+  { to: "/pickup-in-progress", label: "Pickup in progress" },
+  { to: "/pickup-completed", label: "Pickup completed" },
+  { to: "/items-sorted", label: "Items sorted" },
+  { to: "/items-pending-approval", label: "Items pending approval" },
+  { to: "/dropoff-assigned", label: "Dropoff assigned" },
+  { to: "/dropoff-today", label: "Dropoff today" },
+  { to: "/dropoff-in-progress", label: "Dropoff in progress" },
+  { to: "/pending-items-delivery-partial", label: "Pending items delivery (partial)" },
+  { to: "/pending-items-delivery-followup", label: "Pending items delivery (followup)" },
+  { to: "/dropoff-failed", label: "Dropoff failed" },
   { to: "/payment-failed", label: "Payment failed" },
-  { to: "/cancelled", label: "Cancelled" },
-  { to: "/order-complete", label: "Order complete" },
+  { to: "/order-cancelled", label: "Order cancelled" },
+  { to: "/dropoff-completed", label: "Dropoff completed" },
 ];
 
 const Demo = () => {
