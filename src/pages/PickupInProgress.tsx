@@ -41,7 +41,7 @@ const PickupInProgress = () => {
         address={order.pickupLocation}
         when={ts.pickup_completed ?? order.pickupWindow}
         pickupDone
-        dropoff={{ label: order.dropoffNote ?? "Delivery at door", when: arriving }}
+        dropoff={{ label: order.dropoffNote ?? "Drop off at door", when: arriving }}
       />
 
       <OrderConfirmations stage="delivery" orderId={order.orderId} order={order} />
