@@ -58,19 +58,19 @@ const buildConfirmations = (stage: OrderStage): Confirmation[] => {
     {
       key: "pickup",
       label: "Proof of pick up",
-      subtitle: pickupDone ? "Tap to view photos" : "Available after pickup",
+      subtitle: pickupDone ? "View photos" : "Available after pickup",
       status: pickupDone ? "done" : "pending",
     },
     {
       key: "items",
       label: "Items received at Washmen",
-      subtitle: itemsDone ? "Tap to view photos" : "Available after items received",
+      subtitle: itemsDone ? "View photos" : "Available after items received",
       status: itemsDone ? "done" : "pending",
     },
     {
       key: "drop",
       label: "Proof of drop off",
-      subtitle: dropDone ? "Tap to view photos" : "Available after delivery",
+      subtitle: dropDone ? "View photos" : "Available after delivery",
       status: dropDone ? "done" : "pending",
     },
   ];
