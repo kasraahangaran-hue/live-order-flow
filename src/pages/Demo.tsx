@@ -54,21 +54,21 @@ const synthOrder = (orderId: string, orderType: OrderType, status: OrderStatus):
 };
 
 const STATE_LINKS = [
-  { to: "/order-received", label: "Order received" },
-  { to: "/pickup-assigned", label: "Pickup assigned" },
-  { to: "/pickup-in-progress", label: "Pickup in progress" },
-  { to: "/pickup-completed", label: "Pickup completed" },
-  { to: "/items-sorted", label: "Items sorted" },
-  { to: "/items-pending-approval", label: "Items pending approval" },
-  { to: "/dropoff-assigned", label: "Dropoff assigned" },
-  { to: "/dropoff-today", label: "Dropoff today" },
-  { to: "/dropoff-in-progress", label: "Dropoff in progress" },
-  { to: "/pending-items-delivery-partial", label: "Pending items delivery (partial)" },
-  { to: "/pending-items-delivery-followup", label: "Pending items delivery (followup)" },
-  { to: "/dropoff-failed", label: "Dropoff failed" },
-  { to: "/payment-failed", label: "Payment failed" },
-  { to: "/order-cancelled", label: "Order cancelled" },
-  { to: "/dropoff-completed", label: "Dropoff completed" },
+  { to: "/order-received", label: "Order Received" },
+  { to: "/pickup-assigned", label: "Pickup Assigned" },
+  { to: "/pickup-in-progress", label: "Pickup in Progress" },
+  { to: "/pickup-completed", label: "Order Picked-up" },
+  { to: "/items-sorted", label: "Items Sorted" },
+  { to: "/items-pending-approval", label: "Items Pending Approval" },
+  { to: "/dropoff-assigned", label: "Dropoff Assigned" },
+  { to: "/dropoff-today", label: "Dropoff Today" },
+  { to: "/dropoff-in-progress", label: "Dropoff in Progress" },
+  { to: "/pending-items-delivery-partial", label: "Order Partially Dropped Off" },
+  { to: "/pending-items-delivery-followup", label: "Pending Item Drop Off" },
+  { to: "/dropoff-failed", label: "Dropoff Failed" },
+  { to: "/payment-failed", label: "Payment Failed" },
+  { to: "/order-cancelled", label: "Order Cancelled" },
+  { to: "/dropoff-completed", label: "Dropoff Completed" },
 ];
 
 const Demo = () => {
