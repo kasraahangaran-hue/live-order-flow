@@ -214,13 +214,29 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
+                    {/* Render both icons so the browser caches them on first paint;
+                        toggle visibility instead of swapping src to avoid a fetch/flash on state change. */}
                     <img
-                      src={pressActive ? addPressingActiveUrl : addPressingInactiveUrl}
+                      src={addPressingActiveUrl}
                       alt=""
                       aria-hidden
                       width={32}
                       height={32}
-                      className="h-8 w-8 select-none"
+                      className={cn(
+                        "h-8 w-8 select-none",
+                        pressActive ? "block" : "hidden",
+                      )}
+                    />
+                    <img
+                      src={addPressingInactiveUrl}
+                      alt=""
+                      aria-hidden
+                      width={32}
+                      height={32}
+                      className={cn(
+                        "h-8 w-8 select-none",
+                        pressActive ? "hidden" : "block",
+                      )}
                     />
                   </div>
                   <div className="min-w-0 flex-1">
