@@ -30,6 +30,33 @@ import { DEFAULT_ORDER_SERVICES, PRESSING_CATEGORIES } from "@/lib/order-types";
 import { useOrderData } from "@/lib/useOrderData";
 import { servicesStore, useServices } from "@/lib/services-store";
 
+// Preload all service icons immediately on module load so they're cached
+// before any render — eliminates the circle-before-icon flash.
+const ICON_URLS = [
+  washFoldIconUrl,
+  cleanPressIconUrl,
+  bedBathIconUrl,
+  pressOnlyIconUrl,
+  addPressingActiveUrl,
+  addPressingInactiveUrl,
+];
+if (typeof window !== "undefined") {
+  ICON_URLS.forEach((url) => {
+    const img = new Image();
+    img.decoding = "sync";
+    img.src = url;
+    // also inject a <link rel="preload"> so the browser prioritizes it
+    if (!document.head.querySelector(`link[data-preload-icon="${url}"]`)) {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = url;
+      link.setAttribute("data-preload-icon", url);
+      document.head.appendChild(link);
+    }
+  });
+}
+
 const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
   notify: "Notify me",
   "transfer-clean-press": "Transfer to clean & press",
