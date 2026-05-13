@@ -21,6 +21,7 @@ import PendingItemsDelivery from "./pages/PendingItemsDelivery.tsx";
 import OrderCancelled from "./pages/OrderCancelled.tsx";
 import LaundryBagOrder from "./pages/LaundryBagOrder.tsx";
 import PRD from "./pages/PRD.tsx";
+import WashAndFoldInfo from "./pages/WashAndFoldInfo.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { ScrollToTop } from "./components/nav/ScrollToTop.tsx";
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/laundry-bag" element={<LaundryBagOrder />} />
           <Route path="/dropoff-completed" element={<DropoffCompleted />} />
           <Route path="/prd" element={<PRD />} />
+          <Route path="/wash-and-fold-info" element={<WashAndFoldInfo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

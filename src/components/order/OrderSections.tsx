@@ -28,6 +28,7 @@ import { DelicateItemsSheet, delicateItemsSummary } from "./DelicateItemsSheet";
 import type { OrderData, OrderServices } from "@/lib/order-types";
 import { DEFAULT_ORDER_SERVICES, PRESSING_CATEGORIES } from "@/lib/order-types";
 import { useOrderData } from "@/lib/useOrderData";
+import { servicesStore, useServices } from "@/lib/services-store";
 
 const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
   notify: "Notify me",
@@ -157,36 +158,19 @@ const SERVICE_TILES: ServiceTile[] = [
   { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
 ];
 
-/**
- * Wash & Fold+ ("Press & Hang") details page.
- *
- * In production this opens a NATIVE screen via the iOS/Android bridge —
- * the customer app exposes `window.washmen?.openWashAndFoldInfo()` (or
- * equivalent message channel). This page does NOT live on the web.
- *
- * For Lovable demo / preview, we deep-link to the Washmen Order Flow
- * project's `/laundry/wash-and-fold-info` route in a new tab so the
- * interaction is testable end-to-end.
- */
-const WF_INFO_DEMO_URL =
-  "https://id-preview--184088d1-7249-4d14-be85-b2a50400f77d.lovable.app/laundry/wash-and-fold-info";
-
-const openWashAndFoldInfo = () => {
-  // TODO(native-bridge): Replace with the production native handoff.
-  // e.g. window.washmen?.openWashAndFoldInfo?.()
-  if (typeof window !== "undefined") {
-    window.open(WF_INFO_DEMO_URL, "_blank", "noopener,noreferrer");
-  }
-};
-
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
+  const navigate = useNavigate();
   const order = useOrderData();
-  const initial = order.services ?? DEFAULT_ORDER_SERVICES;
-  const [services, setServices] = useState<OrderServices>(initial);
+  const services = useServices(order.services ?? DEFAULT_ORDER_SERVICES);
 
   const toggle = (key: keyof OrderServices) => {
     if (locked) return;
-    setServices((s) => ({ ...s, [key]: !s[key] }));
+    servicesStore.set({ [key]: !services[key] } as Partial<OrderServices>);
+  };
+
+  const openWashAndFoldInfo = () => {
+    if (locked) return;
+    navigate("/wash-and-fold-info");
   };
 
   const pressActive = services.washAndFold && services.addPressing;
