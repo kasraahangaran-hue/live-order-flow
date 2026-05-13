@@ -76,7 +76,7 @@ const WashAndFoldTerms = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-10 bg-background/95 px-5 pt-[max(env(safe-area-inset-top),16px)] pb-3 backdrop-blur">
-        <h1 className="text-base font-bold text-primary">Wash &amp; Fold+ Terms</h1>
+        <h1 className="text-[20px] font-bold leading-[28px] text-primary">Wash &amp; Fold+ Terms</h1>
       </header>
 
       <main className="flex-1 px-5 pb-32 pt-2 flex flex-col gap-3">
@@ -127,8 +127,8 @@ const WashAndFoldTerms = () => {
                 {NOT_SUITABLE_BULLETS.map((b) => (
                   <li key={b}>
                     {b},
-                    <ul className="mt-1 list-disc pl-5">
-                      <li className="text-xs font-bold text-primary">
+                    <ul className="mt-1 list-disc pl-5 marker:text-foreground">
+                      <li className="text-xs font-bold text-foreground">
                         use Clean &amp; Press instead{" "}
                         <button
                           type="button"
