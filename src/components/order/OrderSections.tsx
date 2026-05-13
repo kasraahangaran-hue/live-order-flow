@@ -253,12 +253,12 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
               </div>
             )}
 
-            {services.washAndFold && services.addPressing ? (
+            {services.addPressing ? (
               <div className="flex flex-col px-4 pb-3">
                 <div className="flex items-center gap-3 pt-1 pb-2">
                   <div
                     className={cn(
-                      "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
+                      "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors",
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
@@ -266,7 +266,12 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="truncate text-sm font-semibold leading-tight text-primary">
+                      <p
+                        className={cn(
+                          "truncate text-sm font-semibold leading-tight transition-colors",
+                          pressActive ? "text-primary" : "text-muted-foreground",
+                        )}
+                      >
                         Press &amp; Hang
                       </p>
                       <span className="rounded-md bg-washmen-yellow-pill px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
@@ -282,7 +287,10 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       type="button"
                       aria-label="Edit pressing selections"
                       onClick={openWashAndFoldInfo}
-                      className="flex h-6 w-6 shrink-0 items-center justify-center text-primary"
+                      className={cn(
+                        "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
+                        pressActive ? "text-primary" : "text-muted-foreground",
+                      )}
                     >
                       <Pencil className="h-4 w-4" />
                     </button>
@@ -291,10 +299,22 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                 <div className="pl-[60px] flex flex-col gap-1">
                   {displayPressingCats.map((cat) => (
                     <div key={cat.id} className="flex items-center gap-3">
-                      <span className="flex-1 text-xs font-light leading-[18px] text-muted-foreground">
+                      <span
+                        className={cn(
+                          "flex-1 text-xs font-light leading-[18px] transition-colors",
+                          pressActive ? "text-muted-foreground" : "text-muted-foreground/60",
+                        )}
+                      >
                         {cat.label}
                       </span>
-                      <span className="shrink-0 rounded-md bg-washmen-light-aqua px-1.5 py-0.5 text-[11px] font-medium leading-[16px] text-primary">
+                      <span
+                        className={cn(
+                          "shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium leading-[16px] transition-colors",
+                          pressActive
+                            ? "bg-washmen-light-aqua text-primary"
+                            : "bg-muted text-muted-foreground",
+                        )}
+                      >
                         + AED {cat.ratePlus} /item
                       </span>
                     </div>
