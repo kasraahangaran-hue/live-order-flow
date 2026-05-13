@@ -204,7 +204,7 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                 <div className="flex items-center gap-3 pt-1 pb-2">
                   <div
                     className={cn(
-                      "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full",
+                      "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
@@ -212,7 +212,9 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       src={pressActive ? addPressingActiveUrl : addPressingInactiveUrl}
                       alt=""
                       aria-hidden
-                      className="h-7 w-7 select-none"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 select-none"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -232,14 +234,14 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                     <button
                       type="button"
                       aria-label="Edit pressing selections"
-                      onClick={() => toggle("addPressing")}
+                      onClick={openWashAndFoldInfo}
                       className="flex h-6 w-6 shrink-0 items-center justify-center text-primary"
                     >
                       <Pencil className="h-4 w-4" />
                     </button>
                   )}
                 </div>
-                <div className="pl-[52px] flex flex-col gap-1">
+                <div className="pl-[60px] flex flex-col gap-1">
                   {displayPressingCats.map((cat) => (
                     <div key={cat.id} className="flex items-center gap-3">
                       <span className="flex-1 text-xs font-light leading-[18px] text-muted-foreground">
