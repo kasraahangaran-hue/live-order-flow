@@ -474,18 +474,35 @@ const ServiceRow = ({
       <div
         className={cn(
           "flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
-          iconBgClass,
-          disabled && "opacity-60",
+          disabled ? "bg-[#EFEFF4]" : iconBgClass,
         )}
       >
-        {iconSlot ?? <img src={iconUrl} alt="" aria-hidden width={32} height={32} className={cn("h-8 w-8 select-none", disabled && "opacity-70")} />}
+        {iconSlot ?? (
+          <img
+            src={iconUrl}
+            alt=""
+            aria-hidden
+            width={32}
+            height={32}
+            className="h-8 w-8 select-none"
+            style={
+              disabled
+                ? { filter: "grayscale(1) opacity(0.5) brightness(1.15)" }
+                : undefined
+            }
+          />
+        )}
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <p
             className={cn(
               "min-w-0 truncate text-sm font-semibold leading-tight",
-              titleMuted ? "text-muted-foreground" : "text-primary",
+              disabled
+                ? "text-[#C3C8DB]"
+                : titleMuted
+                  ? "text-muted-foreground"
+                  : "text-primary",
             )}
           >
             {title}
