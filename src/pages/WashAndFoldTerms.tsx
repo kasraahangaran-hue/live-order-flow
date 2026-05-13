@@ -153,7 +153,7 @@ export default function WashAndFoldTerms() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2 pl-5 text-xs font-semibold text-foreground underline">
+                <p className="mt-2 pl-5 text-xs font-semibold text-black underline">
                   Damage compensation will be limited to AED 200 an item
                 </p>
               </CollapsibleContent>
