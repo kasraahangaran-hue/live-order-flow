@@ -84,10 +84,10 @@ const WashAndFoldTerms = () => {
           <div className="rounded-lg border border-border bg-card p-4">
             <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-light-green text-primary">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-primary-green text-primary">
                   <Check className="h-4 w-4" strokeWidth={3} />
                 </div>
-                <p className="text-sm font-semibold text-primary">ONLY Suitable for:</p>
+                <p className="text-base font-semibold text-primary">ONLY Suitable for:</p>
               </div>
               {suitableOpen ? (
                 <ChevronUp className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -110,10 +110,10 @@ const WashAndFoldTerms = () => {
           <div className="rounded-lg border border-border bg-card p-4">
             <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-light-pink text-primary">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-red text-white">
                   <X className="h-4 w-4" strokeWidth={3} />
                 </div>
-                <p className="text-sm font-semibold text-primary">NOT Suitable for:</p>
+                <p className="text-base font-semibold text-primary">NOT Suitable for:</p>
               </div>
               {notSuitableOpen ? (
                 <ChevronUp className="h-5 w-5 shrink-0 text-muted-foreground" />
@@ -149,10 +149,10 @@ const WashAndFoldTerms = () => {
 
         {/* FAQ */}
         <Collapsible open={faqOpen} onOpenChange={setFaqOpen}>
-          <div className="rounded-lg bg-washmen-light-pink px-4 py-3">
-            <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
+          <div className="rounded-lg bg-washmen-light-red px-4 py-3">
+            <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left leading-none">
               <div className="flex items-center gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-white">
                   <HelpCircle className="h-4 w-4" strokeWidth={2} />
                 </div>
                 <p className="text-xs font-medium text-primary">
