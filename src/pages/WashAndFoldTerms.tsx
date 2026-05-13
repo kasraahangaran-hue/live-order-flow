@@ -75,7 +75,7 @@ export default function WashAndFoldTerms() {
   };
 
   return (
-    <div className="flex h-full min-h-screen flex-col overflow-hidden bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Header */}
       <header className="shrink-0 bg-background px-6 pt-[max(env(safe-area-inset-top),24px)] pb-3">
         <div className="flex items-center gap-3">
@@ -86,7 +86,7 @@ export default function WashAndFoldTerms() {
       </header>
 
       {/* Body */}
-      <main className="flex-1 overflow-y-auto overscroll-contain px-6 pt-3 pb-32">
+      <main className="flex-1 px-6 pt-3 pb-32">
         <div className="flex flex-col gap-3">
           {/* Card 1 — Suitable */}
           <Collapsible open={suitableOpen} onOpenChange={setSuitableOpen}>
