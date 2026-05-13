@@ -45,7 +45,7 @@ const WashAndFoldTerms = () => {
     if (mode === "gate") {
       wfPlusTermsStore.set(true);
     }
-    if (returnTo) {
+    if (typeof returnTo === "string") {
       navigate(returnTo, { replace: mode === "gate" });
     } else {
       navigate(-1);
