@@ -440,6 +440,8 @@ interface ServiceRowProps {
   active?: boolean;
   titleMutedWhenInactive?: boolean;
   locked?: boolean;
+  /** Apply muted/greyed visual treatment (used for locked tracking screens). */
+  disabled?: boolean;
   /** Wraps the row in its own card when true. */
   standalone?: boolean;
   onPress?: () => void;
