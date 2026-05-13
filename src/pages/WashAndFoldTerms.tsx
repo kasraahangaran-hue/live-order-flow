@@ -57,6 +57,9 @@ const WashAndFoldTerms = () => {
   const [faqOpen, setFaqOpen] = useState(false);
   const [suitableOpen, setSuitableOpen] = useState(true);
   const [notSuitableOpen, setNotSuitableOpen] = useState(true);
+  const [autoApprovalsOpen, setAutoApprovalsOpen] = useState(false);
+  const [autoApprovals, setAutoApprovals] = useState<AutoApprovalsState>(DEFAULT_AUTO_APPROVALS);
+  const wfConfigured = autoApprovals.washFold !== "notify";
 
   const handleAcknowledge = () => {
     if (mode === "gate") {
@@ -163,11 +166,48 @@ const WashAndFoldTerms = () => {
               )}
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Our team will identify it during sorting and contact you. Unsuitable
-                items can be returned unwashed or transferred to Clean &amp; Press at
-                standard pricing.
-              </p>
+              <div className="mt-3 flex flex-col gap-3 pb-1">
+                <p className="text-xs text-muted-foreground">
+                  Our team will identify it during sorting and contact you. Unsuitable
+                  items can be returned unwashed or transferred to Clean &amp; Press at
+                  standard pricing.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  You can also set automatic approvals on what we should do:
+                </p>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAutoApprovalsOpen(true);
+                  }}
+                  className="flex w-full items-start gap-3 rounded-lg bg-card px-4 py-3 text-left transition-colors hover:bg-card/80"
+                >
+                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-washmen-light-aqua text-primary">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col gap-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="text-xs font-medium text-primary">
+                        Auto-Approvals
+                      </span>
+                      {wfConfigured ? (
+                        <Pencil className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      ) : (
+                        <Plus className="h-5 w-5 shrink-0 text-muted-foreground" strokeWidth={2} />
+                      )}
+                    </div>
+                    {wfConfigured && (
+                      <p className="text-xs text-muted-foreground">
+                        Wash &amp; Fold:{" "}
+                        <span className="font-medium text-primary">
+                          {WF_SHORT_LABELS[autoApprovals.washFold]}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                </button>
+              </div>
             </CollapsibleContent>
           </div>
         </Collapsible>
@@ -181,6 +221,13 @@ const WashAndFoldTerms = () => {
           I Understand
         </Button>
       </footer>
+
+      <AutoApprovalsSheet
+        open={autoApprovalsOpen}
+        onOpenChange={setAutoApprovalsOpen}
+        value={autoApprovals}
+        onApply={setAutoApprovals}
+      />
     </div>
   );
 };
