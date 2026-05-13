@@ -451,6 +451,7 @@ const ServiceRow = ({
   );
 
   const wrapperClass = cn(
+    "block w-full",
     standalone && "rounded-lg border border-border bg-card overflow-hidden",
   );
 
