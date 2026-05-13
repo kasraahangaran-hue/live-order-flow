@@ -127,8 +127,8 @@ const WashAndFoldTerms = () => {
                 {NOT_SUITABLE_BULLETS.map((b) => (
                   <li key={b}>
                     {b},
-                    <ul className="mt-1 list-disc pl-5">
-                      <li className="text-xs font-bold text-primary">
+                    <ul className="mt-1 list-disc pl-5 marker:text-foreground">
+                      <li className="text-xs font-bold text-foreground">
                         use Clean &amp; Press instead{" "}
                         <button
                           type="button"
