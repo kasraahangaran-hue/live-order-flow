@@ -6,15 +6,15 @@ import {
   Camera,
   Plus,
   Pencil,
-  WashingMachine,
-  Shirt,
-  BedDouble,
-  Footprints,
-  Crown,
-  Wind,
   Minus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import washFoldIconUrl from "@/assets/icons/service-wash-fold.svg";
+import cleanPressIconUrl from "@/assets/icons/service-clean-press.svg";
+import bedBathIconUrl from "@/assets/icons/service-bed-bath.svg";
+import pressOnlyIconUrl from "@/assets/icons/service-press-only.svg";
+import addPressingActiveUrl from "@/assets/icons/add-pressing-active.svg";
+import addPressingInactiveUrl from "@/assets/icons/add-pressing-inactive.svg";
 import {
   DoorbellInstructionsSheet,
   doorbellSummary,
