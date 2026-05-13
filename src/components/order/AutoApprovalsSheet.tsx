@@ -99,11 +99,11 @@ export function AutoApprovalsSheet({ open, onOpenChange, value, onApply }: Props
               <div className="flex h-8 w-8 shrink-0 items-center justify-center">
                 <img src={bagWashFoldUrl} alt="" className="h-6 w-6 select-none" />
               </div>
-              <p className="text-[14px] font-medium leading-[20px] text-primary">
+              <p className="text-[16px] font-semibold leading-[22px] text-primary">
                 Wash and Fold Approval
               </p>
             </div>
-            <p className="text-[13px] font-light leading-[18px] tracking-[0.2px] text-primary">
+            <p className="text-[15px] font-normal leading-[22px] tracking-[0.2px] text-primary">
               In order to protect your delicate &amp; expensive items, our team will flag items
               that we believe might not be suitable to Wash &amp; Fold and will require your
               approval on how to proceed
