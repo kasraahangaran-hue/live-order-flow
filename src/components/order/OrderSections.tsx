@@ -558,7 +558,9 @@ const ServiceRow = ({
           className={cn(
             "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors",
             disabled
-              ? "border-muted-foreground/40 bg-transparent text-muted-foreground/60"
+              ? selected
+                ? "border-[#C3C8DB] bg-[#EFEFF4] text-[#C3C8DB]"
+                : "border-[#C3C8DB] bg-transparent text-[#C3C8DB]"
               : selected
                 ? "border-washmen-primary-green bg-washmen-primary-green text-primary"
                 : "border-primary bg-transparent text-primary",
