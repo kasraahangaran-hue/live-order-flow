@@ -103,7 +103,7 @@ export function AutoApprovalsSheet({ open, onOpenChange, value, onApply }: Props
                 Wash and Fold Approval
               </p>
             </div>
-            <p className="text-[13px] font-light leading-[18px] tracking-[0.2px] text-primary">
+            <p className="text-[13px] font-extralight leading-[18px] tracking-[0.2px] text-primary">
               In order to protect your delicate &amp; expensive items, our team will flag items
               that we believe might not be suitable to Wash &amp; Fold and will require your
               approval on how to proceed
