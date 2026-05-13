@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Check, X, HelpCircle, ChevronDown, ChevronUp, Plus, Pencil } from "lucide-react";
+import { X, HelpCircle, ChevronDown, ChevronUp, Plus, Pencil, Check } from "lucide-react";
+import approveIconUrl from "@/assets/icons/instruction-approve.svg";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
