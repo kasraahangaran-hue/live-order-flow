@@ -90,7 +90,7 @@ export default function WashAndFoldTerms() {
         <div className="flex flex-col gap-3">
           {/* Card 1 — Suitable */}
           <Collapsible open={suitableOpen} onOpenChange={setSuitableOpen}>
-            <div className="rounded-lg border border-border bg-card p-4">
+            <div className="rounded-[6px] border border-border bg-card p-4">
               <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
                 <div className="flex items-center gap-3">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-primary-green text-primary">
@@ -118,7 +118,7 @@ export default function WashAndFoldTerms() {
 
           {/* Card 2 — Not Suitable */}
           <Collapsible open={notSuitableOpen} onOpenChange={setNotSuitableOpen}>
-            <div className="rounded-lg border border-border bg-card p-4">
+            <div className="rounded-[6px] border border-border bg-card p-4">
               <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
                 <div className="flex items-center gap-3">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-red text-white">
@@ -162,7 +162,7 @@ export default function WashAndFoldTerms() {
 
           {/* FAQ */}
           <Collapsible open={faqOpen} onOpenChange={setFaqOpen}>
-            <div className="rounded-lg bg-washmen-light-red px-4 py-3">
+            <div className="rounded-[6px] bg-washmen-light-red px-4 py-3">
               <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left leading-none">
                 <div className="flex items-center gap-3">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-white">
@@ -192,7 +192,7 @@ export default function WashAndFoldTerms() {
                       e.stopPropagation();
                       setAutoApprovalsSheetOpen(true);
                     }}
-                    className="flex w-full items-start gap-3 rounded-lg bg-card px-4 py-3 text-left transition-opacity active:opacity-80"
+                    className="flex w-full items-start gap-3 rounded-[6px] bg-card px-4 py-3 text-left transition-opacity active:opacity-80"
                   >
                     <img
                       src={approveIconUrl}
