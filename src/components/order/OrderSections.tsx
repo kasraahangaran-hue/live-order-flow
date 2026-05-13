@@ -28,6 +28,7 @@ import { DelicateItemsSheet, delicateItemsSummary } from "./DelicateItemsSheet";
 import type { OrderData, OrderServices } from "@/lib/order-types";
 import { DEFAULT_ORDER_SERVICES, PRESSING_CATEGORIES } from "@/lib/order-types";
 import { useOrderData } from "@/lib/useOrderData";
+import { servicesStore, useServices } from "@/lib/services-store";
 
 const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
   notify: "Notify me",
