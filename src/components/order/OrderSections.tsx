@@ -157,6 +157,28 @@ const SERVICE_TILES: ServiceTile[] = [
   { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
 ];
 
+/**
+ * Wash & Fold+ ("Press & Hang") details page.
+ *
+ * In production this opens a NATIVE screen via the iOS/Android bridge —
+ * the customer app exposes `window.washmen?.openWashAndFoldInfo()` (or
+ * equivalent message channel). This page does NOT live on the web.
+ *
+ * For Lovable demo / preview, we deep-link to the Washmen Order Flow
+ * project's `/laundry/wash-and-fold-info` route in a new tab so the
+ * interaction is testable end-to-end.
+ */
+const WF_INFO_DEMO_URL =
+  "https://id-preview--184088d1-7249-4d14-be85-b2a50400f77d.lovable.app/laundry/wash-and-fold-info";
+
+const openWashAndFoldInfo = () => {
+  // TODO(native-bridge): Replace with the production native handoff.
+  // e.g. window.washmen?.openWashAndFoldInfo?.()
+  if (typeof window !== "undefined") {
+    window.open(WF_INFO_DEMO_URL, "_blank", "noopener,noreferrer");
+  }
+};
+
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
   const order = useOrderData();
   const initial = order.services ?? DEFAULT_ORDER_SERVICES;
