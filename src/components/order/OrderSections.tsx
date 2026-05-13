@@ -262,28 +262,7 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
-                    <img
-                      src={addPressingActiveUrl}
-                      alt=""
-                      aria-hidden
-                      width={32}
-                      height={32}
-                      className={cn(
-                        "h-8 w-8 select-none",
-                        pressActive ? "block" : "hidden",
-                      )}
-                    />
-                    <img
-                      src={addPressingInactiveUrl}
-                      alt=""
-                      aria-hidden
-                      width={32}
-                      height={32}
-                      className={cn(
-                        "h-8 w-8 select-none",
-                        pressActive ? "hidden" : "block",
-                      )}
-                    />
+                    <PressingIcon active={pressActive} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
