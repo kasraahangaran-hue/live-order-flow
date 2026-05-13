@@ -474,18 +474,35 @@ const ServiceRow = ({
       <div
         className={cn(
           "flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
-          iconBgClass,
-          disabled && "opacity-60",
+          disabled ? "bg-[#EFEFF4]" : iconBgClass,
         )}
       >
-        {iconSlot ?? <img src={iconUrl} alt="" aria-hidden width={32} height={32} className={cn("h-8 w-8 select-none", disabled && "opacity-70")} />}
+        {iconSlot ?? (
+          <img
+            src={iconUrl}
+            alt=""
+            aria-hidden
+            width={32}
+            height={32}
+            className="h-8 w-8 select-none"
+            style={
+              disabled
+                ? { filter: "grayscale(1) opacity(0.5) brightness(1.15)" }
+                : undefined
+            }
+          />
+        )}
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
           <p
             className={cn(
               "min-w-0 truncate text-sm font-semibold leading-tight",
-              titleMuted ? "text-muted-foreground" : "text-primary",
+              disabled
+                ? "text-[#C3C8DB]"
+                : titleMuted
+                  ? "text-muted-foreground"
+                  : "text-primary",
             )}
           >
             {title}
@@ -541,7 +558,9 @@ const ServiceRow = ({
           className={cn(
             "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors",
             disabled
-              ? "border-muted-foreground/40 bg-transparent text-muted-foreground/60"
+              ? selected
+                ? "border-[#C3C8DB] bg-[#EFEFF4] text-[#C3C8DB]"
+                : "border-[#C3C8DB] bg-transparent text-[#C3C8DB]"
               : selected
                 ? "border-washmen-primary-green bg-washmen-primary-green text-primary"
                 : "border-primary bg-transparent text-primary",
