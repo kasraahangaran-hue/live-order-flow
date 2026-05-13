@@ -25,7 +25,9 @@ import { StarchSheet, starchLabel, type StarchLevel } from "./StarchSheet";
 import { AutoApprovalsSheet, type AutoApprovalsState, type WashFoldApproval } from "./AutoApprovalsSheet";
 import { CreasesSheet, creasesSummary, EMPTY_CREASES, type CreasesState } from "./CreasesSheet";
 import { DelicateItemsSheet, delicateItemsSummary } from "./DelicateItemsSheet";
-import type { OrderData } from "@/lib/order-types";
+import type { OrderData, OrderServices } from "@/lib/order-types";
+import { DEFAULT_ORDER_SERVICES, PRESSING_CATEGORIES } from "@/lib/order-types";
+import { useOrderData } from "@/lib/useOrderData";
 
 const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
   notify: "Notify me",
