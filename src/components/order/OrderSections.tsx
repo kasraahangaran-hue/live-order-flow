@@ -157,6 +157,28 @@ const SERVICE_TILES: ServiceTile[] = [
   { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
 ];
 
+/**
+ * Wash & Fold+ ("Press & Hang") details page.
+ *
+ * In production this opens a NATIVE screen via the iOS/Android bridge —
+ * the customer app exposes `window.washmen?.openWashAndFoldInfo()` (or
+ * equivalent message channel). This page does NOT live on the web.
+ *
+ * For Lovable demo / preview, we deep-link to the Washmen Order Flow
+ * project's `/laundry/wash-and-fold-info` route in a new tab so the
+ * interaction is testable end-to-end.
+ */
+const WF_INFO_DEMO_URL =
+  "https://id-preview--184088d1-7249-4d14-be85-b2a50400f77d.lovable.app/laundry/wash-and-fold-info";
+
+const openWashAndFoldInfo = () => {
+  // TODO(native-bridge): Replace with the production native handoff.
+  // e.g. window.washmen?.openWashAndFoldInfo?.()
+  if (typeof window !== "undefined") {
+    window.open(WF_INFO_DEMO_URL, "_blank", "noopener,noreferrer");
+  }
+};
+
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
   const order = useOrderData();
   const initial = order.services ?? DEFAULT_ORDER_SERVICES;
@@ -204,7 +226,7 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                 <div className="flex items-center gap-3 pt-1 pb-2">
                   <div
                     className={cn(
-                      "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full",
+                      "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
@@ -212,7 +234,9 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       src={pressActive ? addPressingActiveUrl : addPressingInactiveUrl}
                       alt=""
                       aria-hidden
-                      className="h-7 w-7 select-none"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 select-none"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -232,14 +256,14 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                     <button
                       type="button"
                       aria-label="Edit pressing selections"
-                      onClick={() => toggle("addPressing")}
+                      onClick={openWashAndFoldInfo}
                       className="flex h-6 w-6 shrink-0 items-center justify-center text-primary"
                     >
                       <Pencil className="h-4 w-4" />
                     </button>
                   )}
                 </div>
-                <div className="pl-[52px] flex flex-col gap-1">
+                <div className="pl-[60px] flex flex-col gap-1">
                   {displayPressingCats.map((cat) => (
                     <div key={cat.id} className="flex items-center gap-3">
                       <span className="flex-1 text-xs font-light leading-[18px] text-muted-foreground">
@@ -358,7 +382,7 @@ const ServiceRow = ({
           iconBgClass,
         )}
       >
-        <img src={iconUrl} alt="" aria-hidden className="h-7 w-7 select-none" />
+        <img src={iconUrl} alt="" aria-hidden width={32} height={32} className="h-8 w-8 select-none" />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
