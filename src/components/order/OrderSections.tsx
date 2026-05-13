@@ -462,11 +462,12 @@ const ServiceRow = ({
   active = true,
   titleMutedWhenInactive,
   locked,
+  disabled,
   standalone,
   onPress,
 }: ServiceRowProps) => {
   const interactive = !locked && !!onPress;
-  const titleMuted = titleMutedWhenInactive && !active;
+  const titleMuted = (titleMutedWhenInactive && !active) || disabled;
 
   const inner = (
     <div className="flex w-full items-center gap-3 px-4 py-2.5 text-left">
@@ -474,9 +475,10 @@ const ServiceRow = ({
         className={cn(
           "flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
           iconBgClass,
+          disabled && "opacity-60",
         )}
       >
-        {iconSlot ?? <img src={iconUrl} alt="" aria-hidden width={32} height={32} className="h-8 w-8 select-none" />}
+        {iconSlot ?? <img src={iconUrl} alt="" aria-hidden width={32} height={32} className={cn("h-8 w-8 select-none", disabled && "opacity-70")} />}
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
@@ -489,23 +491,32 @@ const ServiceRow = ({
             {title}
           </p>
           {badge && (
-            <span className="shrink-0 rounded-md bg-washmen-yellow-pill px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
+            <span
+              className={cn(
+                "shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide",
+                disabled
+                  ? "bg-muted text-muted-foreground"
+                  : "bg-washmen-yellow-pill text-primary",
+              )}
+            >
               {badge}
             </span>
           )}
           {priceLabel && (
-            <span className="shrink-0 rounded-md bg-washmen-light-aqua px-2 py-0.5 text-[10px] font-medium text-primary">
+            <span
+              className={cn(
+                "shrink-0 rounded-md px-2 py-0.5 text-[10px] font-medium",
+                disabled
+                  ? "bg-muted text-muted-foreground"
+                  : "bg-washmen-light-aqua text-primary",
+              )}
+            >
               {priceLabel}
             </span>
           )}
         </div>
         {subtitle && (
-          <p
-            className={cn(
-              "mt-0.5 truncate text-xs leading-tight",
-              titleMuted ? "text-muted-foreground" : "text-muted-foreground",
-            )}
-          >
+          <p className="mt-0.5 truncate text-xs leading-tight text-muted-foreground">
             {subtitle}
           </p>
         )}
@@ -529,9 +540,11 @@ const ServiceRow = ({
           aria-hidden
           className={cn(
             "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors",
-            selected
-              ? "border-washmen-primary-green bg-washmen-primary-green text-primary"
-              : "border-primary bg-transparent text-primary",
+            disabled
+              ? "border-muted-foreground/40 bg-transparent text-muted-foreground/60"
+              : selected
+                ? "border-washmen-primary-green bg-washmen-primary-green text-primary"
+                : "border-primary bg-transparent text-primary",
           )}
         >
           {selected ? (
