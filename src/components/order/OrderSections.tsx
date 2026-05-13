@@ -352,7 +352,8 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
 };
 
 interface ServiceRowProps {
-  iconUrl: string;
+  iconUrl?: string;
+  iconSlot?: React.ReactNode;
   iconBgClass: string;
   title: string;
   subtitle?: string;
@@ -375,6 +376,7 @@ interface ServiceRowProps {
 
 const ServiceRow = ({
   iconUrl,
+  iconSlot,
   iconBgClass,
   title,
   subtitle,
@@ -401,7 +403,7 @@ const ServiceRow = ({
           iconBgClass,
         )}
       >
-        <img src={iconUrl} alt="" aria-hidden width={32} height={32} className="h-8 w-8 select-none" />
+        {iconSlot ?? <img src={iconUrl} alt="" aria-hidden width={32} height={32} className="h-8 w-8 select-none" />}
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
