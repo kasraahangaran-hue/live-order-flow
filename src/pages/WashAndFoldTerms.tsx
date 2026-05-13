@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Check, X, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Check, X, HelpCircle, ChevronDown, ChevronUp, Plus, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
@@ -8,6 +8,23 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { wfPlusTermsStore } from "@/lib/wf-plus-terms-store";
+import {
+  AutoApprovalsSheet,
+  type AutoApprovalsState,
+  type WashFoldApproval,
+} from "@/components/order/AutoApprovalsSheet";
+
+const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
+  notify: "Notify me",
+  "transfer-clean-press": "Transfer to clean & press",
+  "wash-anyway": "Wash anyway",
+  "do-not-wash": "Do not wash",
+};
+
+const DEFAULT_AUTO_APPROVALS: AutoApprovalsState = {
+  stainDamageApprove: false,
+  washFold: "notify",
+};
 
 interface LocationState {
   mode?: "gate" | "view";
