@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Check, X, HelpCircle, ChevronDown, ChevronUp, Plus, Pencil } from "lucide-react";
+import { X, HelpCircle, ChevronDown, ChevronUp, Plus, Pencil, Check } from "lucide-react";
+import approveIconUrl from "@/assets/icons/instruction-approve.svg";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
@@ -183,9 +184,11 @@ const WashAndFoldTerms = () => {
                   }}
                   className="flex w-full items-start gap-3 rounded-lg bg-card px-4 py-3 text-left transition-colors hover:bg-card/80"
                 >
-                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-washmen-light-aqua text-primary">
-                    <Check className="h-3 w-3" strokeWidth={3} />
-                  </div>
+                  <img
+                    src={approveIconUrl}
+                    alt=""
+                    className="mt-0.5 h-5 w-5 shrink-0 select-none"
+                  />
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <div className="flex items-start justify-between gap-3">
                       <span className="text-xs font-medium text-primary">
