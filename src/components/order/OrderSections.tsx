@@ -184,7 +184,7 @@ const SERVICE_TILES: ServiceTile[] = [
 const PressingIcon = ({ active }: { active: boolean }) => {
   const lineClass = active ? "stroke-primary" : "stroke-muted-foreground";
   const solidClass = active ? "fill-primary stroke-primary" : "fill-muted-foreground stroke-muted-foreground";
-  const boardFillClass = active ? "fill-[hsl(var(--surface-lavender-soft))]" : "fill-muted";
+  const boardFillClass = active ? "fill-[hsl(var(--surface-lavender-soft))]" : "fill-card";
 
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden className="h-8 w-8 shrink-0 select-none">
