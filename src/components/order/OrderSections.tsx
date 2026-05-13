@@ -6,15 +6,15 @@ import {
   Camera,
   Plus,
   Pencil,
-  WashingMachine,
-  Shirt,
-  BedDouble,
-  Footprints,
-  Crown,
-  Wind,
   Minus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import washFoldIconUrl from "@/assets/icons/service-wash-fold.svg";
+import cleanPressIconUrl from "@/assets/icons/service-clean-press.svg";
+import bedBathIconUrl from "@/assets/icons/service-bed-bath.svg";
+import pressOnlyIconUrl from "@/assets/icons/service-press-only.svg";
+import addPressingActiveUrl from "@/assets/icons/add-pressing-active.svg";
+import addPressingInactiveUrl from "@/assets/icons/add-pressing-inactive.svg";
 import {
   DoorbellInstructionsSheet,
   doorbellSummary,
@@ -25,7 +25,9 @@ import { StarchSheet, starchLabel, type StarchLevel } from "./StarchSheet";
 import { AutoApprovalsSheet, type AutoApprovalsState, type WashFoldApproval } from "./AutoApprovalsSheet";
 import { CreasesSheet, creasesSummary, EMPTY_CREASES, type CreasesState } from "./CreasesSheet";
 import { DelicateItemsSheet, delicateItemsSummary } from "./DelicateItemsSheet";
-import type { OrderData } from "@/lib/order-types";
+import type { OrderData, OrderServices } from "@/lib/order-types";
+import { DEFAULT_ORDER_SERVICES, PRESSING_CATEGORIES } from "@/lib/order-types";
+import { useOrderData } from "@/lib/useOrderData";
 
 const WF_SHORT_LABELS: Record<WashFoldApproval, string> = {
   notify: "Notify me",
@@ -142,84 +144,311 @@ export const OrderConfirmations = ({ stage = "delivery", orderId = "", order }: 
   );
 };
 
+type ServiceTile = {
+  key: "cleanAndPress" | "bedAndBath" | "pressOnly";
+  title: string;
+  iconUrl: string;
+  iconBgClass: string;
+};
+
+const SERVICE_TILES: ServiceTile[] = [
+  { key: "cleanAndPress", title: "Clean & Press", iconUrl: cleanPressIconUrl, iconBgClass: "bg-washmen-light-green" },
+  { key: "bedAndBath", title: "Bed & Bath", iconUrl: bedBathIconUrl, iconBgClass: "bg-washmen-light-pink" },
+  { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
+];
+
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
+  const order = useOrderData();
+  const initial = order.services ?? DEFAULT_ORDER_SERVICES;
+  const [services, setServices] = useState<OrderServices>(initial);
+
+  const toggle = (key: keyof OrderServices) => {
+    if (locked) return;
+    setServices((s) => ({ ...s, [key]: !s[key] }));
+  };
+
+  const pressActive = services.washAndFold && services.addPressing;
+  const selectedPressingIds = services.pressingItems ?? [];
+  const displayPressingCats =
+    selectedPressingIds.length > 0
+      ? PRESSING_CATEGORIES.filter((c) => selectedPressingIds.includes(c.id))
+      : PRESSING_CATEGORIES.slice(0, 3);
+
   return (
     <section
-      className="mx-5 mt-4 rounded-lg border border-border bg-card animate-fade-in p-4"
+      className="mx-5 mt-4 animate-fade-in"
       style={{ animationDelay: "250ms" }}
     >
-      <h3 className="font-sans text-sm font-bold text-primary leading-tight">Services Selection</h3>
-      <ul className="mt-3 divide-y divide-border/60">
-        {/* Selected: Wash & Fold (with nested Press & Hang add-on) */}
-        <li className="py-2.5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-secondary text-primary">
-              <WashingMachine className="h-4 w-4" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-primary tabular">Wash & Fold</p>
-            </div>
-            <span
-              aria-label="Wash & Fold selected"
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
-            >
-              <Check className="h-3.5 w-3.5" strokeWidth={3} />
-            </span>
-          </div>
+      <h3 className="px-1 font-sans text-sm font-bold text-primary leading-tight">
+        Services Selection
+      </h3>
 
-          {/* nested add-on under Wash & Fold */}
-          <div className="mt-2 ml-[22px] flex items-center gap-3 border-l-2 border-border/70 pl-3 py-1.5">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-secondary/70 text-muted-foreground">
-              <Shirt className="h-3.5 w-3.5" />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Add-on</p>
-                <span className="rounded-md bg-warning px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-warning-foreground">
-                  New
-                </span>
-              </div>
-              <p className="truncate text-xs font-semibold text-primary tabular">Press & Hang · +AED 9/item</p>
-            </div>
-            {!locked && (
-              <button
-                aria-label="Add Press & Hang"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
-              >
-                <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-              </button>
-            )}
-          </div>
-        </li>
+      <div className="mt-3 flex flex-col gap-2">
+        {/* Wash & Fold + Add Pressing combo card */}
+        {(services.washAndFold || !locked) && (
+          <div className="rounded-lg border border-border bg-card overflow-hidden">
+            <ServiceRow
+              iconUrl={washFoldIconUrl}
+              iconBgClass="bg-washmen-light-aqua"
+              title="Wash & Fold"
+              priceLabel={services.washAndFold ? "AED 75 per bag" : undefined}
+              link={locked ? undefined : { label: "Learn More", onPress: () => {} }}
+              selected={services.washAndFold}
+              showSelectionIndicator
+              locked={locked}
+              onPress={() => toggle("washAndFold")}
+            />
 
-        {/* Other services — only shown while still editable */}
-        {!locked &&
-          [
-            { label: "Clean & Press", Icon: Crown },
-            { label: "Bed & Bath", Icon: BedDouble },
-            { label: "Press Only", Icon: Wind },
-            { label: "Try ShoeCare", Icon: Footprints },
-            { label: "The Finery", Icon: Crown },
-          ].map(({ label, Icon }) => (
-            <li key={label} className="flex items-center gap-3 py-2.5">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-secondary text-primary">
-                <Icon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-primary tabular">{label}</p>
+            {services.washAndFold && services.addPressing ? (
+              <div className="flex flex-col px-4 pb-3">
+                <div className="flex items-center gap-3 pt-1 pb-2">
+                  <div
+                    className={cn(
+                      "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full",
+                      pressActive ? "bg-washmen-light-aqua" : "bg-muted",
+                    )}
+                  >
+                    <img
+                      src={pressActive ? addPressingActiveUrl : addPressingInactiveUrl}
+                      alt=""
+                      aria-hidden
+                      className="h-7 w-7 select-none"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="truncate text-sm font-semibold leading-tight text-primary">
+                        Press &amp; Hang
+                      </p>
+                      <span className="rounded-md bg-washmen-yellow-pill px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
+                        NEW
+                      </span>
+                    </div>
+                    <p className="mt-0.5 truncate text-xs leading-tight text-muted-foreground">
+                      Press tops after washing
+                    </p>
+                  </div>
+                  {!locked && (
+                    <button
+                      type="button"
+                      aria-label="Edit pressing selections"
+                      onClick={() => toggle("addPressing")}
+                      className="flex h-6 w-6 shrink-0 items-center justify-center text-primary"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                <div className="pl-[52px] flex flex-col gap-1">
+                  {displayPressingCats.map((cat) => (
+                    <div key={cat.id} className="flex items-center gap-3">
+                      <span className="flex-1 text-xs font-light leading-[18px] text-muted-foreground">
+                        {cat.label}
+                      </span>
+                      <span className="shrink-0 rounded-md bg-washmen-light-aqua px-1.5 py-0.5 text-[11px] font-medium leading-[16px] text-primary">
+                        + AED {cat.ratePlus} /item
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <button
-                aria-label={`Add ${label}`}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-transform duration-100 ease-out active:duration-75 active:scale-90"
-              >
-                <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-              </button>
-            </li>
-          ))}
-      </ul>
+            ) : !locked ? (
+              <>
+                <div className="flex items-center px-4 py-1">
+                  <div className="flex h-4 w-12 shrink-0 items-center justify-center">
+                    <Plus className="h-4 w-4 text-primary" strokeWidth={3} />
+                  </div>
+                </div>
+                <ServiceRow
+                  iconUrl={services.washAndFold ? addPressingActiveUrl : addPressingInactiveUrl}
+                  iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
+                  title="Add Pressing"
+                  titleMutedWhenInactive
+                  active={services.washAndFold}
+                  subtitle="Press tops after washing"
+                  badge="NEW"
+                  rightSlot={
+                    <Plus
+                      className={cn(
+                        "h-4 w-4",
+                        services.washAndFold ? "text-primary" : "text-muted-foreground",
+                      )}
+                      strokeWidth={2.5}
+                    />
+                  }
+                  locked={locked}
+                  onPress={() => services.washAndFold && toggle("addPressing")}
+                />
+              </>
+            ) : null}
+          </div>
+        )}
+
+        {/* Other services — selected always shown; unselected hidden when locked */}
+        {SERVICE_TILES.map((tile) => {
+          const selected = services[tile.key];
+          if (locked && !selected) return null;
+          return (
+            <ServiceRow
+              key={tile.key}
+              iconUrl={tile.iconUrl}
+              iconBgClass={tile.iconBgClass}
+              title={tile.title}
+              link={locked ? undefined : { label: "View Pricing", onPress: () => {} }}
+              selected={selected}
+              showSelectionIndicator
+              locked={locked}
+              onPress={() => toggle(tile.key)}
+              standalone
+            />
+          );
+        })}
+      </div>
     </section>
   );
 };
+
+interface ServiceRowProps {
+  iconUrl: string;
+  iconBgClass: string;
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  priceLabel?: string;
+  link?: { label: string; onPress: () => void };
+  selected?: boolean;
+  /** When set, render the right-side circle indicator (check / plus). */
+  showSelectionIndicator?: boolean;
+  /** Custom right slot replaces the indicator/checkmark when provided. */
+  rightSlot?: React.ReactNode;
+  /** Used by Add Pressing to gray out title/subtitle when W&F is off. */
+  active?: boolean;
+  titleMutedWhenInactive?: boolean;
+  locked?: boolean;
+  /** Wraps the row in its own card when true. */
+  standalone?: boolean;
+  onPress?: () => void;
+}
+
+const ServiceRow = ({
+  iconUrl,
+  iconBgClass,
+  title,
+  subtitle,
+  badge,
+  priceLabel,
+  link,
+  selected,
+  showSelectionIndicator,
+  rightSlot,
+  active = true,
+  titleMutedWhenInactive,
+  locked,
+  standalone,
+  onPress,
+}: ServiceRowProps) => {
+  const interactive = !locked && !!onPress;
+  const titleMuted = titleMutedWhenInactive && !active;
+
+  const inner = (
+    <div className="flex w-full items-center gap-3 px-4 py-2.5 text-left">
+      <div
+        className={cn(
+          "flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
+          iconBgClass,
+        )}
+      >
+        <img src={iconUrl} alt="" aria-hidden className="h-7 w-7 select-none" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 items-center gap-2">
+          <p
+            className={cn(
+              "min-w-0 truncate text-sm font-semibold leading-tight",
+              titleMuted ? "text-muted-foreground" : "text-primary",
+            )}
+          >
+            {title}
+          </p>
+          {badge && (
+            <span className="shrink-0 rounded-md bg-washmen-yellow-pill px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
+              {badge}
+            </span>
+          )}
+          {priceLabel && (
+            <span className="shrink-0 rounded-md bg-washmen-light-aqua px-2 py-0.5 text-[10px] font-medium text-primary">
+              {priceLabel}
+            </span>
+          )}
+        </div>
+        {subtitle && (
+          <p
+            className={cn(
+              "mt-0.5 truncate text-xs leading-tight",
+              titleMuted ? "text-muted-foreground" : "text-muted-foreground",
+            )}
+          >
+            {subtitle}
+          </p>
+        )}
+        {link && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              link.onPress();
+            }}
+            className="mt-0.5 inline-flex items-center text-xs font-medium text-primary underline underline-offset-2"
+          >
+            {link.label}
+          </button>
+        )}
+      </div>
+      {rightSlot ? (
+        <div className="flex h-6 w-6 shrink-0 items-center justify-center">{rightSlot}</div>
+      ) : showSelectionIndicator ? (
+        <div
+          aria-hidden
+          className={cn(
+            "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors",
+            selected
+              ? "border-washmen-primary-green bg-washmen-primary-green text-primary"
+              : "border-primary bg-transparent text-primary",
+          )}
+        >
+          {selected ? (
+            <Check className="h-3.5 w-3.5" strokeWidth={3} />
+          ) : (
+            <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+
+  const wrapperClass = cn(
+    standalone && "rounded-lg border border-border bg-card overflow-hidden",
+  );
+
+  if (interactive) {
+    return (
+      <button
+        type="button"
+        onClick={onPress}
+        aria-pressed={!!selected}
+        className={cn(
+          wrapperClass,
+          "transition-transform duration-100 ease-out active:scale-[0.99]",
+        )}
+      >
+        {inner}
+      </button>
+    );
+  }
+
+  return <div className={wrapperClass}>{inner}</div>;
+};
+
 
 interface InstructionCardProps {
   title: string;

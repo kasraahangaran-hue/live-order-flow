@@ -18,6 +18,14 @@ export const MOCK_ORDERS: OrderData[] = [
     },
     leaveBagsOutside: true,
     cancellable: true,
+    services: {
+      washAndFold: true,
+      addPressing: true,
+      pressingItems: ["tshirts_polos", "shirts_blouses"],
+      cleanAndPress: false,
+      bedAndBath: true,
+      pressOnly: false,
+    },
   },
   {
     orderId: "SHB201",

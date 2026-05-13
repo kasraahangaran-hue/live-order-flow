@@ -96,6 +96,8 @@ export default {
         "washmen-light-pink": "#FFE8FE",
         "washmen-light-red": "#FBEEF2",
         "washmen-light-teal": "#D8FFF8",
+        "washmen-yellow-pill": "#F5D534",
+        "washmen-primary-green": "#A4FF00",
         sidebar: {
           DEFAULT: "hsl(var(--background))",
           foreground: "hsl(var(--foreground))",

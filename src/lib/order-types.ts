@@ -137,4 +137,39 @@ export interface OrderData {
   cancelledAt?: string;
   /** Reason the order was cancelled (only present when status === "order_cancelled") */
   cancelReason?: "pickup_failed" | "expired" | "user_cancelled";
+  /** Selected services for this order. When omitted, defaults to Wash & Fold. */
+  services?: OrderServices;
 }
+
+export interface OrderServices {
+  washAndFold: boolean;
+  addPressing: boolean;
+  /** When set, drives the nested Press & Hang category list under W&F. */
+  pressingItems?: string[];
+  cleanAndPress: boolean;
+  bedAndBath: boolean;
+  pressOnly: boolean;
+}
+
+export const DEFAULT_ORDER_SERVICES: OrderServices = {
+  washAndFold: true,
+  addPressing: false,
+  cleanAndPress: false,
+  bedAndBath: false,
+  pressOnly: false,
+};
+
+export interface PressingCategory {
+  id: string;
+  label: string;
+  ratePlus: number;
+}
+
+/** Mirrors Washmen Order Flow design-system source of truth. */
+export const PRESSING_CATEGORIES: PressingCategory[] = [
+  { id: "tshirts_polos", label: "All T-Shirts / Polos", ratePlus: 9 },
+  { id: "tank_crop", label: "All Tank / Crop Tops", ratePlus: 9 },
+  { id: "gym_tops", label: "All Gym Tops", ratePlus: 9 },
+  { id: "shirts_blouses", label: "All Shirts / Blouses", ratePlus: 10 },
+  { id: "kids_uniform", label: "All Kids Uniform Tops", ratePlus: 7 },
+];
