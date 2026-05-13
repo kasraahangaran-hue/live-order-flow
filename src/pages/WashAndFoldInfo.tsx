@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { PRESSING_CATEGORIES } from "@/lib/order-types";
 import { servicesStore, useServices } from "@/lib/services-store";
+import { wfPlusTermsStore } from "@/lib/wf-plus-terms-store";
 
 const KIDS_UNIFORM_NOTE = "Must contain school crest";
 
@@ -36,6 +37,16 @@ const WashAndFoldInfo = () => {
       // Adding pressing prefs auto-activates Wash & Fold (mirrors reference).
       washAndFold: hasItems ? true : services.washAndFold,
     });
+    // First-time T&Cs gate: if user has just made their first selection
+    // and never accepted the Wash & Fold+ terms, route them through the
+    // gate page. They must hit "I Understand" to continue.
+    if (hasItems && !wfPlusTermsStore.get()) {
+      navigate("/wash-and-fold-info/terms", {
+        state: { mode: "gate" },
+        replace: true,
+      });
+      return;
+    }
     navigate(-1);
   };
 

@@ -1,0 +1,171 @@
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Check, X, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { wfPlusTermsStore } from "@/lib/wf-plus-terms-store";
+
+interface LocationState {
+  mode?: "gate" | "view";
+  /** Where to navigate after I UNDERSTAND in gate mode */
+  returnTo?: string;
+}
+
+const SUITABLE_BULLETS = [
+  "Any clothing or home items applicable for machine wash at 35°C",
+  "Items that can tolerate tumble drying",
+  "Materials: cotton, polyester, nylon, linen, modal, tencel, spandex and heat resistant materials",
+];
+
+const NOT_SUITABLE_BULLETS = [
+  "Delicate or expensive items you love",
+  "Items that require expert stain removal",
+  "Items for dry cleaning or hand wash",
+  "Items that require air dry (no tumble dry)",
+  "Suits, dresses, formal and traditional wear",
+  "Materials: silk, cashmere, wool, leather, velvet, exotic furs & leathers, embroidery and other delicate items",
+];
+
+const WashAndFoldTerms = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state = (location.state as LocationState | null) ?? {};
+  const mode = state.mode ?? "view";
+  const returnTo = state.returnTo;
+
+  const [faqOpen, setFaqOpen] = useState(false);
+  const [suitableOpen, setSuitableOpen] = useState(true);
+  const [notSuitableOpen, setNotSuitableOpen] = useState(true);
+
+  const handleAcknowledge = () => {
+    if (mode === "gate") {
+      wfPlusTermsStore.set(true);
+    }
+    if (typeof returnTo === "string") {
+      navigate(returnTo, { replace: mode === "gate" });
+    } else {
+      navigate(-1);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen flex-col bg-background">
+      <header className="sticky top-0 z-10 bg-background/95 px-5 pt-[max(env(safe-area-inset-top),16px)] pb-3 backdrop-blur">
+        <h1 className="text-base font-bold text-primary">Wash &amp; Fold+ Terms</h1>
+      </header>
+
+      <main className="flex-1 px-5 pb-32 pt-2 flex flex-col gap-3">
+        {/* Card 1 — Suitable */}
+        <Collapsible open={suitableOpen} onOpenChange={setSuitableOpen}>
+          <div className="rounded-lg border border-border bg-card p-4">
+            <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-light-green text-primary">
+                  <Check className="h-4 w-4" strokeWidth={3} />
+                </div>
+                <p className="text-sm font-semibold text-primary">ONLY Suitable for:</p>
+              </div>
+              {suitableOpen ? (
+                <ChevronUp className="h-5 w-5 shrink-0 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-xs text-muted-foreground">
+                {SUITABLE_BULLETS.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+
+        {/* Card 2 — Not Suitable */}
+        <Collapsible open={notSuitableOpen} onOpenChange={setNotSuitableOpen}>
+          <div className="rounded-lg border border-border bg-card p-4">
+            <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-washmen-light-pink text-primary">
+                  <X className="h-4 w-4" strokeWidth={3} />
+                </div>
+                <p className="text-sm font-semibold text-primary">NOT Suitable for:</p>
+              </div>
+              {notSuitableOpen ? (
+                <ChevronUp className="h-5 w-5 shrink-0 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 text-xs text-muted-foreground">
+                {NOT_SUITABLE_BULLETS.map((b) => (
+                  <li key={b}>
+                    {b},
+                    <ul className="mt-1 list-disc pl-5">
+                      <li className="text-xs font-bold text-primary">
+                        use Clean &amp; Press instead{" "}
+                        <button
+                          type="button"
+                          className="font-medium text-primary underline"
+                        >
+                          Learn more
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 pl-5 text-xs font-semibold text-primary underline">
+                Damage compensation will be limited to AED 200 an item
+              </p>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+
+        {/* FAQ */}
+        <Collapsible open={faqOpen} onOpenChange={setFaqOpen}>
+          <div className="rounded-lg bg-washmen-light-pink px-4 py-3">
+            <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left">
+              <div className="flex items-center gap-3">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <HelpCircle className="h-4 w-4" strokeWidth={2} />
+                </div>
+                <p className="text-xs font-medium text-primary">
+                  What if I send an unsuitable item?
+                </p>
+              </div>
+              {faqOpen ? (
+                <ChevronUp className="h-5 w-5 shrink-0 text-primary" />
+              ) : (
+                <ChevronDown className="h-5 w-5 shrink-0 text-primary" />
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Our team will identify it during sorting and contact you. Unsuitable
+                items can be returned unwashed or transferred to Clean &amp; Press at
+                standard pricing.
+              </p>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      </main>
+
+      <footer className="fixed inset-x-0 bottom-0 border-t border-border bg-background/95 px-5 py-3 pb-[max(env(safe-area-inset-bottom),12px)] backdrop-blur">
+        <Button
+          onClick={handleAcknowledge}
+          className="h-[42px] w-full rounded-lg text-sm font-semibold uppercase tracking-wide"
+        >
+          I Understand
+        </Button>
+      </footer>
+    </div>
+  );
+};
+
+export default WashAndFoldTerms;

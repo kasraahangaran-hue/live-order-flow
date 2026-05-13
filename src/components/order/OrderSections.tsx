@@ -320,6 +320,21 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                     </div>
                   ))}
                 </div>
+                {selectedPressingIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate("/wash-and-fold-info/terms", { state: { mode: "view" } });
+                    }}
+                    className={cn(
+                      "mt-2 self-start pl-[60px] text-xs font-normal underline underline-offset-2 transition-colors",
+                      pressActive ? "text-primary" : "text-muted-foreground",
+                    )}
+                  >
+                    View Terms &amp; Conditions
+                  </button>
+                )}
               </div>
             ) : !locked ? (
               <ServiceRow
