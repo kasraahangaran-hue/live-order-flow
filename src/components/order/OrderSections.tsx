@@ -13,8 +13,6 @@ import washFoldIconUrl from "@/assets/icons/service-wash-fold.svg";
 import cleanPressIconUrl from "@/assets/icons/service-clean-press.svg";
 import bedBathIconUrl from "@/assets/icons/service-bed-bath.svg";
 import pressOnlyIconUrl from "@/assets/icons/service-press-only.svg";
-import addPressingActiveUrl from "@/assets/icons/add-pressing-active.svg";
-import addPressingInactiveUrl from "@/assets/icons/add-pressing-inactive.svg";
 import {
   DoorbellInstructionsSheet,
   doorbellSummary,
@@ -37,8 +35,6 @@ const ICON_URLS = [
   cleanPressIconUrl,
   bedBathIconUrl,
   pressOnlyIconUrl,
-  addPressingActiveUrl,
-  addPressingInactiveUrl,
 ];
 if (typeof window !== "undefined") {
   ICON_URLS.forEach((url) => {
@@ -185,24 +181,22 @@ const SERVICE_TILES: ServiceTile[] = [
   { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
 ];
 
-const PressingIcon = ({ active }: { active: boolean }) => (
-  <span className="relative block h-8 w-8 shrink-0" aria-hidden>
-    <img
-      src={addPressingActiveUrl}
-      alt=""
-      width={32}
-      height={32}
-      className={cn("absolute inset-0 h-8 w-8 select-none", active ? "opacity-100" : "opacity-0")}
-    />
-    <img
-      src={addPressingInactiveUrl}
-      alt=""
-      width={32}
-      height={32}
-      className={cn("absolute inset-0 h-8 w-8 select-none", active ? "opacity-0" : "opacity-100")}
-    />
-  </span>
-);
+const PressingIcon = ({ active }: { active: boolean }) => {
+  const lineClass = active ? "stroke-primary" : "stroke-muted-foreground";
+  const solidClass = active ? "fill-primary stroke-primary" : "fill-muted-foreground stroke-muted-foreground";
+  const boardFillClass = active ? "fill-[hsl(var(--surface-lavender-soft))]" : "fill-muted";
+
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden className="h-8 w-8 shrink-0 select-none">
+      <path d="M16.602 5.49317C16.602 5.49317 18.8319 5.49317 20.0398 4.32658C20.2153 4.1614 20.4424 4.07881 20.6695 4.15107C21.7639 4.50208 24.9436 5.55511 25.625 6.08163C26.4199 6.71138 26.6057 6.5049 28.9286 10.9441C29.0525 11.1816 29.0112 11.4707 28.8357 11.6668L25.945 14.7433C25.7076 15.0014 25.3049 15.0117 25.0572 14.7639L24.0558 13.7935V27.328C24.0558 27.6171 23.8596 27.8649 23.5809 27.9371C22.4143 28.2262 19.5236 28.9592 16.7052 28.8972C13.5564 28.8663 10.8413 28.2262 9.66437 27.9371C9.38563 27.8649 9.18948 27.6171 9.18948 27.328V13.7935L8.18807 14.7639C7.9403 15.0014 7.53767 14.9911 7.30022 14.7433L4.40956 11.6668C4.22373 11.4707 4.19276 11.1816 4.31664 10.9441C6.6395 6.5049 6.82533 6.70105 7.62026 6.08163C8.29131 5.55511 11.4814 4.50208 12.5757 4.15107C12.8028 4.07881 13.0299 4.15107 13.2054 4.32658C14.4133 5.49317 16.6329 5.49317 16.6329 5.49317H16.602Z" className={cn("fill-card", lineClass)} strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20.4734 4.12036C19.9469 6.40192 16.602 9.56101 16.602 9.56101C16.602 9.56101 13.257 6.40192 12.7305 4.12036" className={lineClass} strokeWidth="1.25" strokeMiterlimit="10" strokeLinecap="round" />
+      <path d="M4.83158 23.3668L21.3883 23.3668C21.7948 23.3668 22.1243 23.6963 22.1243 24.1028L22.1243 24.3198C22.1243 24.7263 21.7948 25.0558 21.3883 25.0558L4.83158 25.0558C4.42508 25.0558 4.09557 24.7263 4.09557 24.3198L4.09557 24.1028C4.09557 23.6963 4.42509 23.3668 4.83158 23.3668Z" className={solidClass} strokeMiterlimit="10" strokeLinecap="round" />
+      <path d="M21.1408 23.1628C20.645 20.1915 18.3362 17.5721 15.8802 16.0083C13.2614 14.3429 10.1469 13.561 7.09433 13.2951C5.99416 13.2013 4.94048 13.4046 4.18896 14.2647C3.29798 15.2812 2.46125 16.3446 1.609 17.3923C1.02793 18.1038 0.594063 19.1672 1.609 19.7693C1.61675 19.7693 1.63223 19.7849 1.63998 19.7928C4.97146 21.7319 4.7313 23.3347 4.7313 23.3347" className={cn(boardFillClass, lineClass)} strokeMiterlimit="10" strokeLinecap="round" />
+      <path d="M7.1402 18.7804L15.6239 18.7804C15.7169 18.7804 15.7711 18.6719 15.7091 18.6022C15.0815 17.9049 12.5326 15.4179 8.1629 15.5031C8.1629 15.5031 6.59786 15.4489 5.68364 16.4948C5.38148 16.8434 5.2188 17.3006 5.31177 17.7499C5.41249 18.2303 5.8231 18.7804 7.1402 18.7804Z" className={cn("fill-card", lineClass)} strokeMiterlimit="10" strokeLinecap="round" />
+      <path d="M11.6883 18.5789L11.6883 17.595C11.6883 17.3315 11.4791 17.1223 11.2157 17.1223L8.70545 17.1223C8.44203 17.1223 8.23285 17.3315 8.23285 17.595L8.23285 18.5789" className={cn(boardFillClass, lineClass)} strokeMiterlimit="10" strokeLinecap="round" />
+    </svg>
+  );
+};
 
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
   const navigate = useNavigate();
@@ -268,28 +262,7 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
-                    <img
-                      src={addPressingActiveUrl}
-                      alt=""
-                      aria-hidden
-                      width={32}
-                      height={32}
-                      className={cn(
-                        "h-8 w-8 select-none",
-                        pressActive ? "block" : "hidden",
-                      )}
-                    />
-                    <img
-                      src={addPressingInactiveUrl}
-                      alt=""
-                      aria-hidden
-                      width={32}
-                      height={32}
-                      className={cn(
-                        "h-8 w-8 select-none",
-                        pressActive ? "hidden" : "block",
-                      )}
-                    />
+                    <PressingIcon active={pressActive} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
