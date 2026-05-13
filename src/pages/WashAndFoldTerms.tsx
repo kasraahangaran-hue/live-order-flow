@@ -89,7 +89,12 @@ const WashAndFoldTerms = () => {
                 </div>
                 <p className="text-base font-semibold text-primary">ONLY Suitable for:</p>
               </div>
-...
+              {suitableOpen ? (
+                <ChevronUp className="h-5 w-5 shrink-0 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
+              )}
+            </CollapsibleTrigger>
             <CollapsibleContent>
               <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-xs text-muted-foreground">
                 {SUITABLE_BULLETS.map((b) => (
