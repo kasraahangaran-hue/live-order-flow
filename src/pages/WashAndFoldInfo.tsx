@@ -42,7 +42,7 @@ const WashAndFoldInfo = () => {
     // gate page. They must hit "I Understand" to continue.
     if (hasItems && !wfPlusTermsStore.get()) {
       navigate("/wash-and-fold-info/terms", {
-        state: { mode: "gate", returnTo: -1 },
+        state: { mode: "gate" },
         replace: true,
       });
       return;
