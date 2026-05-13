@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import { OrderShell } from "@/components/order/OrderShell";
 import { DeliveryCard } from "@/components/order/DeliveryCard";
 
@@ -8,6 +9,10 @@ import type { Stage } from "@/components/order/StatusTimeline";
 const PickupCompleted = () => {
   const order = useOrderData();
   const ts = order.stageTimestamps;
+  const [params] = useSearchParams();
+  // Within 1h of pickup → W&F still editable; after 1h → fully locked.
+  // Toggle the post-hour state with ?postHour=1 for design review.
+  const lockMode = params.get("postHour") ? "post_hour" : "post_pickup";
 
   const stages: Stage[] = [
     { key: "order_received", label: "Order Received", timestamp: ts.order_received },
@@ -41,8 +46,8 @@ const PickupCompleted = () => {
 
       <OrderConfirmations stage="collected" orderId={order.orderId} order={order} />
 
-      <ServicesSelection locked />
-      <OrderInstructions locked />
+      <ServicesSelection lockMode={lockMode} />
+      <OrderInstructions locked={lockMode === "post_hour"} />
     </OrderShell>
   );
 };
