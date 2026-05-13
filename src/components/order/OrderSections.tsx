@@ -198,22 +198,44 @@ const PressingIcon = ({ active }: { active: boolean }) => {
   );
 };
 
-export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
+/**
+ * Service editing lock states on tracking screens:
+ * - "none"        — fully editable (Order Received / Pickup Assigned).
+ * - "post_pickup" — after pickup completed, within 1h grace window for W&F.
+ *                   CP / BB / PO are disabled-but-visible. W&F + Add Pressing
+ *                   remain editable so the customer can still add P&H.
+ * - "post_hour"   — >1h after pickup OR any later stage. Everything visible
+ *                   but disabled (greyed out, no pencil, no T&C link action).
+ */
+export type ServicesLockMode = "none" | "post_pickup" | "post_hour";
+
+export const ServicesSelection = ({
+  locked = false,
+  lockMode,
+}: {
+  /** @deprecated use lockMode. true → "post_hour" for backward compat. */
+  locked?: boolean;
+  lockMode?: ServicesLockMode;
+}) => {
   const navigate = useNavigate();
   const order = useOrderData();
   const services = useServices(order.services ?? DEFAULT_ORDER_SERVICES);
 
-  const toggle = (key: keyof OrderServices) => {
-    if (locked) return;
+  const mode: ServicesLockMode = lockMode ?? (locked ? "post_hour" : "none");
+  const wfLocked = mode === "post_hour";
+  const othersLocked = mode === "post_pickup" || mode === "post_hour";
+
+  const toggle = (key: keyof OrderServices, isLocked: boolean) => {
+    if (isLocked) return;
     servicesStore.set({ [key]: !services[key] } as Partial<OrderServices>);
   };
 
   const openWashAndFoldInfo = () => {
-    if (locked) return;
+    if (wfLocked) return;
     navigate("/wash-and-fold-info");
   };
 
-  const pressActive = services.washAndFold && services.addPressing;
+  const pressActive = services.washAndFold && services.addPressing && !wfLocked;
   const selectedPressingIds = services.pressingItems ?? [];
   const displayPressingCats =
     selectedPressingIds.length > 0
@@ -231,151 +253,166 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
 
       <div className="mt-3 flex flex-col gap-2">
         {/* Wash & Fold + Add Pressing combo card */}
-        {(services.washAndFold || !locked) && (
-          <div className="rounded-lg border border-border bg-card overflow-hidden">
-            <ServiceRow
-              iconUrl={washFoldIconUrl}
-              iconBgClass="bg-washmen-light-aqua"
-              title="Wash & Fold"
-              priceLabel={services.washAndFold ? "AED 75 per bag" : undefined}
-              link={locked ? undefined : { label: "Learn More", onPress: () => {} }}
-              selected={services.washAndFold}
-              showSelectionIndicator
-              locked={locked}
-              onPress={() => toggle("washAndFold")}
-            />
+        <div className="rounded-lg border border-border bg-card overflow-hidden">
+          <ServiceRow
+            iconUrl={washFoldIconUrl}
+            iconBgClass="bg-washmen-light-aqua"
+            title="Wash & Fold"
+            priceLabel={services.washAndFold ? "AED 75 per bag" : undefined}
+            link={wfLocked ? undefined : { label: "Learn More", onPress: () => {} }}
+            selected={services.washAndFold}
+            showSelectionIndicator
+            locked={wfLocked}
+            disabled={wfLocked}
+            onPress={() => toggle("washAndFold", wfLocked)}
+          />
 
-            {(services.washAndFold || !locked) && (
-              <div className="flex items-center px-4 py-1">
-                <div className="flex h-4 w-12 shrink-0 items-center justify-center">
-                  <Plus className="h-4 w-4 text-primary" strokeWidth={3} />
-                </div>
+          {(services.washAndFold || !wfLocked) && (
+            <div className="flex items-center px-4 py-1">
+              <div className="flex h-4 w-12 shrink-0 items-center justify-center">
+                <Plus
+                  className={cn("h-4 w-4", wfLocked ? "text-muted-foreground" : "text-primary")}
+                  strokeWidth={3}
+                />
               </div>
-            )}
+            </div>
+          )}
 
-            {services.addPressing ? (
-              <div className="flex flex-col px-4 pb-3">
-                <div className="flex items-center gap-3 pt-1 pb-2">
-                  <div
-                    className={cn(
-                      "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors",
-                      pressActive ? "bg-washmen-light-aqua" : "bg-muted",
-                    )}
-                  >
-                    <PressingIcon active={pressActive} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <p
-                        className={cn(
-                          "truncate text-sm font-semibold leading-tight transition-colors",
-                          pressActive ? "text-primary" : "text-muted-foreground",
-                        )}
-                      >
-                        Press &amp; Hang
-                      </p>
-                      <span className="rounded-md bg-washmen-yellow-pill px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
-                        NEW
-                      </span>
-                    </div>
-                    <p className="mt-0.5 truncate text-xs leading-tight text-muted-foreground">
-                      Press tops after washing
-                    </p>
-                  </div>
-                  {!locked && (
-                    <button
-                      type="button"
-                      aria-label="Edit pressing selections"
-                      onClick={openWashAndFoldInfo}
+          {services.addPressing ? (
+            <div className="flex flex-col px-4 pb-3">
+              <div className="flex items-center gap-3 pt-1 pb-2">
+                <div
+                  className={cn(
+                    "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors",
+                    pressActive ? "bg-washmen-light-aqua" : "bg-muted",
+                  )}
+                >
+                  <PressingIcon active={pressActive} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p
                       className={cn(
-                        "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
+                        "truncate text-sm font-semibold leading-tight transition-colors",
                         pressActive ? "text-primary" : "text-muted-foreground",
                       )}
                     >
-                      <Pencil className="h-4 w-4" />
-                    </button>
-                  )}
+                      Press &amp; Hang
+                    </p>
+                    <span
+                      className={cn(
+                        "rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide",
+                        wfLocked
+                          ? "bg-muted text-muted-foreground"
+                          : "bg-washmen-yellow-pill text-primary",
+                      )}
+                    >
+                      NEW
+                    </span>
+                  </div>
+                  <p className="mt-0.5 truncate text-xs leading-tight text-muted-foreground">
+                    Press tops after washing
+                  </p>
                 </div>
-                <div className="pl-[60px] flex flex-col gap-1">
-                  {displayPressingCats.map((cat) => (
-                    <div key={cat.id} className="flex items-center gap-3">
-                      <span
-                        className={cn(
-                          "flex-1 text-xs font-light leading-[18px] transition-colors",
-                          pressActive ? "text-muted-foreground" : "text-muted-foreground/60",
-                        )}
-                      >
-                        {cat.label}
-                      </span>
-                      <span
-                        className={cn(
-                          "shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium leading-[16px] transition-colors",
-                          pressActive
-                            ? "bg-washmen-light-aqua text-primary"
-                            : "bg-muted text-muted-foreground",
-                        )}
-                      >
-                        + AED {cat.ratePlus} /item
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {selectedPressingIds.length > 0 && (
+                {!wfLocked && (
                   <button
                     type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate("/wash-and-fold-info/terms", { state: { mode: "view" } });
-                    }}
+                    aria-label="Edit pressing selections"
+                    onClick={openWashAndFoldInfo}
                     className={cn(
-                      "mt-2 self-start pl-[60px] text-xs font-normal underline underline-offset-2 transition-colors",
+                      "flex h-6 w-6 shrink-0 items-center justify-center transition-colors",
                       pressActive ? "text-primary" : "text-muted-foreground",
                     )}
                   >
-                    View Terms &amp; Conditions
+                    <Pencil className="h-4 w-4" />
                   </button>
                 )}
               </div>
-            ) : !locked ? (
-              <ServiceRow
-                iconSlot={<PressingIcon active={services.washAndFold} />}
-                iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
-                title="Add Pressing"
-                titleMutedWhenInactive
-                active={services.washAndFold}
-                subtitle="Press tops after washing"
-                badge="NEW"
-                rightSlot={
-                  <Plus
-                    className={cn(
-                      "h-4 w-4",
-                      services.washAndFold ? "text-primary" : "text-muted-foreground",
-                    )}
-                    strokeWidth={2.5}
-                  />
-                }
-                locked={locked}
-                onPress={() => services.washAndFold && toggle("addPressing")}
-              />
-            ) : null}
-          </div>
-        )}
+              <div className="pl-[60px] flex flex-col gap-1">
+                {displayPressingCats.map((cat) => (
+                  <div key={cat.id} className="flex items-center gap-3">
+                    <span
+                      className={cn(
+                        "flex-1 text-xs font-light leading-[18px] transition-colors",
+                        pressActive ? "text-muted-foreground" : "text-muted-foreground/60",
+                      )}
+                    >
+                      {cat.label}
+                    </span>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium leading-[16px] transition-colors",
+                        pressActive
+                          ? "bg-washmen-light-aqua text-primary"
+                          : "bg-muted text-muted-foreground",
+                      )}
+                    >
+                      + AED {cat.ratePlus} /item
+                    </span>
+                  </div>
+                ))}
+              </div>
+              {selectedPressingIds.length > 0 && (
+                <button
+                  type="button"
+                  disabled={wfLocked}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (wfLocked) return;
+                    navigate("/wash-and-fold-info/terms", { state: { mode: "view" } });
+                  }}
+                  className={cn(
+                    "mt-2 self-start pl-[60px] text-xs font-normal underline underline-offset-2 transition-colors",
+                    wfLocked
+                      ? "text-muted-foreground"
+                      : pressActive
+                        ? "text-primary"
+                        : "text-muted-foreground",
+                  )}
+                >
+                  View Terms &amp; Conditions
+                </button>
+              )}
+            </div>
+          ) : !wfLocked ? (
+            <ServiceRow
+              iconSlot={<PressingIcon active={services.washAndFold} />}
+              iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
+              title="Add Pressing"
+              titleMutedWhenInactive
+              active={services.washAndFold}
+              subtitle="Press tops after washing"
+              badge="NEW"
+              rightSlot={
+                <Plus
+                  className={cn(
+                    "h-4 w-4",
+                    services.washAndFold ? "text-primary" : "text-muted-foreground",
+                  )}
+                  strokeWidth={2.5}
+                />
+              }
+              locked={wfLocked}
+              onPress={() => services.washAndFold && toggle("addPressing", wfLocked)}
+            />
+          ) : null}
+        </div>
 
-        {/* Other services — selected always shown; unselected hidden when locked */}
+        {/* Other services — always visible. Disabled-but-visible when locked. */}
         {SERVICE_TILES.map((tile) => {
           const selected = services[tile.key];
-          if (locked && !selected) return null;
           return (
             <ServiceRow
               key={tile.key}
               iconUrl={tile.iconUrl}
-              iconBgClass={tile.iconBgClass}
+              iconBgClass={othersLocked ? "bg-muted" : tile.iconBgClass}
               title={tile.title}
-              link={locked ? undefined : { label: "View Pricing", onPress: () => {} }}
+              link={othersLocked ? undefined : { label: "View Pricing", onPress: () => {} }}
               selected={selected}
               showSelectionIndicator
-              locked={locked}
-              onPress={() => toggle(tile.key)}
+              locked={othersLocked}
+              disabled={othersLocked}
+              onPress={() => toggle(tile.key, othersLocked)}
               standalone
             />
           );
