@@ -232,7 +232,7 @@ export default function WashAndFoldTerms() {
       <footer className="fixed inset-x-0 bottom-0 border-t border-border bg-background/95 px-6 py-3 pb-[max(env(safe-area-inset-bottom),12px)] backdrop-blur">
         <Button
           onClick={handleAcknowledge}
-          className={cn("h-[42px] w-full rounded-[8px] text-sm font-semibold uppercase tracking-wide")}
+          className={cn("h-[42px] w-full rounded-[8px] text-[14px] font-medium uppercase tracking-wide")}
         >
           I UNDERSTAND
         </Button>
