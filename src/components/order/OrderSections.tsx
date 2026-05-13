@@ -382,7 +382,7 @@ const ServiceRow = ({
           iconBgClass,
         )}
       >
-        <img src={iconUrl} alt="" aria-hidden className="h-7 w-7 select-none" />
+        <img src={iconUrl} alt="" aria-hidden width={32} height={32} className="h-8 w-8 select-none" />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex min-w-0 items-center gap-2">
