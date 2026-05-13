@@ -49,8 +49,8 @@ function RadioRow({
     >
       <span
         className={cn(
-          "flex-1 text-left text-[14px] leading-[20px] tracking-[0.1px]",
-          selected ? "font-normal text-primary" : "font-light text-muted-foreground",
+          "flex-1 text-left text-[12px] font-normal leading-[18px] tracking-[0.1px]",
+          selected ? "text-primary" : "text-muted-foreground",
         )}
       >
         {label}
