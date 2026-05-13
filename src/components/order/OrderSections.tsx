@@ -251,6 +251,14 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
               onPress={() => toggle("washAndFold")}
             />
 
+            {(services.washAndFold || !locked) && (
+              <div className="flex items-center px-4 py-1">
+                <div className="flex h-4 w-12 shrink-0 items-center justify-center">
+                  <Plus className="h-4 w-4 text-primary" strokeWidth={3} />
+                </div>
+              </div>
+            )}
+
             {services.washAndFold && services.addPressing ? (
               <div className="flex flex-col px-4 pb-3">
                 <div className="flex items-center gap-3 pt-1 pb-2">
@@ -260,8 +268,6 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                       pressActive ? "bg-washmen-light-aqua" : "bg-muted",
                     )}
                   >
-                    {/* Render both icons so the browser caches them on first paint;
-                        toggle visibility instead of swapping src to avoid a fetch/flash on state change. */}
                     <img
                       src={addPressingActiveUrl}
                       alt=""
@@ -323,33 +329,26 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                 </div>
               </div>
             ) : !locked ? (
-              <>
-                <div className="flex items-center px-4 py-1">
-                  <div className="flex h-4 w-12 shrink-0 items-center justify-center">
-                    <Plus className="h-4 w-4 text-primary" strokeWidth={3} />
-                  </div>
-                </div>
-                <ServiceRow
-                  iconSlot={<PressingIcon active={services.washAndFold} />}
-                  iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
-                  title="Add Pressing"
-                  titleMutedWhenInactive
-                  active={services.washAndFold}
-                  subtitle="Press tops after washing"
-                  badge="NEW"
-                  rightSlot={
-                    <Plus
-                      className={cn(
-                        "h-4 w-4",
-                        services.washAndFold ? "text-primary" : "text-muted-foreground",
-                      )}
-                      strokeWidth={2.5}
-                    />
-                  }
-                  locked={locked}
-                  onPress={() => services.washAndFold && toggle("addPressing")}
-                />
-              </>
+              <ServiceRow
+                iconSlot={<PressingIcon active={services.washAndFold} />}
+                iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
+                title="Add Pressing"
+                titleMutedWhenInactive
+                active={services.washAndFold}
+                subtitle="Press tops after washing"
+                badge="NEW"
+                rightSlot={
+                  <Plus
+                    className={cn(
+                      "h-4 w-4",
+                      services.washAndFold ? "text-primary" : "text-muted-foreground",
+                    )}
+                    strokeWidth={2.5}
+                  />
+                }
+                locked={locked}
+                onPress={() => services.washAndFold && toggle("addPressing")}
+              />
             ) : null}
           </div>
         )}
