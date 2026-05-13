@@ -158,6 +158,25 @@ const SERVICE_TILES: ServiceTile[] = [
   { key: "pressOnly", title: "Press Only", iconUrl: pressOnlyIconUrl, iconBgClass: "bg-washmen-light-grey" },
 ];
 
+const PressingIcon = ({ active }: { active: boolean }) => (
+  <span className="relative block h-8 w-8 shrink-0" aria-hidden>
+    <img
+      src={addPressingActiveUrl}
+      alt=""
+      width={32}
+      height={32}
+      className={cn("absolute inset-0 h-8 w-8 select-none", active ? "opacity-100" : "opacity-0")}
+    />
+    <img
+      src={addPressingInactiveUrl}
+      alt=""
+      width={32}
+      height={32}
+      className={cn("absolute inset-0 h-8 w-8 select-none", active ? "opacity-0" : "opacity-100")}
+    />
+  </span>
+);
+
 export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
   const navigate = useNavigate();
   const order = useOrderData();
@@ -284,7 +303,7 @@ export const ServicesSelection = ({ locked = false }: { locked?: boolean }) => {
                   </div>
                 </div>
                 <ServiceRow
-                  iconUrl={services.washAndFold ? addPressingActiveUrl : addPressingInactiveUrl}
+                  iconSlot={<PressingIcon active={services.washAndFold} />}
                   iconBgClass={services.washAndFold ? "bg-washmen-light-aqua" : "bg-muted"}
                   title="Add Pressing"
                   titleMutedWhenInactive
